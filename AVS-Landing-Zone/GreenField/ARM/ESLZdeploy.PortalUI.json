@@ -379,7 +379,7 @@
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
-                "VNetExists": "[if(equals(steps('avsNetwork').createAvdVnet, true), false)]",
+                "VNetExists": "[if(equals(steps('avsNetwork').createAvsVnet, true), false)]",
                 "VNetAddressSpace": "[steps('avsNetwork').avsVnetAddressSpace]",
                 "VNetGatewaySubnet": "[steps('avsNetwork').avsGatewaySubnet]",
                 "BastionSubnet": "[steps('avsNetwork').avsBastionSubnet]",
