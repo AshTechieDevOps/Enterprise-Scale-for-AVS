@@ -355,9 +355,29 @@
                     "label": "Monitoring",
                     "elements": [
                         {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
-                        }
+                            "name": "avsMonitoring",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": true,
+                            "options": {
+                                "text": "Placeholder for monitoring description.",
+                                "link": {
+                                    "label": "Learn more",
+                                    "uri": "https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring"
+                                }
+                            }
+                        },
+                        {
+                            "name": "ActionGroupEmails",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Action Group Email",
+                            "toolTip": "Provide an email address to send the service health alerts to.",
+                            "defaultValue": "",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+                                "validationMessage": "Please provide a valid email address."
+                            }
+                        },
                     ]
                 },
                 {
@@ -369,7 +389,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Deploy HCX",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -390,7 +410,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Deploy SRM",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
