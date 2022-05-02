@@ -3,7 +3,7 @@
     "view": {
         "kind": "Form",
         "properties": {
-            "title": "AVS landing zone accelerator - Baseline",
+            "title": "AVS landing zone accelerator - Greenfield",
             "steps": [
                 {
                     "name": "basics",
@@ -98,11 +98,11 @@
                                     "type": "Microsoft.Common.TextBox",
                                     "visible": true,
                                     "label": "AVS Address Space",
-                                    "defaultValue": "10",
+                                    "defaultValue": "",
                                     "toolTip": "The AVS address space needs to be /22, note to rewrite this, add regex for /22 catch",
                                     "constraints": {
                                         "required": true,
-                                        "regex": "",
+                                        "regex": "^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(/([0-9]|[0-2][0-9]|3[0-2]))$",
                                         "validationMessage": "Address space must be /22"
                                     }
                                 },
