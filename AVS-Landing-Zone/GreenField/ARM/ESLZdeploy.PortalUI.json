@@ -6,8 +6,8 @@
             "title": "AVS landing zone accelerator - Baseline",
             "steps": [
                 {
-                    "name": "basics",
-                    "label": "Azure Core Setup",
+                    "name": "test",
+                    "label": "Azure Core Setup delete",
                     "elements": [
                         {
                             "name": "resourceScope",
@@ -41,29 +41,10 @@
                             ]
                         },
                         {
-                            "name": "avsDeploymentScope",
-                            "type": "Microsoft.Common.ResourceScope",
-                            "location": {
-                                "resourceTypes": []
-                            }
-                        },
-                        {
-                            "name": "avsWorkloadSubscription",
-                            "type": "Microsoft.Common.TextBlock",
-                            "visible": true,
-                            "options": {
-                                "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
-                                "link": {
-                                    "label": "Learn more",
-                                    "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
-                                }
-                            }
-                        },
-                        {
                             "name": "avsDeploymentPrefix",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Deployment prefix",
-                            "toolTip": "Provide a prefix (max 4 characters) for the resource groups and resources created as part of avs landing zones.",
+                            "toolTip": "Provide a prefix (max 4 characters) for the resource groups and resources created as part of AVD landing zones.",
                             "placeholder": "Example: App1",
                             "constraints": {
                                 "required": true,
@@ -84,7 +65,7 @@
                     ]
                 },
                 {
-                    "name": "basics",
+                    "name": "Private Cloud",
                     "label": "Private Cloud",
                     "elements": [
                         {
@@ -94,7 +75,7 @@
                     ]
                 },
                 {
-                    "name": "basics",
+                    "name": "Networking",
                     "label": "Networking and Connectivity",
                     "elements": [
                         {
@@ -104,7 +85,7 @@
                     ]
                 },
                 {
-                    "name": "basics",
+                    "name": "Identity",
                     "label": "Identity",
                     "elements": [
                         {
@@ -114,7 +95,7 @@
                     ]
                 },
                 {
-                    "name": "basics",
+                    "name": "Monitoring",
                     "label": "Monitoring",
                     "elements": [
                         {
@@ -124,7 +105,7 @@
                     ]
                 },
                 {
-                    "name": "basics",
+                    "name": "Migration",
                     "label": "Migration",
                     "elements": [
                         {
@@ -137,8 +118,7 @@
         },
         "outputs": {
             "parameters": {
-                "ActionGroupEmails": "[steps('HealthSettings').ActionGroupEmails]",
-                "PrivateCloudResourceId": "[steps('HealthSettings').PrivateCloudSelectorId]"
+                "Prefix": "[steps('basics').avsDeploymentPrefix]"
             },
             "kind": "Subscription",
             "location": "[steps('basics').resourceScope.location.name]"
