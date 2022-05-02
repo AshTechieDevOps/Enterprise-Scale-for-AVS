@@ -118,7 +118,26 @@
         },
         "outputs": {
             "parameters": {
-                "Prefix": "[steps('basics').avsDeploymentPrefix]"
+                "Prefix": "[steps('basics').avsDeploymentPrefix]",
+                "Location": "[steps('basics').avsDeploymentPrefix]",
+                "PrivateCloudAddressSpace": "[steps('basics').avsDeploymentPrefix]",
+                "PrivateCloudSKU": "[steps('basics').avsDeploymentPrefix]",
+                "PrivateCloudHostCount": "[steps('basics').avsDeploymentPrefix]",
+                "VNetExists": "[steps('basics').avsDeploymentPrefix]",
+                "VNetAddressSpace": "[steps('basics').avsDeploymentPrefix]",
+                "VNetGatewaySubnet": "[steps('basics').avsDeploymentPrefix]",
+                "AlertEmails": "[steps('basics').avsDeploymentPrefix]",
+                "DeployJumpbox": "[steps('basics').avsDeploymentPrefix]",
+                "JumpboxUsername": "[steps('basics').avsDeploymentPrefix]",
+                "JumpboxPassword": "[steps('basics').avsDeploymentPrefix]",
+                "JumpboxSubnet": "[steps('basics').avsDeploymentPrefix]",
+                "JumpboxSku": "[steps('basics').avsDeploymentPrefix]",
+                "BastionSubnet": "[steps('basics').avsDeploymentPrefix]",
+                "DeployHCX": "[steps('basics').avsDeploymentPrefix]",
+                "DeploySRM": "[steps('basics').avsDeploymentPrefix]",
+                "SRMLicenseKey": "[steps('basics').avsDeploymentPrefix]",
+                "VRServerCount": "[steps('basics').avsDeploymentPrefix]",
+                "TelemetryOptOut": "[steps('basics').avsDeploymentPrefix]"
             },
             "kind": "Subscription",
             "location": "[steps('basics').resourceScope.location.name]"
