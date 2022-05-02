@@ -473,7 +473,7 @@
                 "JumpboxSku": "[steps('azureNetwork').vmSkuSelector]",
                 "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
                 "JumpboxPassword": "[steps('azureNetwork').jumpboxCredentials.JumpboxPassword]",
-                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
+                "AlertEmails": "[[steps('Monitoring').ActionGroupEmails]]",
                 "DeployHCX": "[steps('Addons').deployHCX]",
                 "DeploySRM": "[steps('Addons').deploySRM]",
                 "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
