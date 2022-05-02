@@ -53,7 +53,7 @@
                             "name": "avsDeploymentPrefix",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Deployment prefix",
-                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVD landing zones.",
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
                             "placeholder": "Example: App1",
                             "constraints": {
                                 "required": true,
@@ -207,7 +207,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
-                            "toolTip": "Virtual network subnet for AVD virtual machines",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.0.0/24",
                             "constraints": {
                                 "required": true,
@@ -220,7 +220,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
-                            "toolTip": "Virtual network subnet for AVD virtual machines",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.1.0/24",
                             "constraints": {
                                 "required": true,
@@ -233,7 +233,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
-                            "toolTip": "Virtual network subnet for AVD virtual machines",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.2.0/24",
                             "constraints": {
                                 "required": true,
@@ -242,7 +242,7 @@
                             }
                         },
                         {
-                            "name": "avdconnectioninfo",
+                            "name": "avsconnectioninfo",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "options": {
@@ -252,7 +252,7 @@
                             }
                         },
                         {
-                            "name": "avdExistingVnetInfoBox",
+                            "name": "avsExistingVnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, false)]",
                             "options": {
