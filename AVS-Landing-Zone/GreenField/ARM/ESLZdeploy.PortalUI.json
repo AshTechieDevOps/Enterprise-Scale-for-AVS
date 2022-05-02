@@ -6,16 +6,6 @@
             "title": "AVS landing zone accelerator - Baseline",
             "steps": [
                 {
-                    "name": "test",
-                    "label": "Azure Core Setup delete",
-                    "elements": [
-                        {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
-                        }
-                    ]
-                },
-                {
                     "name": "basics",
                     "label": "Azure core setup",
                     "subLabel": {
@@ -34,30 +24,49 @@
                                     "name": "info",
                                     "type": "Microsoft.Common.InfoBox",
                                     "options": {
-                                        "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Application group, host pool, workspace, key vaults, storage, VMs etc.).",
+                                        "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
                                         "style": "Info"
                                     }
                                 }
                             ]
                         },
                         {
-                            "name": "avsDeploymentPrefix",
-                            "type": "Microsoft.Common.TextBox",
-                            "label": "Deployment prefix",
-                            "toolTip": "Provide a prefix (max 4 characters) for the resource groups and resources created as part of AVD landing zones.",
-                            "placeholder": "Example: App1",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^[a-z0-9A-Z-]{1,4}$",
-                                "validationMessage": "The prefix must be 1-4 characters."
+                            "name": "avdDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
                             }
                         },
                         {
-                            "name": "roleinfo",
+                            "name": "avdWorkloadSubscription",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": true,
+                            "options": {
+                                "text": "Azure AVD Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
+                                "link": {
+                                    "label": "Learn more",
+                                    "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                }
+                            }
+                        },
+                        {
+                            "name": "avsDeploymentPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Deployment prefix",
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVD landing zones.",
+                            "placeholder": "Example: App1",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-z0-9A-Z-]{1,8}$",
+                                "validationMessage": "The prefix must be 1-8 characters."
+                            }
+                        },
+                        {
+                            "name": "rbacInfo",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": true,
                             "options": {
-                                "text": "Azure AVS Landing Zones ARM deployment requires owner access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "text": "Azure AVS Landing Zones ARM deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
                                 "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
                                 "style": "Warning"
                             }
@@ -65,12 +74,82 @@
                     ]
                 },
                 {
-                    "name": "Private Cloud",
-                    "label": "Private Cloud",
+                    "name": "PrivateCloud",
+                    "label": "AVS Private Cloud",
                     "elements": [
                         {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
+                            "name": "hostPoolInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Placeholder for prerequisites info - perhaps red box or more stronger etc",
+                                "uri": "https://docs.microsoft.com/en-us/azure/virtual-desktop/data-locations",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "avsPrivateCloudSettings",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Private Cloud settings",
+                            "elements": [
+                                {
+                                    "name": "avsAddressSpace",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": true,
+                                    "label": "AVS Address Space",
+                                    "defaultValue": "10",
+                                    "toolTip": "The AVS address space needs to be /22, note to rewrite this, add regex for /22 catch",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": "Address space must be /22"
+                                    }
+                                },
+                                {
+                                    "name": "avsSkuType",
+                                    "type": "Microsoft.Common.DropDown",
+                                    "visible": true,
+                                    "label": "AVS SKU",
+                                    "defaultValue": "AV36",
+                                    "multiLine": true,
+                                    "toolTip": "",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "AV36",
+                                                "description": "",
+                                                "value": "AV36"
+                                            },
+                                            {
+                                                "label": "AV36T",
+                                                "description": "",
+                                                "value": "AV36T"
+                                            },
+                                            {
+                                                "label": "AV36P",
+                                                "description": "",
+                                                "value": "AV36P"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "avsHostCount",
+                                    "type": "Microsoft.Common.Slider",
+                                    "label": "AVS Host Count",
+                                    "subLabel": "",
+                                    "toolTip": "Number of hosts in the Private Cloud, minimum 3",
+                                    "min": 3,
+                                    "max": 16,
+                                    "defaultValue": 3,
+                                    "showStepMarkers": true,
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
@@ -119,10 +198,10 @@
         "outputs": {
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
-                "Location": "[steps('basics').avsDeploymentPrefix]",
-                "PrivateCloudAddressSpace": "[steps('basics').avsDeploymentPrefix]",
-                "PrivateCloudSKU": "[steps('basics').avsDeploymentPrefix]",
-                "PrivateCloudHostCount": "[steps('basics').avsDeploymentPrefix]",
+                "Location": "[steps('basics').avdDeploymentScope.location.name]",
+                "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
+                "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
+                "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
                 "VNetExists": "[steps('basics').avsDeploymentPrefix]",
                 "VNetAddressSpace": "[steps('basics').avsDeploymentPrefix]",
                 "VNetGatewaySubnet": "[steps('basics').avsDeploymentPrefix]",
@@ -139,7 +218,8 @@
                 "VRServerCount": "[steps('basics').avsDeploymentPrefix]",
                 "TelemetryOptOut": "[steps('basics').avsDeploymentPrefix]"
             },
-            "kind": "Subscription"
+            "kind": "Subscription",
+            "location": "[steps('basics').resourceScope.location.name]"
         }
     }
 }
