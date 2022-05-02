@@ -190,7 +190,7 @@
                             }
                         },
                         {
-                            "name": "VnetAddressSpace",
+                            "name": "vNetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "label": "vNet address range",
@@ -465,7 +465,7 @@
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
                 "VNetExists": "[steps('azureNetwork').createAzureVnet]",
-                "VNetAddressSpace": "[steps('azureNetwork').vnetAddressSpace]",
+                "VNetAddressSpace": "[if(equals(steps('azureNetwork').createAzureVnet, true), steps('azureNetwork').vNetAddressSpace, '192.168.0.0/22')]",
                 "VNetGatewaySubnet": "[steps('azureNetwork').GatewaySubnet]",
                 "BastionSubnet": "[steps('azureNetwork').BastionSubnet]",
                 "JumpboxSubnet": "[steps('azureNetwork').JumpboxSubnet]",
