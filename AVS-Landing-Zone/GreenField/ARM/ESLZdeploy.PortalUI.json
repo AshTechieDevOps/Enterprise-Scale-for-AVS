@@ -374,7 +374,7 @@
                             "defaultValue": "",
                             "constraints": {
                                 "required": true,
-                                "regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+                                "regex": "[\\w-\\]+@([\\w-]+\\.)+[\\w-]+",
                                 "validationMessage": "Please provide a valid email address."
                             }
                         }
