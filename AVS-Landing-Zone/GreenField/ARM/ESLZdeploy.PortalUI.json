@@ -365,8 +365,73 @@
                     "label": "AVS Addons",
                     "elements": [
                         {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
+                            "name": "deployHCX",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy HCX",
+                            "defaultValue": "Yes",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "deploySRM",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy SRM",
+                            "defaultValue": "Yes",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "srmLicenseKey",
+                            "type": "Microsoft.Common.TextBlock",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "options": {
+                                "text": "Placeholder for SRM License key information",
+                                "link": {
+                                    "label": "Learn more",
+                                    "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
+                                }
+                            }
+                        },
+                        {
+                            "name": "srmVRCount",
+                            "type": "Microsoft.Common.Slider",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "Number of Replication Servers",
+                            "subLabel": "",
+                            "toolTip": "Number of vSphere replication servers to be deployed, minimum 1",
+                            "min": 1,
+                            "max": 3,
+                            "defaultValue": 3,
+                            "showStepMarkers": true,
+                            "constraints": {
+                                "required": true
+                            }
                         }
                     ]
                 }
