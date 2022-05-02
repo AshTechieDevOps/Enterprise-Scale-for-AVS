@@ -3,7 +3,7 @@
     "view": {
         "kind": "Form",
         "properties": {
-            "title": "AVS landing zone accelerator - Greenfield",
+            "title": "AVS Landing Zone Accelerator",
             "steps": [
                 {
                     "name": "basics",
@@ -154,9 +154,9 @@
                     ]
                 },
                 {
-                    "name": "avsNetwork",
+                    "name": "azureNetwork",
                     "label": "Networking and Connectivity",
-                    "bladeTitle": "avsNetworkingSettings",
+                    "bladeTitle": "azureNetworkingSettings",
                     "elements": [
                         {
                             "name": "vnetInfoBox",
@@ -169,7 +169,7 @@
                             }
                         },
                         {
-                            "name": "createAvsVnet",
+                            "name": "createAzureVnet",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Virtual network",
@@ -190,9 +190,9 @@
                             }
                         },
                         {
-                            "name": "avsVnetAddressSpace",
+                            "name": "VnetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "label": "vNet address range",
                             "toolTip": "Virtual network for AVS resource in Azure Native. Ensure this is not overlapping the AVS Private Cloud",
                             "placeholder": "Example: 192.168.0.0/22",
@@ -203,9 +203,9 @@
                             }
                         },
                         {
-                            "name": "avsGatewaySubnet",
+                            "name": "GatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "label": "Subnet address prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.0.0/24",
@@ -216,9 +216,9 @@
                             }
                         },
                         {
-                            "name": "avsBastionSubnet",
+                            "name": "BastionSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "label": "Subnet address prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.1.0/24",
@@ -229,9 +229,9 @@
                             }
                         },
                         {
-                            "name": "avsJumpboxSubnet",
+                            "name": "JumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "label": "Subnet address prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.2.0/24",
@@ -244,7 +244,7 @@
                         {
                             "name": "avsconnectioninfo",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
                             "options": {
                                 "text": "Placeholder for vNet subnet connection information .",
                                 "uri": "",
@@ -252,9 +252,9 @@
                             }
                         },
                         {
-                            "name": "avsExistingVnetInfoBox",
+                            "name": "ExistingVnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('avsNetwork').createAvsVnet, false)]",
+                            "visible": "[equals(steps('azureNetwork').createAzureVnet, false)]",
                             "options": {
                                 "text": "Placeholder - By choosing existing network, ensure you setup connectivity manually after etc...",
                                 "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking",
@@ -285,7 +285,7 @@
                         {
                             "name": "vmSkuSelector",
                             "type": "Microsoft.Compute.SizeSelector",
-                            "visible": "[equals(steps('avsNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Jumpbox SKU",
                             "toolTip": "",
                             "recommendedSizes": [
@@ -309,13 +309,13 @@
                             }
                         },
                         {
-                            "name": "avsJumpboxCredentials",
+                            "name": "jumpboxCredentials",
                             "type": "Microsoft.Common.Section",
-                            "visible": "[equals(steps('avsNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Jumpbox login credentials",
                             "elements": [
                                 {
-                                    "name": "avsJumpboxLocalUserName",
+                                    "name": "jumpboxLocalUserName",
                                     "type": "Microsoft.Common.TextBox",
                                     "label": "Username",
                                     "toolTip": "Provide username for session host local admin account.",
@@ -326,7 +326,7 @@
                                     }
                                 },
                                 {
-                                    "name": "avsJumpboxPassword",
+                                    "name": "JumpboxPassword",
                                     "type": "Microsoft.Compute.CredentialsCombo",
                                     "visible": true,
                                     "label": {
@@ -464,18 +464,18 @@
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
-                "VNetExists": "[steps('basics').avsDeploymentPrefix]",
-                "VNetAddressSpace": "[steps('avsNetwork').avsVnetAddressSpace]",
-                "VNetGatewaySubnet": "[steps('avsNetwork').avsGatewaySubnet]",
-                "BastionSubnet": "[steps('avsNetwork').avsBastionSubnet]",
-                "JumpboxSubnet": "[steps('avsNetwork').avsJumpboxSubnet]",
-                "DeployJumpbox": "[steps('basics').avsDeploymentPrefix]",
-                "JumpboxSku": "[steps('avsNetwork').vmSkuSelector]",
-                "JumpboxUsername": "[steps('avsNetwork').avsJumpboxCredentials.avsJumpboxLocalUserName]",
-                "JumpboxPassword": "[steps('avsNetwork').avsJumpboxCredentials.avsJumpboxPassword]",
-                "AlertEmails": "[steps('basics').avsDeploymentPrefix]",
-                "DeployHCX": "[steps('basics').avsDeploymentPrefix]",
-                "DeploySRM": "[steps('basics').avsDeploymentPrefix]",
+                "VNetExists": "[steps('azureNetwork').createAzureVnet]",
+                "VNetAddressSpace": "[steps('azureNetwork').vnetAddressSpace]",
+                "VNetGatewaySubnet": "[steps('azureNetwork').GatewaySubnet]",
+                "BastionSubnet": "[steps('azureNetwork').BastionSubnet]",
+                "JumpboxSubnet": "[steps('azureNetwork').JumpboxSubnet]",
+                "DeployJumpbox": "[steps('azureNetwork').createJumpbox]",
+                "JumpboxSku": "[steps('azureNetwork').vmSkuSelector]",
+                "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
+                "JumpboxPassword": "[steps('azureNetwork').jumpboxCredentials.JumpboxPassword]",
+                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
+                "DeployHCX": "[steps('Addons').deployHCX]",
+                "DeploySRM": "[steps('Addons').deploySRM]",
                 "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
                 "VRServerCount": "[steps('Addons').srmVRCount]",
                 "TelemetryOptOut": "false"
