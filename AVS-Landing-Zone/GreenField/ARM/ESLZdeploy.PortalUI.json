@@ -309,13 +309,13 @@
                             }
                         },
                         {
-                            "name": "avsIdentityDomainCredentials",
+                            "name": "avsJumpboxCredentials",
                             "type": "Microsoft.Common.Section",
                             "visible": "[equals(steps('avsNetwork').createJumpbox, true)]",
                             "label": "Jumpbox login credentials",
                             "elements": [
                                 {
-                                    "name": "avsIdentityLocalUserName",
+                                    "name": "avsJumpboxLocalUserName",
                                     "type": "Microsoft.Common.TextBox",
                                     "label": "Username",
                                     "toolTip": "Provide username for session host local admin account.",
@@ -326,7 +326,7 @@
                                     }
                                 },
                                 {
-                                    "name": "avsIdentityLocalUserPassword",
+                                    "name": "avsJumpboxPassword",
                                     "type": "Microsoft.Compute.CredentialsCombo",
                                     "visible": true,
                                     "label": {
@@ -471,14 +471,14 @@
                 "JumpboxSubnet": "[steps('avsNetwork').avsJumpboxSubnet]",
                 "DeployJumpbox": "[steps('basics').avsDeploymentPrefix]",
                 "JumpboxSku": "[steps('avsNetwork').vmSkuSelector]",
-                "JumpboxUsername": "[steps('avsNetwork').avsIdentityDomainCredentials.avsIdentityLocalUserName]",
-                "JumpboxPassword": "[steps('avsNetwork').avsIdentityDomainCredentials.avsIdentityLocalUserPassword]",
+                "JumpboxUsername": "[steps('avsNetwork').avsJumpboxCredentials.avsJumpboxLocalUserName]",
+                "JumpboxPassword": "[steps('avsNetwork').avsJumpboxCredentials.avsJumpboxPassword]",
                 "AlertEmails": "[steps('basics').avsDeploymentPrefix]",
                 "DeployHCX": "[steps('basics').avsDeploymentPrefix]",
                 "DeploySRM": "[steps('basics').avsDeploymentPrefix]",
-                "SRMLicenseKey": "[steps('basics').avsDeploymentPrefix]",
-                "VRServerCount": "[steps('basics').avsDeploymentPrefix]",
-                "TelemetryOptOut": "[steps('basics').avsDeploymentPrefix]"
+                "SRMLicenseKey": "[steps('Addons').srmLicenseKey]",
+                "VRServerCount": "[steps('Addons').srmVRCount]",
+                "TelemetryOptOut": "false"
             },
             "kind": "Subscription",
             "location": "[steps('basics').avsDeploymentScope.location.name]"
