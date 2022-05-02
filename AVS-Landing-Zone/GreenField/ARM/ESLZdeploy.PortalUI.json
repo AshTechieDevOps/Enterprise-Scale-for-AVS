@@ -154,22 +154,160 @@
                     ]
                 },
                 {
-                    "name": "Networking",
+                    "name": "avsNetwork",
                     "label": "Networking and Connectivity",
+                    "bladeTitle": "avsNetworkingSettings",
                     "elements": [
                         {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
-                        }
-                    ]
-                },
-                {
-                    "name": "Identity",
-                    "label": "Identity",
-                    "elements": [
+                            "name": "vnetInfoBox",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "AVS requires connectivity to a network.... replace.",
+                                "uri": "",
+                                "style": "info"
+                            }
+                        },
                         {
-                            "name": "resourceScope",
-                            "type": "Microsoft.Common.ResourceScope"
+                            "name": "avsNetworkingInformation",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Networking information",
+                            "elements": [
+                                {
+                                    "name": "createAvsVnet",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": true,
+                                    "label": "Virtual network",
+                                    "defaultValue": "New",
+                                    "toolTip": "",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "New",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "Existing",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "avsVnetSize",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                                    "label": "vNet address range",
+                                    "toolTip": "Virtual network for AVS resource in Azure Native. Ensure this is not overlapping the AVS Private Cloud",
+                                    "placeholder": "Example: 192.168.0.0/22",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                        "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                                    }
+                                },
+                                {
+                                    "name": "avsGatewaySubnetSize",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                                    "label": "Subnet address prefix",
+                                    "toolTip": "Virtual network subnet for AVD virtual machines",
+                                    "placeholder": "Example: 192.168.0.0/24",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                        "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                                    }
+                                },
+                                {
+                                    "name": "avsBastionSubnetSize",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                                    "label": "Subnet address prefix",
+                                    "toolTip": "Virtual network subnet for AVD virtual machines",
+                                    "placeholder": "Example: 192.168.1.0/24",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                        "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                                    }
+                                },
+                                {
+                                    "name": "avsJumpboxSubnetSize",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                                    "label": "Subnet address prefix",
+                                    "toolTip": "Virtual network subnet for AVD virtual machines",
+                                    "placeholder": "Example: 192.168.2.0/24",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                        "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                                    }
+                                },
+                                {
+                                    "name": "avdVnetPeeringInfoBox",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
+                                    "options": {
+                                        "text": "Placeholder for vNet subnet connection information .",
+                                        "uri": "",
+                                        "style": "info"
+                                    }
+                                },
+                                {
+                                    "name": "avdExistingVnetInfoBox",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "visible": "[equals(steps('avsNetwork').createAvsVnet, false)]",
+                                    "options": {
+                                        "text": "Placeholder - By choosing existing network, ensure you setup connectivity manually after etc...",
+                                        "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking",
+                                        "style": "info"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "avdIdentityDomainCredentials",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Jumpbox login credentials",
+                            "elements": [
+                                {
+                                    "name": "avdIdentityLocalUserName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Username",
+                                    "toolTip": "Provide username for session host local admin account.",
+                                    "placeholder": "Example: avdadmin",
+                                    "defaultValue": "",
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "avdIdentityLocalUserPassword",
+                                    "type": "Microsoft.Compute.CredentialsCombo",
+                                    "visible": true,
+                                    "label": {
+                                        "password": "Password",
+                                        "confirmPassword": "Confirm password"
+                                    },
+                                    "toolTip": {
+                                        "password": "The password must be alphanumeric, contain at least 12 characters, have at least 1 letter,1 number and 1 special character."
+                                    },
+                                    "constraints": {
+                                        "required": true,
+                                        "customPasswordRegex": "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_!*<>()])(?=\\S+$).{12,123}$",
+                                        "customValidationMessage": "Password must include 1 special character."
+                                    },
+                                    "options": {
+                                        "hideConfirmation": false
+                                    },
+                                    "osPlatform": "Windows"
+                                }
+                            ]
                         }
                     ]
                 },
