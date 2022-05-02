@@ -54,7 +54,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "label": "Deployment prefix",
                             "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
-                            "placeholder": "Example: App1",
+                            "placeholder": "Example: AVS",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-z0-9A-Z-]{1,8}$",
@@ -447,7 +447,7 @@
                             "toolTip": "Number of vSphere replication servers to be deployed, minimum 1",
                             "min": 1,
                             "max": 3,
-                            "defaultValue": 3,
+                            "defaultValue": 1,
                             "showStepMarkers": true,
                             "constraints": {
                                 "required": true
@@ -481,7 +481,8 @@
                 "TelemetryOptOut": "false"
             },
             "kind": "Subscription",
-            "location": "[steps('basics').avsDeploymentScope.location.name]"
+            "location": "[steps('basics').avsDeploymentScope.location.name]",
+            "subscriptionId": "[steps('basics').avsDeploymentScope.subscription.id]"
         }
     }
 }
