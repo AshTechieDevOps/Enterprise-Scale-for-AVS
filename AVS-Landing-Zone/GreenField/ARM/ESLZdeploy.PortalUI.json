@@ -218,8 +218,7 @@
                 "VRServerCount": "[steps('basics').avsDeploymentPrefix]",
                 "TelemetryOptOut": "[steps('basics').avsDeploymentPrefix]"
             },
-            "kind": "Subscription",
-            "location": "[steps('basics').resourceScope.location.name]"
+            "kind": "Subscription"
         }
     }
 }
