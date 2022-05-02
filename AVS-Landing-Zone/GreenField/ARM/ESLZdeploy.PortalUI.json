@@ -374,8 +374,8 @@
                             "defaultValue": "",
                             "constraints": {
                                 "required": true,
-                                "regex": "{*}[^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}{*}$",
-                                "validationMessage": "Please provide a valid email address. Must be in quotes"
+                                "regex": "[^abc][^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}[^abc]$",
+                                "validationMessage": "Please provide a valid email address. 1"
                             }
                         }
                     ]
