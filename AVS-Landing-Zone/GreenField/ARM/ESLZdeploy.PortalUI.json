@@ -190,7 +190,7 @@
                             }
                         },
                         {
-                            "name": "avsVnetSize",
+                            "name": "avsVnetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "vNet address range",
@@ -203,7 +203,7 @@
                             }
                         },
                         {
-                            "name": "avsGatewaySubnetSize",
+                            "name": "avsGatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
@@ -216,7 +216,7 @@
                             }
                         },
                         {
-                            "name": "avsBastionSubnetSize",
+                            "name": "avsBastionSubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
@@ -229,7 +229,7 @@
                             }
                         },
                         {
-                            "name": "avsJumpboxSubnetSize",
+                            "name": "avsJumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "label": "Subnet address prefix",
@@ -242,7 +242,7 @@
                             }
                         },
                         {
-                            "name": "avdVnetPeeringInfoBox",
+                            "name": "avdconnectioninfo",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('avsNetwork').createAvsVnet, true)]",
                             "options": {
@@ -283,24 +283,50 @@
                             }
                         },
                         {
-                            "name": "avdIdentityDomainCredentials",
+                            "name": "vmSkuSelector",
+                            "type": "Microsoft.Compute.SizeSelector",
+                            "visible": "[equals(steps('avsNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox SKU",
+                            "toolTip": "",
+                            "recommendedSizes": [
+                                "Standard_D1",
+                                "Standard_D2",
+                                "Standard_D3"
+                            ],
+                            "constraints": {
+                                "allowedSizes": [],
+                                "excludedSizes": [],
+                                "required": true
+                            },
+                            "options": {
+                                "hideDiskTypeFilter": true
+                            },
+                            "osPlatform": "Windows",
+                            "imageReference": {
+                                "publisher": "MicrosoftWindowsDesktop",
+                                "offer": "Windows-11",
+                                "sku": "21h2-avd"
+                            }
+                        },
+                        {
+                            "name": "avsIdentityDomainCredentials",
                             "type": "Microsoft.Common.Section",
                             "visible": "[equals(steps('avsNetwork').createJumpbox, true)]",
                             "label": "Jumpbox login credentials",
                             "elements": [
                                 {
-                                    "name": "avdIdentityLocalUserName",
+                                    "name": "avsIdentityLocalUserName",
                                     "type": "Microsoft.Common.TextBox",
                                     "label": "Username",
                                     "toolTip": "Provide username for session host local admin account.",
-                                    "placeholder": "Example: avdadmin",
+                                    "placeholder": "Example: avsadmin",
                                     "defaultValue": "",
                                     "constraints": {
                                         "required": true
                                     }
                                 },
                                 {
-                                    "name": "avdIdentityLocalUserPassword",
+                                    "name": "avsIdentityLocalUserPassword",
                                     "type": "Microsoft.Compute.CredentialsCombo",
                                     "visible": true,
                                     "label": {
@@ -335,8 +361,8 @@
                     ]
                 },
                 {
-                    "name": "Migration",
-                    "label": "Migration",
+                    "name": "Addons",
+                    "label": "AVS Addons",
                     "elements": [
                         {
                             "name": "resourceScope",
@@ -353,16 +379,16 @@
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
-                "VNetExists": "[steps('basics').avsDeploymentPrefix]",
-                "VNetAddressSpace": "[steps('basics').avsDeploymentPrefix]",
-                "VNetGatewaySubnet": "[steps('basics').avsDeploymentPrefix]",
+                "VNetExists": "[if(equals(steps('avsNetwork').createAvdVnet, true), false)]",
+                "VNetAddressSpace": "[steps('avsNetwork').avsVnetAddressSpace]",
+                "VNetGatewaySubnet": "[steps('avsNetwork').avsGatewaySubnet]",
+                "BastionSubnet": "[steps('avsNetwork').avsBastionSubnet]",
+                "JumpboxSubnet": "[steps('avsNetwork').avsJumpboxSubnet]",
+                "DeployJumpbox": "[if(equals(steps('avsNetwork').createJumpbox, true), false)]",
+                "JumpboxSku": "[steps('avsNetwork').vmSkuSelector]",
+                "JumpboxUsername": "[steps('avsNetwork').avsIdentityDomainCredentials.avsIdentityLocalUserName]",
+                "JumpboxPassword": "[steps('avsNetwork').avsIdentityDomainCredentials.avsIdentityLocalUserPassword]",
                 "AlertEmails": "[steps('basics').avsDeploymentPrefix]",
-                "DeployJumpbox": "[steps('basics').avsDeploymentPrefix]",
-                "JumpboxUsername": "[steps('basics').avsDeploymentPrefix]",
-                "JumpboxPassword": "[steps('basics').avsDeploymentPrefix]",
-                "JumpboxSubnet": "[steps('basics').avsDeploymentPrefix]",
-                "JumpboxSku": "[steps('basics').avsDeploymentPrefix]",
-                "BastionSubnet": "[steps('basics').avsDeploymentPrefix]",
                 "DeployHCX": "[steps('basics').avsDeploymentPrefix]",
                 "DeploySRM": "[steps('basics').avsDeploymentPrefix]",
                 "SRMLicenseKey": "[steps('basics').avsDeploymentPrefix]",
