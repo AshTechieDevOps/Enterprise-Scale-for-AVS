@@ -377,7 +377,7 @@
                                 "regex": "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
                                 "validationMessage": "Please provide a valid email address."
                             }
-                        },
+                        }
                     ]
                 },
                 {
