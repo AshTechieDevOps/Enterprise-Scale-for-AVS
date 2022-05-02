@@ -31,18 +31,18 @@
                             ]
                         },
                         {
-                            "name": "avdDeploymentScope",
+                            "name": "avsDeploymentScope",
                             "type": "Microsoft.Common.ResourceScope",
                             "location": {
                                 "resourceTypes": []
                             }
                         },
                         {
-                            "name": "avdWorkloadSubscription",
+                            "name": "avsWorkloadSubscription",
                             "type": "Microsoft.Common.TextBlock",
                             "visible": true,
                             "options": {
-                                "text": "Azure AVD Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
+                                "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
                                 "link": {
                                     "label": "Learn more",
                                     "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
@@ -198,7 +198,7 @@
         "outputs": {
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
-                "Location": "[steps('basics').avdDeploymentScope.location.name]",
+                "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
@@ -218,7 +218,8 @@
                 "VRServerCount": "[steps('basics').avsDeploymentPrefix]",
                 "TelemetryOptOut": "[steps('basics').avsDeploymentPrefix]"
             },
-            "kind": "Subscription"
+            "kind": "Subscription",
+            "location": "[steps('basics').avsDeploymentScope.location.name]"
         }
     }
 }
