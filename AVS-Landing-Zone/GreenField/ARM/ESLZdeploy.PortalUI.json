@@ -25,7 +25,7 @@
                             "name": "avsSharedServices",
                             "type": "Microsoft.Common.InfoBox",
                             "options": {
-                                "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "text": "The subscription and location selected in this step will be used to deploy the AVS Workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
                                 "style": "Info"
                             }
                         },
@@ -80,6 +80,7 @@
                             "name": "hostPoolInfo",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": true,
+                            "label": "Prerequisites",
                             "options": {
                                 "text": "Placeholder for prerequisites info - perhaps red box or more stronger etc",
                                 "uri": "https://docs.microsoft.com/en-us/azure/virtual-desktop/data-locations",
@@ -90,7 +91,7 @@
                             "name": "avsPrivateCloudSettings",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "Private Cloud settings",
+                            "label": "Private Cloud details",
                             "elements": [
                                 {
                                     "name": "avsAddressSpace",
