@@ -21,9 +21,7 @@
             "value": "10.1.0.0/24"
         },
         "AlertEmails": {
-            "value": [
-                "example@microsoft.com"
-            ]
+            "value": "example@microsoft.com"
         },
         "DeployJumpbox": {
             "value": true

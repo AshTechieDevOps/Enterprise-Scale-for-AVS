@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.5.6.12127",
-      "templateHash": "635120292300984040"
+      "templateHash": "1629320221236381572"
     }
   },
   "parameters": {
@@ -69,8 +69,7 @@
       }
     },
     "AlertEmails": {
-      "type": "array",
-      "defaultValue": [],
+      "type": "string",
       "metadata": {
         "description": "Email addresses to be added to the alerting action group. Use the format [\"name1@domain.com\",\"name2@domain.com\"]."
       }
@@ -1444,7 +1443,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.5.6.12127",
-              "templateHash": "12924961167613731188"
+              "templateHash": "11727579679258558165"
             }
           },
           "parameters": {
@@ -1455,7 +1454,7 @@
               "type": "string"
             },
             "AlertEmails": {
-              "type": "array"
+              "type": "string"
             },
             "PrimaryPrivateCloudName": {
               "type": "string"
@@ -1505,7 +1504,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.5.6.12127",
-                      "templateHash": "18363773964559539298"
+                      "templateHash": "10139601999885047037"
                     }
                   },
                   "parameters": {
@@ -1513,8 +1512,7 @@
                       "type": "string"
                     },
                     "ActionGroupEmails": {
-                      "type": "array",
-                      "defaultValue": []
+                      "type": "string"
                     }
                   },
                   "resources": [
@@ -1524,19 +1522,15 @@
                       "name": "[format('{0}-ActionGroup', parameters('Prefix'))]",
                       "location": "Global",
                       "properties": {
-                        "copy": [
-                          {
-                            "name": "emailReceivers",
-                            "count": "[length(parameters('ActionGroupEmails'))]",
-                            "input": {
-                              "emailAddress": "[parameters('ActionGroupEmails')[copyIndex('emailReceivers')]]",
-                              "name": "[split(parameters('ActionGroupEmails')[copyIndex('emailReceivers')], '@')[0]]",
-                              "useCommonAlertSchema": false
-                            }
-                          }
-                        ],
                         "enabled": true,
-                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]"
+                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]",
+                        "emailReceivers": [
+                          {
+                            "emailAddress": "[parameters('ActionGroupEmails')]",
+                            "name": "[split(parameters('ActionGroupEmails'), '@')[0]]",
+                            "useCommonAlertSchema": false
+                          }
+                        ]
                       }
                     }
                   ],

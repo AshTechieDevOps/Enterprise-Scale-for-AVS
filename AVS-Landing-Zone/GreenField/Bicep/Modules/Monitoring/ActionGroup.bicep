@@ -1,5 +1,5 @@
 param Prefix string
-param ActionGroupEmails array = []
+param ActionGroupEmails string
 
 resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   name: '${Prefix}-ActionGroup'
@@ -7,11 +7,13 @@ resource ActionGroup 'microsoft.insights/actionGroups@2019-06-01' = {
   properties:{
     enabled: true
     groupShortName: substring('avs${uniqueString(Prefix)}', 0, 12)
-    emailReceivers: [for email in ActionGroupEmails: {
-      emailAddress: email
-      name: split(email, '@')[0]
-      useCommonAlertSchema: false
-    }]
+    emailReceivers: [ 
+      {
+        emailAddress: ActionGroupEmails
+        name: split(ActionGroupEmails, '@')[0]
+        useCommonAlertSchema: false
+      }
+  ]
   }
 }
 

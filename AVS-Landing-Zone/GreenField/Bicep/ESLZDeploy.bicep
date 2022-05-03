@@ -27,7 +27,7 @@ param VNetAddressSpace string
 param VNetGatewaySubnet string
 
 @description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
-param AlertEmails array = []
+param AlertEmails string
 @description('Should a Jumpbox & Bastion be deployed to access the Private Cloud')
 
 param DeployJumpbox bool = false

@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 param Prefix string
 param PrimaryLocation string
-param AlertEmails array
+param AlertEmails string
 param PrimaryPrivateCloudName string
 param PrimaryPrivateCloudResourceId string
 param JumpboxResourceId string
