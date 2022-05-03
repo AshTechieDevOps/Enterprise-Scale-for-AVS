@@ -93,17 +93,6 @@
                             "label": "Prerequisites",
                             "elements": [
                                 {
-                                    "name": "avsPrerequisites",
-                                    "type": "Microsoft.Common.InfoBox",
-                                    "visible": true,
-                                    "options": {
-                                        "text": "Important: Ensure the below prerequisites have been met before moving ahead",
-                                        "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/GettingStarted.md",
-                                        "style": "Warning"
-                                        }
-                                
-                                },
-                                {
                                     "name": "avsPrerequisites2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
