@@ -98,10 +98,10 @@
                                     "name": "avsPrerequisites2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Request AVS quote allocation for your subscription. If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "text": "Request AVS quote allocation for your subscription",
                                         "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 },
@@ -109,7 +109,18 @@
                                     "name": "avsPrerequisites3",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
                                         "link": {
                                             "label": "",
                                             "uri": ""
