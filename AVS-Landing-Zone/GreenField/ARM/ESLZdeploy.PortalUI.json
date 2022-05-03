@@ -493,8 +493,8 @@
                         {
                             "name": "srmLicenseKey",
                             "type": "Microsoft.Common.TextBox",
-                            "label": "License Key",
                             "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "label": "License Key",
                             "toolTip": "The license key is required to install SRM.",
                             "placeholder": "Enter your license key",
                             "defaultValue": "",
