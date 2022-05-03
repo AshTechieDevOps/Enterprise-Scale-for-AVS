@@ -85,20 +85,19 @@
                                 {
                                     "name": "avsPrerequisites",
                                     "type": "Microsoft.Common.InfoBox",
+                                    "visible": true,
                                     "options": {
-                                        "text": "Important: Before you start, here are a few things you will need to do",
-                                        "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization",
-                                            "style": "Warning"
+                                        "text": "Important: Ensure the below prerequisites have been met before moving ahead",
+                                        "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/GettingStarted.md",
+                                        "style": "Error"
                                         }
-                                    }
+                                
                                 },
                                 {
                                     "name": "avsPrerequisites2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Request AVS quote allocation for your subscription",
+                                        "text": "Before you start, you must request AVS quote allocation for your subscription",
                                         "link": {
                                             "label": "",
                                             "uri": ""
