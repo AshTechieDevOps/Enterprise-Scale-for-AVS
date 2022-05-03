@@ -295,7 +295,7 @@
                         {
                             "name": "avsconnectioninfo",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "options": {
                                 "text": "Placeholder for vNet subnet connection information .",
                                 "uri": "",
@@ -305,7 +305,7 @@
                         {
                             "name": "ExistingVnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "options": {
                                 "text": "Placeholder - By choosing existing network, ensure you setup connectivity manually after etc...",
                                 "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking",
