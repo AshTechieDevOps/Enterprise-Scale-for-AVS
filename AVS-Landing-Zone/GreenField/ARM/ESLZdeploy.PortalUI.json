@@ -129,7 +129,7 @@
                                     "name": "avsPrerequisites5",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "- Get valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
@@ -220,7 +220,7 @@
                             }
                         },
                         {
-                            "name": "createAzureVnet",
+                            "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Virtual network",
@@ -231,11 +231,11 @@
                                 "allowedValues": [
                                     {
                                         "label": "New",
-                                        "value": true
+                                        "value": false
                                     },
                                     {
                                         "label": "Existing",
-                                        "value": false
+                                        "value": true
                                     }
                                 ]
                             }
@@ -243,7 +243,7 @@
                         {
                             "name": "vNetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Virtual Network address range",
                             "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "placeholder": "Example: 192.168.0.0/22",
@@ -256,7 +256,7 @@
                         {
                             "name": "GatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.0.0/24",
@@ -269,7 +269,7 @@
                         {
                             "name": "BastionSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.1.0/24",
@@ -282,7 +282,7 @@
                         {
                             "name": "JumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.2.0/24",
@@ -295,7 +295,7 @@
                         {
                             "name": "avsconnectioninfo",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "options": {
                                 "text": "Placeholder for vNet subnet connection information .",
                                 "uri": "",
@@ -305,7 +305,7 @@
                         {
                             "name": "ExistingVnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').createAzureVnet, false)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "options": {
                                 "text": "Placeholder - By choosing existing network, ensure you setup connectivity manually after etc...",
                                 "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking",
@@ -521,11 +521,11 @@
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
-                "VNetExists": "[steps('azureNetwork').createAzureVnet]",
-                "VNetAddressSpace": "[if(equals(steps('azureNetwork').createAzureVnet, true), steps('azureNetwork').vNetAddressSpace, 'none')]",
-                "VNetGatewaySubnet": "[if(equals(steps('azureNetwork').createAzureVnet, true), steps('azureNetwork').GatewaySubnet, 'none')]",
-                "BastionSubnet": "[if(equals(steps('azureNetwork').createAzureVnet, true), steps('azureNetwork').BastionSubnet, 'none')]",
-                "JumpboxSubnet": "[if(equals(steps('azureNetwork').createAzureVnet, true), steps('azureNetwork').JumpboxSubnet, 'none')]",
+                "VNetExists": "[steps('azureNetwork').VNetExists]",
+                "VNetAddressSpace": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').vNetAddressSpace, 'none')]",
+                "VNetGatewaySubnet": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]",
+                "BastionSubnet": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').BastionSubnet, 'none')]",
+                "JumpboxSubnet": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').JumpboxSubnet, 'none')]",
                 "DeployJumpbox": "[steps('azureNetwork').createJumpbox]",
                 "JumpboxSku": "[steps('azureNetwork').vmSkuSelector]",
                 "JumpboxUsername": "[steps('azureNetwork').jumpboxCredentials.jumpboxLocalUserName]",
