@@ -153,9 +153,8 @@
                                     "visible": true,
                                     "label": "AVS SKU",
                                     "defaultValue": "AV36",
-                                    "tooltip": "Ensure you select the correct SKU as per your quota request",
                                     "multiLine": true,
-                                    "toolTip": "",
+                                    "toolTip": "Ensure you select the correct SKU as per your quota request",
                                     "constraints": {
                                         "required": true,
                                         "allowedValues": [
