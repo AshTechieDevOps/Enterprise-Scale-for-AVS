@@ -80,16 +80,39 @@
                             "name": "avsInfo",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "Deployment",
+                            "label": "Prerequisites",
                             "elements": [
                                 {
                                     "name": "avsPrerequisites",
-                                    "type": "Microsoft.Common.TextBlock",
+                                    "type": "Microsoft.Common.InfoBox",
                                     "options": {
-                                        "text": "Placeholder for prerequisites.",
+                                        "text": "Before you start, here are a few things you will need",
                                         "link": {
                                             "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization",
+                                            "style": "Info"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Request AVS quote allocation for your subscription. If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 }
