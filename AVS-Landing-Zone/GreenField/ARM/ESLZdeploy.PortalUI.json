@@ -86,11 +86,11 @@
                                     "name": "avsPrerequisites",
                                     "type": "Microsoft.Common.InfoBox",
                                     "options": {
-                                        "text": "Before you start, here are a few things you will need",
+                                        "text": "Important: Before you start, here are a few things you will need to do",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization",
-                                            "style": "None"
+                                            "style": "Warning"
                                         }
                                     }
                                 },
