@@ -125,6 +125,17 @@
                                             "uri": ""
                                         }
                                     }
+                                },
+                                {
+                                    "name": "avsPrerequisites5",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- Get valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                        }
+                                    }
                                 }
                             ]
                         },
