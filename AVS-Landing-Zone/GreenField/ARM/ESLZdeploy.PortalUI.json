@@ -90,7 +90,7 @@
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization",
-                                            "style": "Error"
+                                            "style": "None"
                                         }
                                     }
                                 },
