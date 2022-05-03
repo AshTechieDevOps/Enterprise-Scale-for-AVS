@@ -77,15 +77,23 @@
                     "label": "AVS Private Cloud",
                     "elements": [
                         {
-                            "name": "hostPoolInfo",
-                            "type": "Microsoft.Common.InfoBox",
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "Prerequisites",
-                            "options": {
-                                "text": "Placeholder for prerequisites info - perhaps red box or more stronger etc",
-                                "uri": "https://docs.microsoft.com/en-us/azure/virtual-desktop/data-locations",
-                                "style": "Info"
-                            }
+                            "label": "Deployment",
+                            "elements": [
+                                {
+                                    "name": "avsPrerequisites",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Placeholder for prerequisites.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         {
                             "name": "avsPrivateCloudSettings",
@@ -112,6 +120,7 @@
                                     "visible": true,
                                     "label": "AVS SKU",
                                     "defaultValue": "AV36",
+                                    "tooltip": "Ensure you select the correct SKU as per your quota request",
                                     "multiLine": true,
                                     "toolTip": "",
                                     "constraints": {
