@@ -437,6 +437,11 @@
                                     "label": "Learn more",
                                     "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
                                 }
+                            },
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}$",
+                                "validationMessage": "Invalid license key, the license must be formatted as 5 groups of 5 alphanumeric characters, separated by hyphens."
                             }
                         },
                         {
