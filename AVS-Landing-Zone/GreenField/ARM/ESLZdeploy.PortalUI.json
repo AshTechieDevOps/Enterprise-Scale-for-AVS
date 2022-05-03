@@ -370,12 +370,13 @@
                             "name": "ActionGroupEmails",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Action Group Email",
-                            "toolTip": "Provide an email address to send the service health alerts to.",
+                            "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
+                            "placeholder": "Example: alerts@company.com",
                             "defaultValue": "",
                             "constraints": {
                                 "required": true,
-                                "regex": "[^abc][^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}[^abc]$",
-                                "validationMessage": "Please provide a valid email address. 1"
+                                "regex": "",
+                                "validationMessage": "Please provide a valid email address. Email must be in quotes"
                             }
                         }
                     ]
