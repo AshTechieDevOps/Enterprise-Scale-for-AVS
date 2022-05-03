@@ -22,29 +22,28 @@
                             }
                         },
                         {
-                            "name": "avsWorkloadSubscription",
-                            "type": "Microsoft.Common.TextBlock",
-                            "visible": true,
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.InfoBox",
                             "options": {
-                                "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
-                                "link": {
-                                    "label": "Learn more",
-                                    "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
-                                }
+                                "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "style": "Info"
                             }
                         },
                         {
-                            "name": "avsSharedServices",
+                            "name": "avsWorkloadSubscription",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
                             "label": "Deployment",
                             "elements": [
                                 {
                                     "name": "info",
-                                    "type": "Microsoft.Common.InfoBox",
+                                    "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
-                                        "style": "Info"
+                                        "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                        }
                                     }
                                 }
                             ]
