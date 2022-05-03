@@ -77,6 +77,16 @@
                     "label": "AVS Private Cloud",
                     "elements": [
                         {
+                            "name": "avsPrerequisites",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Important: Ensure the below prerequisites have been met before moving ahead",
+                                "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/GettingStarted.md",
+                                "style": "Warning"
+                                }
+                        },
+                        {
                             "name": "avsInfo",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
@@ -245,8 +255,8 @@
                             "name": "vNetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
-                            "label": "vNet address range",
-                            "toolTip": "Virtual network for AVS resource in Azure Native. Ensure this is not overlapping the AVS Private Cloud",
+                            "label": "Virtual Network address range",
+                            "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "placeholder": "Example: 192.168.0.0/22",
                             "constraints": {
                                 "required": true,
@@ -258,7 +268,7 @@
                             "name": "GatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
-                            "label": "Subnet address prefix",
+                            "label": "Gateway Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.0.0/24",
                             "constraints": {
@@ -271,7 +281,7 @@
                             "name": "BastionSubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
-                            "label": "Subnet address prefix",
+                            "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.1.0/24",
                             "constraints": {
@@ -284,7 +294,7 @@
                             "name": "JumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').createAzureVnet, true)]",
-                            "label": "Subnet address prefix",
+                            "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.2.0/24",
                             "constraints": {
