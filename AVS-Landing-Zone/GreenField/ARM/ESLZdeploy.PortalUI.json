@@ -121,8 +121,8 @@
                                     "options": {
                                         "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
                                         "link": {
-                                            "label": "",
-                                            "uri": ""
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
                                         }
                                     }
                                 },
