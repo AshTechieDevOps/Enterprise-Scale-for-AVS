@@ -243,7 +243,7 @@
                         {
                             "name": "vNetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
                             "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "placeholder": "Example: 192.168.0.0/22",
@@ -256,7 +256,7 @@
                         {
                             "name": "GatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.0.0/24",
@@ -269,7 +269,7 @@
                         {
                             "name": "BastionSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.1.0/24",
@@ -282,7 +282,7 @@
                         {
                             "name": "JumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "placeholder": "Example: 192.168.2.0/24",
