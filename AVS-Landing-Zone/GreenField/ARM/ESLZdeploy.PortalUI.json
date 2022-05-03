@@ -89,7 +89,7 @@
                                     "options": {
                                         "text": "Important: Ensure the below prerequisites have been met before moving ahead",
                                         "uri": "https://github.com/Azure/Enterprise-Scale-for-AVS/blob/main/GettingStarted.md",
-                                        "style": "Error"
+                                        "style": "Warning"
                                         }
                                 
                                 },
