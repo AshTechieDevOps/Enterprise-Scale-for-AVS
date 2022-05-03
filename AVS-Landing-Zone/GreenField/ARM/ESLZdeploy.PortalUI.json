@@ -479,16 +479,24 @@
                             }
                         },
                         {
-                            "name": "srmLicenseKey",
+                            "name": "srmInfo",
                             "type": "Microsoft.Common.TextBlock",
                             "visible": "[equals(steps('Addons').deploySRM, true)]",
                             "options": {
-                                "text": "Placeholder for SRM License key information",
+                                "text": "Placeholder for SRM info.",
                                 "link": {
                                     "label": "Learn more",
                                     "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/disaster-recovery-using-vmware-site-recovery-manager#install-srm-in-azure-vmware-solution"
                                 }
-                            },
+                            }
+                        },
+                        {
+                            "name": "srmLicenseKey",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('Addons').deploySRM, true)]",
+                            "toolTip": "The license key is required to install SRM.",
+                            "placeholder": "Enter your license key",
+                            "defaultValue": "",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}$",
