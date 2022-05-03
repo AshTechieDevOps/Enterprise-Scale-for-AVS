@@ -15,22 +15,6 @@
                     "bladeTitle": "avsBasics",
                     "elements": [
                         {
-                            "name": "avsSharedServices",
-                            "type": "Microsoft.Common.Section",
-                            "visible": true,
-                            "label": "Workload services baseline deployment",
-                            "elements": [
-                                {
-                                    "name": "info",
-                                    "type": "Microsoft.Common.InfoBox",
-                                    "options": {
-                                        "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
-                                        "style": "Info"
-                                    }
-                                }
-                            ]
-                        },
-                        {
                             "name": "avsDeploymentScope",
                             "type": "Microsoft.Common.ResourceScope",
                             "location": {
@@ -48,6 +32,22 @@
                                     "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
                                 }
                             }
+                        },
+                        {
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Deployment",
+                            "elements": [
+                                {
+                                    "name": "info",
+                                    "type": "Microsoft.Common.InfoBox",
+                                    "options": {
+                                        "text": "Subscription and location selected in this step, will be used to deploy AVS workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                        "style": "Info"
+                                    }
+                                }
+                            ]
                         },
                         {
                             "name": "avsDeploymentPrefix",
