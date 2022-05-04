@@ -244,7 +244,7 @@
                             "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Virtual network",
+                            "label": "Virtual Network",
                             "defaultValue": "New",
                             "toolTip": "",
                             "constraints": {
@@ -269,7 +269,7 @@
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
-                            "label": "Virtual network",
+                            "label": "Virtual Network",
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
                                 "required": true
@@ -393,8 +393,8 @@
                         {
                             "name": "createJumpbox",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": true,
-                            "label": "Deploy Jumpbox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Deploy Jumpbox and Azure Bastion",
                             "defaultValue": "Yes",
                             "toolTip": "",
                             "constraints": {
