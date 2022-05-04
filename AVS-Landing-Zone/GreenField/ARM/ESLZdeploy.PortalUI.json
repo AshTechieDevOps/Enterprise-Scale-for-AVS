@@ -257,8 +257,53 @@
                                     {
                                         "label": "Existing",
                                         "value": true
+                                    },
+                                    {
+                                        "label": "None",
+                                        "value": null
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "name": "azureVnetSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "Virtual Network",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "constraints": {
+                                "required": true
+                            }
+                        },
+                        {
+                            "name": "GatewayExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
+                            "label": "Virtual Network Gateway",
+                            "defaultValue": "New",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "azureVnetSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
+                            "label": "Virtual Network",
+                            "resourceType": "Microsoft.Network/virtualNetworkGateways",
+                            "constraints": {
+                                "required": true
                             }
                         },
                         {
@@ -548,6 +593,7 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployPrivateCloud": "[steps('PrivateCloud').DeployPrivateCloud]",
                 "PrivateCloudAddressSpace": "[steps('PrivateCloud').avsPrivateCloudSettings.avsAddressSpace]",
                 "PrivateCloudSKU": "[steps('PrivateCloud').avsPrivateCloudSettings.avsSkuType]",
                 "PrivateCloudHostCount": "[steps('PrivateCloud').avsPrivateCloudSettings.avsHostCount]",
