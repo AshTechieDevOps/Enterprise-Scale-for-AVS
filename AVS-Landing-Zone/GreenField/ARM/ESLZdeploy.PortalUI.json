@@ -268,7 +268,7 @@
                         {
                             "name": "azureVnetSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": true,
                             "label": "Select Virtual Network",
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
