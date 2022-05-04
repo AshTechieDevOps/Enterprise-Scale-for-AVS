@@ -284,7 +284,7 @@
                         {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "true",
                             "label": "Virtual Network Gateway",
                             "defaultValue": "New",
                             "toolTip": "",
@@ -303,13 +303,19 @@
                             }
                         },
                         {
-                            "name": "azureGatewaySelector",
+                            "name": "gatewaySelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
+                            "visible": true,
                             "label": "Select Virtual Network Gateway",
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
                                 "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
                             }
                         },
                         {
