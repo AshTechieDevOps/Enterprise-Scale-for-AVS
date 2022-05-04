@@ -266,10 +266,10 @@
                             }
                         },
                         {
-                            "name": "azureVnetSelector",
+                            "name": "avdVnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": true,
-                            "label": "Select Virtual Network",
+                            "label": "Virtual network",
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
                                 "required": true
