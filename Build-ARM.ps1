@@ -4,7 +4,7 @@ if ($LASTEXITCODE -ne 0) {
     Write-Error "Error whilst upgrading Bicep, is the Azure CLI & Bicep installed?" -ErrorAction Stop
 }
 
-Get-ChildItem '.\' -Recurse -Include '*.bicep' |% {
+Get-ChildItem '.\AVS-Landing-Zone\GreenField\Bicep\' -Recurse -Include '*.bicep' |% {
     $source = $_.FullName
     if (!($source -like "*\Bicep\Modules\*") -and !($source -like "*/Bicep/Modules/*") -and !($source -like "*CUAID*") -and !($source -like "*999-WorkInProgress*")) { 
         $folder = $_.Directory.Parent

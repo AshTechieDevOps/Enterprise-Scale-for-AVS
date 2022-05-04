@@ -139,9 +139,30 @@
                             ]
                         },
                         {
+                            "name": "DeployPrivateCloud",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": true,
+                            "label": "Deploy Private Cloud",
+                            "defaultValue": "Yes",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
                             "name": "avsPrivateCloudSettings",
                             "type": "Microsoft.Common.Section",
-                            "visible": true,
+                            "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
                             "label": "Private Cloud details",
                             "elements": [
                                 {
