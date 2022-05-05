@@ -324,6 +324,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
                             "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
+                            "defaultValue": "192.168.0.0/22",
                             "placeholder": "Example: 192.168.0.0/22",
                             "constraints": {
                                 "required": true,
@@ -337,6 +338,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.0.0/24",
                             "placeholder": "Example: 192.168.0.0/24",
                             "constraints": {
                                 "required": true,
@@ -350,6 +352,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.1.0/24",
                             "placeholder": "Example: 192.168.1.0/24",
                             "constraints": {
                                 "required": true,
@@ -363,6 +366,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.2.0/24",
                             "placeholder": "Example: 192.168.2.0/24",
                             "constraints": {
                                 "required": true,
@@ -501,7 +505,7 @@
                             "label": "Action Group Email",
                             "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
                             "placeholder": "Example: alerts@company.com",
-                            "defaultValue": "",
+                            "defaultValue": "alerts@company.com",
                             "constraints": {
                                 "required": true,
                                 "regex": "",
