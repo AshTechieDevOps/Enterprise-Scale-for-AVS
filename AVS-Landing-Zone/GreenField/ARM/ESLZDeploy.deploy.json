@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.1.6515",
-      "templateHash": "827974813877944433"
+      "templateHash": "15624503126307032348"
     }
   },
   "parameters": {
@@ -34,6 +34,7 @@
     },
     "PrivateCloudAddressSpace": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22"
       }
