@@ -12,7 +12,7 @@ param Location string = deployment().location
 param DeployPrivateCloud bool = true
 
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
-param PrivateCloudAddressSpace string
+param PrivateCloudAddressSpace string = ''
 @description('The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying')
 @allowed([
   'AV36'
