@@ -64,7 +64,7 @@ param DeployPrivateCloud bool = true
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module AVSCore 'Modules/AVSCore.bicep' =  if (DeployPrivateCloud) {
+module AVSCore 'Modules/AVSCore.bicep' =  if (DeployPrivateCloud == false) {
   name: '${deploymentPrefix}-AVS'
   params: {
     Prefix: Prefix
