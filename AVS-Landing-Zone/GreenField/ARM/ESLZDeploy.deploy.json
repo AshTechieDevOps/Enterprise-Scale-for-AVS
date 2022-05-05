@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.1.6515",
-      "templateHash": "5060308219023951068"
+      "templateHash": "10891615242534478487"
     }
   },
   "parameters": {
@@ -23,6 +23,13 @@
       "defaultValue": "[deployment().location]",
       "metadata": {
         "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
+      }
+    },
+    "DeployPrivateCloud": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Set this to false if the Private Cloud already exists"
       }
     },
     "PrivateCloudAddressSpace": {
@@ -146,13 +153,6 @@
       "defaultValue": false,
       "metadata": {
         "description": "Opt-out of deployment telemetry"
-      }
-    },
-    "DeployPrivateCloud": {
-      "type": "bool",
-      "defaultValue": true,
-      "metadata": {
-        "description": "Set this to false if the Private Cloud already exists"
       }
     }
   },

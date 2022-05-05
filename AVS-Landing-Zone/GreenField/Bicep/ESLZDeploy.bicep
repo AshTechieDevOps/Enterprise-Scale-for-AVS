@@ -8,6 +8,9 @@ param Prefix string = 'AVS'
 @description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
 param Location string = deployment().location
 
+@description('Set this to false if the Private Cloud already exists')
+param DeployPrivateCloud bool = true
+
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string = ''
 @description('The SKU that should be used for the first cluster, ensure you have quota for the given SKU before deploying')
@@ -56,11 +59,6 @@ param VRServerCount int = 1
 
 @description('Opt-out of deployment telemetry')
 param TelemetryOptOut bool = false
-
-//Temp
-@description('Set this to false if the Private Cloud already exists')
-param DeployPrivateCloud bool = true
-
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
