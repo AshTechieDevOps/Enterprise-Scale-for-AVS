@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.1.6515",
-      "templateHash": "10891615242534478487"
+      "templateHash": "6381004553555951073"
     }
   },
   "parameters": {
@@ -387,7 +387,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.6.1.6515",
-              "templateHash": "1891369300678807274"
+              "templateHash": "13960625139068926488"
             }
           },
           "parameters": {
@@ -448,7 +448,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.6.1.6515",
-                      "templateHash": "15913851186141939538"
+                      "templateHash": "1179180637294898137"
                     }
                   },
                   "parameters": {
@@ -484,20 +484,16 @@
                           "addressPrefixes": [
                             "[parameters('VNetAddressSpace')]"
                           ]
-                        }
+                        },
+                        "subnets": [
+                          {
+                            "name": "GatewaySubnet",
+                            "properties": {
+                              "addressPrefix": "[parameters('VNetGatewaySubnet')]"
+                            }
+                          }
+                        ]
                       }
-                    },
-                    {
-                      "condition": "[not(parameters('VNetExists'))]",
-                      "type": "Microsoft.Network/virtualNetworks/subnets",
-                      "apiVersion": "2021-02-01",
-                      "name": "[format('{0}/{1}', variables('VNetName'), 'GatewaySubnet')]",
-                      "properties": {
-                        "addressPrefix": "[parameters('VNetGatewaySubnet')]"
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualNetworks', variables('VNetName'))]"
-                      ]
                     }
                   ],
                   "outputs": {

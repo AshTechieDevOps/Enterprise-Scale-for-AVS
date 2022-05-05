@@ -17,6 +17,14 @@ resource VNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExists) 
         VNetAddressSpace
       ]
     }
+    subnets: [
+      {
+        name: 'GatewaySubnet'
+        properties: {
+          addressPrefix: VNetGatewaySubnet
+      }
+    }
+    ]
   }
 }
 
@@ -24,13 +32,13 @@ resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = 
   name: VNetName
 }
 
-resource GatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if (!VNetExists) {
-  name: 'GatewaySubnet'
-  parent: VNet
-  properties: {
-    addressPrefix: VNetGatewaySubnet
-  }
-}
+// resource GatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if (!VNetExists) {
+//   name: 'GatewaySubnet'
+//   parent: VNet
+//   properties: {
+//     addressPrefix: VNetGatewaySubnet
+//   }
+// }
 
 // resource GatewayPIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = if (!VNetExists) {
 //   name: '${GatewayName}-PIP'

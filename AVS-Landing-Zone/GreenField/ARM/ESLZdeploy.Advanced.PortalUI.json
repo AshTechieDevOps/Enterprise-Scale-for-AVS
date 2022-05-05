@@ -361,7 +361,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Deploy Jumpbox and Azure Bastion",
-                            "defaultValue": "Yes",
+                            "defaultValue": "false",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -375,6 +375,16 @@
                                         "value": false
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "name": "vnetInfoBox",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Ensure you enter valid prefixes from the 'Virtual Network address range' above or else this deployment will fail.",
+                                "uri": "",
+                                "style": "info"
                             }
                         },
                         {
