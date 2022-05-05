@@ -478,24 +478,6 @@
                                         "hideConfirmation": false
                                     },
                                     "osPlatform": "Windows"
-                                },
-                                {
-                                    "name": "element1",
-                                    "type": "Microsoft.Common.PasswordBox",
-                                    "label": {
-                                        "password": "Password",
-                                        "confirmPassword": "Confirm password"
-                                    },
-                                    "toolTip": "",
-                                    "constraints": {
-                                        "required": true,
-                                        "regex": "^[a-zA-Z0-9]{8,}$",
-                                        "validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
-                                    },
-                                    "options": {
-                                        "hideConfirmation": false
-                                    },
-                                    "visible": true
                                 }
                             ]
                         }
