@@ -494,16 +494,56 @@
                     "label": "Monitoring",
                     "elements": [
                         {
-                            "name": "avsMonitoring",
-                            "type": "Microsoft.Common.TextBlock",
+                            "name": "monitoringInfo",
+                            "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "options": {
-                                "text": "Placeholder for monitoring description.",
-                                "link": {
-                                    "label": "Learn more",
-                                    "uri": "https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring"
+                            "label": "Networking",
+                            "elements": [
+                                {
+                                    "name": "monitoringInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Monitoring is a key aspect for any environment and is a part of the Operational Excellence pillar of the Well Architected Framework  .",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "monitoringInfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "As per Enterprise Scale guidance, this deployment will create Metric Alerts, Service Health Alerts and a Dashboard to visualize the health of this Private Cloud.",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "monitoringInfo3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "By entering email information below, an Action Group in Azure Monitor will be created and will send an email notification when the alert is triggered, and when we publish any Service Health notifications",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "monitoringInfo4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "For more information and what you can configure, please click on the link below:",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/configure-alerts-for-azure-vmware-solution#supported-metrics-and-activities"
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         {
                             "name": "ActionGroupEmails",
