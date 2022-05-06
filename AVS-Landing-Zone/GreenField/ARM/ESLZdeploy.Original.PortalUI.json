@@ -399,7 +399,7 @@
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
-                            "defaultValue": "192.168.1.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.1.0/24",
                             "constraints": {
                                 "required": true,
@@ -413,7 +413,7 @@
                             "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
-                            "defaultValue": "192.168.2.0/24",
+                            "defaultValue": "",
                             "placeholder": "Example: 192.168.2.0/24",
                             "constraints": {
                                 "required": true,
