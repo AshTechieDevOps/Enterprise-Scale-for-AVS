@@ -231,14 +231,56 @@
                     "bladeTitle": "azureNetworkingSettings",
                     "elements": [
                         {
-                            "name": "vnetInfoBox",
-                            "type": "Microsoft.Common.InfoBox",
+                            "name": "networkingInfo",
+                            "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "options": {
-                                "text": "AVS requires connectivity to a network.... replace.",
-                                "uri": "",
-                                "style": "info"
-                            }
+                            "label": "Networking",
+                            "elements": [
+                                {
+                                    "name": "networkingInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "AVS is dedicated hardware in Azure and by default does not have any connectivity to Azure Native services, On-Premise or to the Internet. This is by design as a zero trust approach",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "networkingInfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "In order to connect to Azure Native services, you will need to configure your network to allow access to vCenter, NSX-T and other AVS services. You can do this by integrating an existing Azure Virtual Network to AVS, or create a new Virtual Network.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "networkingInfo3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "This deployment will create a new Virtual Network, subnets, a virtual network gateway and connect this new network to AVS via an ExpressRoute connection.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "networkingInfo4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "For more information and why this is required, please click on the link below.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/concepts-networking"
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         {
                             "name": "VNetExists",
@@ -344,7 +386,7 @@
                         {
                             "name": "vnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": true,
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
                             "options": {
                                 "text": "Ensure you enter valid prefixes from the 'Virtual Network address range' above or else this deployment will fail.",
                                 "uri": "",
