@@ -29,10 +29,10 @@ param VNetAddressSpace string
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetGatewaySubnet string
 
-// @description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
-// param AlertEmails string
-@description('Should a Jumpbox & Bastion be deployed to access the Private Cloud')
+@description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
+param AlertEmails string
 
+@description('Should a Jumpbox & Bastion be deployed to access the Private Cloud')
 param DeployJumpbox bool = false
 @description('Username for the Jumpbox VM')
 param JumpboxUsername string = 'avsjump'
@@ -85,17 +85,17 @@ module Networking 'Modules/Networking.bicep' = {
   }
 }
 
-// module VNetConnection 'Modules/VNetConnection.bicep' = {
-//   name: '${deploymentPrefix}-VNet'
-//   params: {
-//     GatewayName: Networking.outputs.GatewayName
-//     NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
-//     VNetPrefix: Prefix
-//     PrivateCloudName: AVSCore.outputs.PrivateCloudName
-//     PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
-//     Location: Location
-//   }
-// }
+module VNetConnection 'Modules/VNetConnection.bicep' = {
+  name: '${deploymentPrefix}-VNet'
+  params: {
+    GatewayName: Networking.outputs.GatewayName
+    NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
+    VNetPrefix: Prefix
+    PrivateCloudName: AVSCore.outputs.PrivateCloudName
+    PrivateCloudResourceGroup: AVSCore.outputs.PrivateCloudResourceGroupName
+    Location: Location
+  }
+}
 
 module Addons 'Modules/AVSAddons.bicep' = {
   name: '${deploymentPrefix}-AVSAddons'
@@ -124,16 +124,16 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
   }
 }
 
-// module OperationalMonitoring 'Modules/Monitoring.bicep' = {
-//   name: '${deploymentPrefix}-Monitoring'
-//   params: {
-//     AlertEmails: AlertEmails
-//     Prefix: Prefix
-//     PrimaryLocation: Location
-//     PrimaryPrivateCloudName: AVSCore.outputs.PrivateCloudName
-//     PrimaryPrivateCloudResourceId: AVSCore.outputs.PrivateCloudResourceId
-//     JumpboxResourceId: DeployJumpbox ? Jumpbox.outputs.JumpboxResourceId : ''
-//     VNetResourceId: Networking.outputs.VNetResourceId
-//     ExRConnectionResourceId: VNetConnection.outputs.ExRConnectionResourceId
-//   }
-// }
+module OperationalMonitoring 'Modules/Monitoring.bicep' = {
+  name: '${deploymentPrefix}-Monitoring'
+  params: {
+    AlertEmails: AlertEmails
+    Prefix: Prefix
+    PrimaryLocation: Location
+    PrimaryPrivateCloudName: AVSCore.outputs.PrivateCloudName
+    PrimaryPrivateCloudResourceId: AVSCore.outputs.PrivateCloudResourceId
+    JumpboxResourceId: DeployJumpbox ? Jumpbox.outputs.JumpboxResourceId : ''
+    VNetResourceId: Networking.outputs.VNetResourceId
+    ExRConnectionResourceId: VNetConnection.outputs.ExRConnectionResourceId
+  }
+}

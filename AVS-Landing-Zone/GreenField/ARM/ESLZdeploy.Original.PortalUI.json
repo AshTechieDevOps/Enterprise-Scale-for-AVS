@@ -240,7 +240,7 @@
                                     "name": "networkingInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "AVS is dedicated hardware in Azure and by default does not have any connectivity to Azure Native services, On-Premise or to the Internet. This is by design as a zero trust approach",
+                                        "text": "AVS is dedicated hardware in Azure and by default does not have any connectivity to Azure Native services, On-Premise or to the Internet. This is by design as a zero trust approach.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -253,7 +253,7 @@
                                     "options": {
                                         "text": "In order to connect to Azure Native services, you will need to configure your network to allow access to vCenter, NSX-T and other AVS services. You can do this by integrating an existing Azure Virtual Network to AVS, or create a new Virtual Network.",
                                         "link": {
-                                            "label": "Learn more",
+                                            "label": "",
                                             "uri": ""
                                         }
                                     }
@@ -264,7 +264,7 @@
                                     "options": {
                                         "text": "This deployment will create a new Virtual Network, subnets, a virtual network gateway and connect this new network to AVS via an ExpressRoute connection.",
                                         "link": {
-                                            "label": "Learn more",
+                                            "label": "",
                                             "uri": ""
                                         }
                                     }
@@ -273,7 +273,7 @@
                                     "name": "networkingInfo4",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "For more information and why this is required, please click on the link below.",
+                                        "text": "For more information and why this is required, please click on the link below:",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/concepts-networking"
@@ -367,7 +367,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Deploy Jumpbox and Azure Bastion",
-                            "defaultValue": "false",
+                            "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -390,7 +390,7 @@
                             "options": {
                                 "text": "Ensure you enter valid prefixes from the 'Virtual Network address range' above or else this deployment will fail.",
                                 "uri": "",
-                                "style": "info"
+                                "style": "Warning"
                             }
                         },
                         {

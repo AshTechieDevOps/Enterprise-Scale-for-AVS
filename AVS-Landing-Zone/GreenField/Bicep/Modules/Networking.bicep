@@ -23,7 +23,7 @@ module Network 'Networking/VNetWithGW.bicep' = {
   }
 }
 
-//output GatewayName string = Network.outputs.GatewayName
+output GatewayName string = Network.outputs.GatewayName
 output VNetName string = Network.outputs.VNetName
 output VNetResourceId string = Network.outputs.VNetResourceId
 output NetworkResourceGroup string = NetworkResourceGroup.name
