@@ -9,7 +9,7 @@ param Prefix string = 'AVS'
 param Location string = deployment().location
 
 @description('Set this to false if the Private Cloud already exists')
-param DeployPrivateCloud bool = true
+param DeployPrivateCloud bool = false
 
 @description('The address space used for the AVS Private Cloud management networks. Must be a non-overlapping /22')
 param PrivateCloudAddressSpace string = ''
