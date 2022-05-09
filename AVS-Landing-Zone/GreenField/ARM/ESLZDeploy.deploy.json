@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.1.6515",
-      "templateHash": "28726956033998593"
+      "templateHash": "15108123100049584006"
     }
   },
   "parameters": {
@@ -27,7 +27,7 @@
     },
     "DeployPrivateCloud": {
       "type": "bool",
-      "defaultValue": true,
+      "defaultValue": false,
       "metadata": {
         "description": "Set this to false if the Private Cloud already exists"
       }
