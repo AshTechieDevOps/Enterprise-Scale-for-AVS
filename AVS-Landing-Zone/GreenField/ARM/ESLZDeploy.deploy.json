@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.1.6515",
-      "templateHash": "15108123100049584006"
+      "templateHash": "3036885434550498225"
     }
   },
   "parameters": {
@@ -607,6 +607,7 @@
       }
     },
     {
+      "condition": "[parameters('DeployPrivateCloud')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
@@ -1418,6 +1419,7 @@
       ]
     },
     {
+      "condition": "[parameters('DeployPrivateCloud')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Monitoring', variables('deploymentPrefix'))]",
@@ -1450,7 +1452,7 @@
             "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.VNetResourceId.value]"
           },
           "ExRConnectionResourceId": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNet', variables('deploymentPrefix')))).outputs.ExRConnectionResourceId.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-VNet', variables('deploymentPrefix'))), '2020-10-01').outputs.ExRConnectionResourceId.value]"
           }
         },
         "template": {

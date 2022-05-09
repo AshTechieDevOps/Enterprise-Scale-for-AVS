@@ -85,7 +85,7 @@ module Networking 'Modules/Networking.bicep' = {
   }
 }
 
-module VNetConnection 'Modules/VNetConnection.bicep' = {
+module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployPrivateCloud) {
   name: '${deploymentPrefix}-VNet'
   params: {
     GatewayName: Networking.outputs.GatewayName
@@ -124,7 +124,7 @@ module Jumpbox 'Modules/JumpBox.bicep' = if (DeployJumpbox) {
   }
 }
 
-module OperationalMonitoring 'Modules/Monitoring.bicep' = {
+module OperationalMonitoring 'Modules/Monitoring.bicep' = if (DeployPrivateCloud) {
   name: '${deploymentPrefix}-Monitoring'
   params: {
     AlertEmails: AlertEmails
