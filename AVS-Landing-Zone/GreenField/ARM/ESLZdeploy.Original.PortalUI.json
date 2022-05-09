@@ -492,6 +492,7 @@
                 {
                     "name": "Monitoring",
                     "label": "Monitoring",
+                    "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
                     "elements": [
                         {
                             "name": "monitoringInfo",
