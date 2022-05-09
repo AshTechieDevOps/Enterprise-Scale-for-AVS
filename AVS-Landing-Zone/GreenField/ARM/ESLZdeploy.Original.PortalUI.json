@@ -563,6 +563,7 @@
                 {
                     "name": "Addons",
                     "label": "AVS Addons",
+                    "visible": "[equals(steps('PrivateCloud').DeployPrivateCloud, true)]",
                     "elements": [
                         {
                             "name": "deployHCX",
