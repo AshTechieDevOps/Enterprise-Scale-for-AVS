@@ -5,7 +5,7 @@ param SKUName string
 param Location string
 param TelemetryOptOut bool
 
-resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
+resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-12-01' = {
   name: '${Prefix}-SDDC'
   sku: {
     name: SKUName
@@ -13,6 +13,7 @@ resource PrivateCloud 'Microsoft.AVS/privateClouds@2021-06-01' = {
   location: Location
   properties: {
     networkBlock: NetworkBlock
+    internet: 'Disabled'
     managementCluster: {
       clusterSize: ManagementClusterSize
     }
