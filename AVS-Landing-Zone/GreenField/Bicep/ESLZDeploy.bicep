@@ -97,7 +97,7 @@ module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployPrivateCloud) {
   }
 }
 
-module Addons 'Modules/AVSAddons.bicep' = {
+module Addons 'Modules/AVSAddons.bicep' = if (DeployPrivateCloud) {
   name: '${deploymentPrefix}-AVSAddons'
   params: {
     PrivateCloudName: AVSCore.outputs.PrivateCloudName

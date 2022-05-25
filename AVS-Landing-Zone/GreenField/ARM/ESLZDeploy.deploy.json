@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.6.18.56646",
-      "templateHash": "10015211711608629051"
+      "templateHash": "15118202355214541032"
     }
   },
   "parameters": {
@@ -830,6 +830,7 @@
       ]
     },
     {
+      "condition": "[parameters('DeployPrivateCloud')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-AVSAddons', variables('deploymentPrefix'))]",
