@@ -262,7 +262,7 @@
                                     "name": "networkingInfo3",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "This deployment will create a new Virtual Network, subnets, a virtual network gateway and connect this new network to AVS via an ExpressRoute connection.",
+                                        "text": "This deployment will create a new Virtual Network, subnets, an ExpressRoute virtual network gateway and connect this new network to AVS via an ExpressRoute connection.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -341,7 +341,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
-                            "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
+                            "toolTip": "Virtual network in Azure Native to host the ExpressRoute Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "placeholder": "Example: 192.168.0.0/22",
                             "constraints": {
                                 "required": true,
