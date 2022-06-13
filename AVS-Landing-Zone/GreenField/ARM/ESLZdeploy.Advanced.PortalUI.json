@@ -241,6 +241,14 @@
                             }
                         },
                         {
+                            "name": "avsNetworkingtooltips",
+                            "type": "Microsoft.Common.InfoBox",
+                            "options": {
+                                "text": "The vNet is required to setup the connectivity between AVS and On-prem",
+                                "style": "Info"
+                            }
+                        },
+                        {
                             "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
