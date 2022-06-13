@@ -601,6 +601,128 @@
                     ]
                 },
                 {
+                    "name": "jumpbox",
+                    "label": "Jumpbox",
+                    "bladeTitle": "Jumpbox",
+                    "elements": [
+                        {
+                            "name": "createJumpbox",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Deploy Jumpbox and Azure Bastion",
+                            "defaultValue": "false",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "BastionSubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Azure Bastion Subnet Prefix",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.1.0/24",
+                            "placeholder": "Example: 192.168.1.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                            }
+                        },
+                        {
+                            "name": "JumpboxSubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox Subnet Prefix",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.2.0/24",
+                            "placeholder": "Example: 192.168.2.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                            }
+                        },
+                        {
+                            "name": "vmSkuSelector",
+                            "type": "Microsoft.Compute.SizeSelector",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox SKU",
+                            "toolTip": "",
+                            "recommendedSizes": [
+                                "Standard_D1",
+                                "Standard_D2",
+                                "Standard_D3"
+                            ],
+                            "constraints": {
+                                "allowedSizes": [],
+                                "excludedSizes": [],
+                                "required": true
+                            },
+                            "options": {
+                                "hideDiskTypeFilter": true
+                            },
+                            "osPlatform": "Windows",
+                            "imageReference": {
+                                "publisher": "MicrosoftWindowsDesktop",
+                                "offer": "Windows-11",
+                                "sku": "21h2-avd"
+                            }
+                        },
+                        {
+                            "name": "jumpboxCredentials",
+                            "type": "Microsoft.Common.Section",
+                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "label": "Jumpbox login credentials",
+                            "elements": [
+                                {
+                                    "name": "jumpboxLocalUserName",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Username",
+                                    "toolTip": "Provide username for session host local admin account.",
+                                    "placeholder": "Example: avsadmin",
+                                    "defaultValue": "",
+                                    "constraints": {
+                                        "required": true
+                                    }
+                                },
+                                {
+                                    "name": "JumpboxPassword",
+                                    "type": "Microsoft.Compute.CredentialsCombo",
+                                    "visible": true,
+                                    "label": {
+                                        "password": "Password",
+                                        "confirmPassword": "Confirm password"
+                                    },
+                                    "toolTip": {
+                                        "password": "The password must be alphanumeric, contain at least 12 characters, have at least 1 letter,1 number and 1 special character."
+                                    },
+                                    "constraints": {
+                                        "required": true,
+                                        "customPasswordRegex": "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_!*<>()])(?=\\S+$).{12,123}$",
+                                        "customValidationMessage": "Password must include 1 special character."
+                                    },
+                                    "options": {
+                                        "hideConfirmation": false
+                                    },
+                                    "osPlatform": "Windows"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "Monitoring",
                     "label": "Monitoring",
                     "elements": [
