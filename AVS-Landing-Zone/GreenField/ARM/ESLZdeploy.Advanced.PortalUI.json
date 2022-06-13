@@ -231,6 +231,58 @@
                     "bladeTitle": "azureNetworkingSettings",
                     "elements": [
                         {
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Prerequisites",
+                            "elements": [
+                                {
+                                    "name": "avsPrerequisites2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Before you start, you must request AVS quote allocation for your subscription",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites3",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites4",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "avsPrerequisites5",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "name": "vnetInfoBox",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": true,
