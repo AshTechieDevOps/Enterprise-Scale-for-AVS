@@ -234,24 +234,13 @@
                             "name": "avsInfo",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "Prerequisites",
+                            "label": "AVS Connectivity",
                             "elements": [
                                 {
-                                    "name": "avsPrerequisites2",
+                                    "name": "networkinfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Before you start, you must request AVS quote allocation for your subscription",
-                                        "link": {
-                                            "label": "",
-                                            "uri": ""
-                                        }
-                                    }
-                                },
-                                {
-                                    "name": "avsPrerequisites3",
-                                    "type": "Microsoft.Common.TextBlock",
-                                    "options": {
-                                        "text": "- If you are Enterprise agreement (EA) customer, you need to log a support request to allocate hosts",
+                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner, and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway. See link below for more information.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
@@ -259,24 +248,13 @@
                                     }
                                 },
                                 {
-                                    "name": "avsPrerequisites4",
+                                    "name": "networkinfo2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "- If you are a CSP customer, use Microsoft Partner Center to make this available for your customers",
+                                        "text": "This deployment with allow you to specify a new or select an existing Virtual Network, the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from AVS to the Gateway, allowing Azure Resource in this vNet to communicate with AVS",
                                         "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-csp-customers"
-                                        }
-                                    }
-                                },
-                                {
-                                    "name": "avsPrerequisites5",
-                                    "type": "Microsoft.Common.TextBlock",
-                                    "options": {
-                                        "text": "- Get a valid non-overlapping CIDR address block. Azure VMware Solution ingests a /22 network that you provide. Then carves it up into smaller segments and then uses those IP segments for vCenter, VMware HCX, NSX-T, and vMotion.",
-                                        "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/azure/azure-vmware/tutorial-network-checklist?WT.mc_id=Portal-VMCP"
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 }
@@ -417,6 +395,36 @@
                             }
                         },
                         {
+                            "name": "avsInfo",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "On-Premise Connectivity",
+                            "elements": [
+                                {
+                                    "name": "onpreminfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "On-premise connectivity is also typically required especially for any migrations of workload via HCX. If VPN is the current method of Azure to On-premise connectivity, then we will need an Azure Route Server to act as the route forwarder from the VPN Gateway to the ExpressRoute Gateway deployed in the section above",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "onpreminfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "If VPN is selected and RouteServer is 'New', a RouteServer will be deployed in the same virtual network as selected in the section above. A RouteServerSubnet will be required for this deployment and can be specified below",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "name": "OnpremiseConnect",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
@@ -528,16 +536,6 @@
                                         "value": false
                                     }
                                 ]
-                            }
-                        },
-                        {
-                            "name": "vnetInfoBox",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": true,
-                            "options": {
-                                "text": "Ensure you enter valid prefixes from the 'Virtual Network address range' above or else this deployment will fail.",
-                                "uri": "",
-                                "style": "info"
                             }
                         },
                         {
