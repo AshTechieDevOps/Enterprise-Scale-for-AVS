@@ -523,7 +523,7 @@
                         {
                             "name": "createJumpbox",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "visible": "",
                             "label": "Deploy Jumpbox and Azure Bastion",
                             "defaultValue": "false",
                             "toolTip": "",
@@ -544,7 +544,7 @@
                         {
                             "name": "BastionSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('Jumpbox').createJumpbox, true)]",
                             "label": "Azure Bastion Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "defaultValue": "192.168.1.0/24",
@@ -558,7 +558,7 @@
                         {
                             "name": "JumpboxSubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('Jumpbox').createJumpbox, true)]",
                             "label": "Jumpbox Subnet Prefix",
                             "toolTip": "Virtual network subnet for AVS virtual machines",
                             "defaultValue": "192.168.2.0/24",
@@ -572,7 +572,7 @@
                         {
                             "name": "vmSkuSelector",
                             "type": "Microsoft.Compute.SizeSelector",
-                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('Jumpbox').createJumpbox, true)]",
                             "label": "Jumpbox SKU",
                             "toolTip": "",
                             "recommendedSizes": [
@@ -598,7 +598,7 @@
                         {
                             "name": "jumpboxCredentials",
                             "type": "Microsoft.Common.Section",
-                            "visible": "[equals(steps('azureNetwork').createJumpbox, true)]",
+                            "visible": "[equals(steps('Jumpbox').createJumpbox, true)]",
                             "label": "Jumpbox login credentials",
                             "elements": [
                                 {
