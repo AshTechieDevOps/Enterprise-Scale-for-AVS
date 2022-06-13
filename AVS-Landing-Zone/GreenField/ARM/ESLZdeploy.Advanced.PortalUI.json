@@ -377,7 +377,7 @@
                             }
                         },
                         {
-                            "name": "avsInfo",
+                            "name": "onpremInfo",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
                             "label": "On-Premise Connectivity",
