@@ -368,7 +368,7 @@
                             "name": "OnpremiseConnect",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
-                            "label": "How will AVS connect to On-premise?",
+                            "label": "How does Azure connect to On-premises?",
                             "defaultValue": "ExpressRoute",
                             "toolTip": "",
                             "constraints": {
@@ -388,7 +388,7 @@
                         {
                             "name": "DeployRouteServer",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
+                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, true)]",
                             "label": "Deploy Route Server",
                             "defaultValue": "No",
                             "toolTip": "",
@@ -409,7 +409,7 @@
                         {
                             "name": "DeployRouteServerSubnet",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
+                            "visible": "[equals(steps('azureNetwork').DeployRouteServer, true)]",
                             "label": "RouteServer Subnet",
                             "defaultValue": "No",
                             "toolTip": "",
@@ -446,7 +446,7 @@
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').DeployRouteServerSubnet, false)]",
                             "label": "Select existing RouteServer Subnet",
-                            "resourceType": "Microsoft.Network/virtualNetworkGateways",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
                             "constraints": {
                                 "required": true
                             },
