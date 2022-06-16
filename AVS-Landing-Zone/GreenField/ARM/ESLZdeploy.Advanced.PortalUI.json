@@ -334,8 +334,8 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Does a GatewaySubnet Exist?",
-                            "defaultValue": "",
-                            "toolTip": "",
+                            "defaultValue": "none",
+                            "toolTip": "Ensure that the virtual network has a GatewaySubnet, otherwise the deployment will fail",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -348,16 +348,6 @@
                                         "value": false
                                     }
                                 ]
-                            }
-                        },
-                        {
-                            "name": "GWSubnetExistsTrue",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
-                            "options": {
-                                "text": "If a GatewaySubnet does not exist, this deployment will fail",
-                                "uri": "",
-                                "style": "Warning"
                             }
                         },
                         {
