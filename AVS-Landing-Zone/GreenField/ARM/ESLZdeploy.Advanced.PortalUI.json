@@ -330,12 +330,6 @@
                             "resourceType": "Microsoft.Network/virtualNetworks/subnets",
                             "constraints": {
                                 "required": true
-                            },
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
                             }
                         },
                         {
