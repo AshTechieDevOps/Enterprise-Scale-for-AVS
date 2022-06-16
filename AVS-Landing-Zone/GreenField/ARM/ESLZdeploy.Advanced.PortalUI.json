@@ -306,7 +306,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Does a GatewaySubnet Exist?",
-                            "defaultValue": "No",
+                            "defaultValue": "",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
