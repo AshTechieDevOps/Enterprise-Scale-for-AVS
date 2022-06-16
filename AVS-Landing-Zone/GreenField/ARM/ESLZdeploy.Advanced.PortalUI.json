@@ -394,7 +394,7 @@
                         {
                             "name": "gatewaySelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
                             "label": "Select Virtual Network Gateway",
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
