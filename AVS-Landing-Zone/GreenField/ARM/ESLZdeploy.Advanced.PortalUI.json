@@ -305,7 +305,7 @@
                             "name": "GatewaySubnetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
-                            "label": "Does the GatewaySubnet Exist?",
+                            "label": "Does a GatewaySubnet Exist?",
                             "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
@@ -335,7 +335,7 @@
                         {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
                             "label": "Virtual Network Gateway",
                             "defaultValue": "New",
                             "toolTip": "",
@@ -356,7 +356,7 @@
                         {
                             "name": "gatewaySelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
                             "label": "Select Virtual Network Gateway",
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
