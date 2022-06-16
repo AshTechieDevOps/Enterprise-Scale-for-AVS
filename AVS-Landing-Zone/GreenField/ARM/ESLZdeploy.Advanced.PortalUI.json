@@ -327,9 +327,19 @@
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "options": {
-                                "text": "Ensure that a GatewaySubnet exists in the Virtual Network, else this deployment will fail",
+                                "text": "If a GatewaySubnet does not exist, this deployment will fail",
                                 "uri": "",
                                 "style": "Warning"
+                            }
+                        },
+                        {
+                            "name": "ExistingVnetInfoBox",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "options": {
+                                "text": "Mandatory: Add a GatewaySubnet to the selected Virtual Network",
+                                "uri": "",
+                                "style": "Error"
                             }
                         },
                         {
