@@ -302,6 +302,43 @@
                             }
                         },
                         {
+                            "name": "GatewaySubnetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "Gateway Subnet",
+                            "defaultValue": "New",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "gatewaysubnetSelectorId",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "label": "Choose GatewaySubnet",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                            "constraints": {
+                                "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
