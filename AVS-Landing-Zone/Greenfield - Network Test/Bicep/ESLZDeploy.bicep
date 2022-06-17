@@ -11,13 +11,13 @@ param Location string = deployment().location
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param VNetExists bool = false
 @description('The Existing VNet name')
-param ExistingVnetName string
+param ExistingVnetName string = ''
 @description('The Existing Gateway name')
-param ExistingGatewayName string
+param ExistingGatewayName string = ''
 @description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
-param NewVNetAddressSpace string
+param NewVNetAddressSpace string = ''
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
-param NewGatewaySubnetAddressPrefix string
+param NewGatewaySubnetAddressPrefix string = ''
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param GatewayExists bool = false

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "10621876629358006037"
+      "templateHash": "10878062918699658460"
     }
   },
   "parameters": {
@@ -34,24 +34,28 @@
     },
     "ExistingVnetName": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The Existing VNet name"
       }
     },
     "ExistingGatewayName": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The Existing Gateway name"
       }
     },
     "NewVNetAddressSpace": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks"
       }
     },
     "NewGatewaySubnetAddressPrefix": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace"
       }
@@ -111,39 +115,33 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "2151291161928168633"
+              "templateHash": "2788752025958704390"
             }
           },
           "parameters": {
             "Location": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "Prefix": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "VNetExists": {
               "type": "bool"
             },
             "ExistingVnetName": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "GatewayExists": {
               "type": "bool"
             },
             "ExistingGatewayName": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "NewVNetAddressSpace": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "NewGatewaySubnetAddressPrefix": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             }
           },
           "resources": [
@@ -440,44 +438,37 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "12210668246597896802"
+              "templateHash": "11273190827950094287"
             }
           },
           "parameters": {
             "VNetPrefix": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "AVSPrefix": {
               "type": "string",
               "defaultValue": "[parameters('VNetPrefix')]"
             },
             "PrivateCloudResourceGroup": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "PrivateCloudName": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "NetworkResourceGroup": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "GatewayExists": {
               "type": "bool"
             },
             "NewGatewayName": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "ExistingGatewayName": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             },
             "Location": {
-              "type": "string",
-              "defaultValue": ""
+              "type": "string"
             }
           },
           "resources": [
