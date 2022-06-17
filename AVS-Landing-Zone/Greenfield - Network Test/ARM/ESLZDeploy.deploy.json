@@ -1,0 +1,678 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.7.4.23292",
+      "templateHash": "10621876629358006037"
+    }
+  },
+  "parameters": {
+    "Prefix": {
+      "type": "string",
+      "defaultValue": "AVS",
+      "maxLength": 20,
+      "minLength": 1,
+      "metadata": {
+        "description": "The prefix to use on resources inside this template"
+      }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[deployment().location]",
+      "metadata": {
+        "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
+      }
+    },
+    "VNetExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set this to true if you are redeploying, and the VNet already exists"
+      }
+    },
+    "ExistingVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Existing VNet name"
+      }
+    },
+    "ExistingGatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Existing Gateway name"
+      }
+    },
+    "NewVNetAddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks"
+      }
+    },
+    "NewGatewaySubnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace"
+      }
+    },
+    "GatewayExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Set this to true if you are redeploying, and the VNet already exists"
+      }
+    }
+  },
+  "variables": {
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-Network', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          },
+          "VNetExists": {
+            "value": "[parameters('VNetExists')]"
+          },
+          "ExistingVnetName": {
+            "value": "[parameters('ExistingVnetName')]"
+          },
+          "GatewayExists": {
+            "value": "[parameters('GatewayExists')]"
+          },
+          "ExistingGatewayName": {
+            "value": "[parameters('ExistingGatewayName')]"
+          },
+          "NewVNetAddressSpace": {
+            "value": "[parameters('NewVNetAddressSpace')]"
+          },
+          "NewGatewaySubnetAddressPrefix": {
+            "value": "[parameters('NewGatewaySubnetAddressPrefix')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.7.4.23292",
+              "templateHash": "2151291161928168633"
+            }
+          },
+          "parameters": {
+            "Location": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "Prefix": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "VNetExists": {
+              "type": "bool"
+            },
+            "ExistingVnetName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "GatewayExists": {
+              "type": "bool"
+            },
+            "ExistingGatewayName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "NewVNetAddressSpace": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "NewGatewaySubnetAddressPrefix": {
+              "type": "string",
+              "defaultValue": ""
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Network', parameters('Prefix'))]",
+              "location": "[parameters('Location')]"
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-Network', deployment().name)]",
+              "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  },
+                  "VNetExists": {
+                    "value": "[parameters('VNetExists')]"
+                  },
+                  "ExistingVnetName": {
+                    "value": "[parameters('ExistingVnetName')]"
+                  },
+                  "GatewayExists": {
+                    "value": "[parameters('GatewayExists')]"
+                  },
+                  "ExistingGatewayName": {
+                    "value": "[parameters('ExistingGatewayName')]"
+                  },
+                  "NewVNetAddressSpace": {
+                    "value": "[parameters('NewVNetAddressSpace')]"
+                  },
+                  "NewGatewaySubnetAddressPrefix": {
+                    "value": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "10416348921448547044"
+                    }
+                  },
+                  "parameters": {
+                    "Location": {
+                      "type": "string"
+                    },
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "VNetExists": {
+                      "type": "bool"
+                    },
+                    "ExistingVnetName": {
+                      "type": "string"
+                    },
+                    "GatewayExists": {
+                      "type": "bool"
+                    },
+                    "ExistingGatewayName": {
+                      "type": "string"
+                    },
+                    "NewVNetAddressSpace": {
+                      "type": "string"
+                    },
+                    "NewGatewaySubnetAddressPrefix": {
+                      "type": "string"
+                    },
+                    "NewGatewaySku": {
+                      "type": "string",
+                      "defaultValue": "Standard"
+                    }
+                  },
+                  "variables": {
+                    "NewVNetName": "[format('{0}-vnet', parameters('Prefix'))]",
+                    "NewVnetNewGatewayName": "[format('{0}-gw', parameters('Prefix'))]",
+                    "ExistingVnetNewGatewayName": "[format('{0}-egw', parameters('Prefix'))]"
+                  },
+                  "resources": [
+                    {
+                      "condition": "[not(parameters('VNetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworks",
+                      "apiVersion": "2021-02-01",
+                      "name": "[variables('NewVNetName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "addressSpace": {
+                          "addressPrefixes": [
+                            "[parameters('NewVNetAddressSpace')]"
+                          ]
+                        },
+                        "subnets": [
+                          {
+                            "name": "GatewaySubnet",
+                            "properties": {
+                              "addressPrefix": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "condition": "[not(parameters('VNetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', variables('NewVNetName'), 'GatewaySubnet')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
+                      ]
+                    },
+                    {
+                      "condition": "[not(parameters('GatewayExists'))]",
+                      "type": "Microsoft.Network/publicIPAddresses",
+                      "apiVersion": "2021-08-01",
+                      "name": "[format('{0}-pip', variables('NewVnetNewGatewayName'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "publicIPAllocationMethod": "Dynamic"
+                      },
+                      "sku": {
+                        "name": "Basic",
+                        "tier": "Regional"
+                      }
+                    },
+                    {
+                      "condition": "[and(not(parameters('GatewayExists')), not(parameters('VNetExists')))]",
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('NewVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('NewVNetName'), 'GatewaySubnet')]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('NewVNetName'), 'GatewaySubnet')]"
+                      ]
+                    },
+                    {
+                      "condition": "[and(not(parameters('GatewayExists')), parameters('VNetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('ExistingVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('ExistingVnetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('ExistingVnetName')), '/')[1])]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                      ]
+                    }
+                  ],
+                  "outputs": {
+                    "VNetName": {
+                      "type": "string",
+                      "value": "[if(parameters('VNetExists'), parameters('ExistingVnetName'), variables('NewVNetName'))]"
+                    },
+                    "NewGatewayName": {
+                      "type": "string",
+                      "value": "[if(and(not(parameters('GatewayExists')), parameters('VNetExists')), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayName'))]"
+                    },
+                    "ExistingGatewayName": {
+                      "type": "string",
+                      "value": "[if(parameters('GatewayExists'), parameters('ExistingGatewayName'), parameters('ExistingGatewayName'))]"
+                    },
+                    "VNetResourceId": {
+                      "type": "string",
+                      "value": "[if(parameters('VNetExists'), resourceId('Microsoft.Network/virtualNetworks', parameters('ExistingVnetName')), resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName')))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Network', parameters('Prefix')))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "NewGatewayName": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.NewGatewayName.value]"
+            },
+            "ExistingGatewayName": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.ExistingGatewayName.value]"
+            },
+            "VNetName": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.VNetName.value]"
+            },
+            "VNetResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.VNetResourceId.value]"
+            },
+            "NetworkResourceGroup": {
+              "type": "string",
+              "value": "[format('{0}-Network', parameters('Prefix'))]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "NewGatewayName": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.NewGatewayName.value]"
+          },
+          "ExistingGatewayName": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.ExistingGatewayName.value]"
+          },
+          "NetworkResourceGroup": {
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.NetworkResourceGroup.value]"
+          },
+          "VNetPrefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "GatewayExists": {
+            "value": "[parameters('GatewayExists')]"
+          },
+          "PrivateCloudName": {
+            "value": "SJAVS-SDDC"
+          },
+          "PrivateCloudResourceGroup": {
+            "value": "SJAVS-PrivateCloud"
+          },
+          "Location": {
+            "value": "[parameters('Location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.7.4.23292",
+              "templateHash": "12210668246597896802"
+            }
+          },
+          "parameters": {
+            "VNetPrefix": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "AVSPrefix": {
+              "type": "string",
+              "defaultValue": "[parameters('VNetPrefix')]"
+            },
+            "PrivateCloudResourceGroup": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "PrivateCloudName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "NetworkResourceGroup": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "GatewayExists": {
+              "type": "bool"
+            },
+            "NewGatewayName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "ExistingGatewayName": {
+              "type": "string",
+              "defaultValue": ""
+            },
+            "Location": {
+              "type": "string",
+              "defaultValue": ""
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ExRAuth', deployment().name)]",
+              "resourceGroup": "[parameters('PrivateCloudResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ConnectionName": {
+                    "value": "[format('{0}-VNet', parameters('VNetPrefix'))]"
+                  },
+                  "PrivateCloudName": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "13030027764924857473"
+                    }
+                  },
+                  "parameters": {
+                    "PrivateCloudName": {
+                      "type": "string"
+                    },
+                    "ConnectionName": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.AVS/privateClouds/authorizations",
+                      "apiVersion": "2021-06-01",
+                      "name": "[format('{0}/{1}', parameters('PrivateCloudName'), parameters('ConnectionName'))]"
+                    }
+                  ],
+                  "outputs": {
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds/authorizations', parameters('PrivateCloudName'), parameters('ConnectionName'))).expressRouteAuthorizationKey]"
+                    },
+                    "ExpressRouteId": {
+                      "type": "string",
+                      "value": "[reference(resourceId('Microsoft.AVS/privateClouds', parameters('PrivateCloudName')), '2021-06-01').circuit.expressRouteID]"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ExR', deployment().name)]",
+              "resourceGroup": "[parameters('NetworkResourceGroup')]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "NewGWConnectionName": {
+                    "value": "[format('{0}-AVS-GW', parameters('AVSPrefix'))]"
+                  },
+                  "ExistingGWConnectionName": {
+                    "value": "[format('{0}-AVS-EGW', parameters('AVSPrefix'))]"
+                  },
+                  "GatewayExists": {
+                    "value": "[parameters('GatewayExists')]"
+                  },
+                  "NewGatewayName": {
+                    "value": "[parameters('NewGatewayName')]"
+                  },
+                  "ExistingGatewayName": {
+                    "value": "[parameters('ExistingGatewayName')]"
+                  },
+                  "ExpressRouteAuthorizationKey": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteAuthorizationKey.value]"
+                  },
+                  "ExpressRouteId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))).outputs.ExpressRouteId.value]"
+                  },
+                  "Location": {
+                    "value": "[parameters('Location')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "7926019310191247689"
+                    }
+                  },
+                  "parameters": {
+                    "GatewayExists": {
+                      "type": "bool"
+                    },
+                    "NewGatewayName": {
+                      "type": "string"
+                    },
+                    "NewGWConnectionName": {
+                      "type": "string"
+                    },
+                    "ExistingGatewayName": {
+                      "type": "string"
+                    },
+                    "ExistingGWConnectionName": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "ExpressRouteAuthorizationKey": {
+                      "type": "secureString"
+                    },
+                    "ExpressRouteId": {
+                      "type": "secureString"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "condition": "[not(parameters('GatewayExists'))]",
+                      "type": "Microsoft.Network/connections",
+                      "apiVersion": "2021-02-01",
+                      "name": "[parameters('NewGWConnectionName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "connectionType": "ExpressRoute",
+                        "routingWeight": 0,
+                        "virtualNetworkGateway1": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('NewGatewayName'))]",
+                          "properties": {}
+                        },
+                        "peer": {
+                          "id": "[parameters('ExpressRouteId')]"
+                        },
+                        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+                      }
+                    },
+                    {
+                      "condition": "[parameters('GatewayExists')]",
+                      "type": "Microsoft.Network/connections",
+                      "apiVersion": "2021-02-01",
+                      "name": "[parameters('ExistingGWConnectionName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "connectionType": "ExpressRoute",
+                        "routingWeight": 0,
+                        "virtualNetworkGateway1": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('ExistingGatewayName'))]",
+                          "properties": {}
+                        },
+                        "peer": {
+                          "id": "[parameters('ExpressRouteId')]"
+                        },
+                        "authorizationKey": "[parameters('ExpressRouteAuthorizationKey')]"
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "ExRConnectionResourceId": {
+                      "type": "string",
+                      "value": "[if(parameters('GatewayExists'), resourceId('Microsoft.Network/connections', parameters('ExistingGWConnectionName')), resourceId('Microsoft.Network/connections', parameters('NewGWConnectionName')))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('PrivateCloudResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExRAuth', deployment().name))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "ExRConnectionResourceId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('NetworkResourceGroup')), 'Microsoft.Resources/deployments', format('{0}-ExR', deployment().name))).outputs.ExRConnectionResourceId.value]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))]"
+      ]
+    }
+  ]
+}
