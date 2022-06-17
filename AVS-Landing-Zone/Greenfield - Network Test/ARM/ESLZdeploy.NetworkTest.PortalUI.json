@@ -253,8 +253,8 @@
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "VNetExists": "[steps('azureNetwork').VNetExists]",
-                "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId]",
-                "ExistingGatewayName": "[steps('azureNetwork').gatewaySelectorId]",
+                "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId.name]",
+                "ExistingGatewayName": "[steps('azureNetwork').gatewaySelectorId.name]",
                 "NewVNetAddressSpace": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').vNetAddressSpace, 'none')]",
                 "NewGatewaySubnetAddressPrefix": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]"
             },
