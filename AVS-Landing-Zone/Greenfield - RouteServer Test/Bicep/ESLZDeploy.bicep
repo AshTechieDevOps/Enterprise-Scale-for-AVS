@@ -17,37 +17,20 @@ param ExistingGatewayName string = ''
 @description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
 param NewVNetAddressSpace string = ''
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
-param NewGatewaySubnetAddressPrefix string = ''
-
-@description('Set this to true if you are redeploying, and the VNet already exists')
-param GatewayExists bool = false
+param RouteServerSubnetPrefix string = ''
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module Networking 'Modules/Networking.bicep' = {
-  name: '${deploymentPrefix}-Network'
+module RouteServer 'Modules/RouteServer.bicep' = {
+  name: '${deploymentPrefix}-VNet'
   params: {
     Prefix: Prefix
     Location: Location
-    VNetExists: VNetExists
-    ExistingVnetName : ExistingVnetName
-    GatewayExists : GatewayExists
-    ExistingGatewayName : ExistingGatewayName
-    NewVNetAddressSpace: NewVNetAddressSpace
-    NewGatewaySubnetAddressPrefix: NewGatewaySubnetAddressPrefix
-  }
-}
-
-module VNetConnection 'Modules/VNetConnection.bicep' = {
-  name: '${deploymentPrefix}-VNet'
-  params: {
-    NewGatewayName: Networking.outputs.NewGatewayName
-    ExistingGatewayName : Networking.outputs.ExistingGatewayName
-    NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
+    VNetName: 'SJAVS-Vnet'
+    RouteServerSubnetPrefix : RouteServerSubnetPrefix
+    NetworkResourceGroup: NetworkResourceGroup
     VNetPrefix: Prefix
-    GatewayExists : GatewayExists
     PrivateCloudName: 'SJAVS-SDDC'
     PrivateCloudResourceGroup: 'SJAVS-PrivateCloud'
-    Location: Location
   }
 }
