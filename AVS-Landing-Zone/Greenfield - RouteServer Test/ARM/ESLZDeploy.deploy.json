@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "13944846499448671829"
+      "templateHash": "10878062918699658460"
     }
   },
   "parameters": {
@@ -115,7 +115,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "6326232092156915087"
+              "templateHash": "2788752025958704390"
             }
           },
           "parameters": {
@@ -194,7 +194,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "12019003882060354871"
+                      "templateHash": "10416348921448547044"
                     }
                   },
                   "parameters": {
@@ -352,7 +352,7 @@
                     },
                     "NewGatewayName": {
                       "type": "string",
-                      "value": "[if(and(not(parameters('GatewayExists')), not(parameters('VNetExists'))), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayName'))]"
+                      "value": "[if(and(not(parameters('GatewayExists')), parameters('VNetExists')), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayName'))]"
                     },
                     "ExistingGatewayName": {
                       "type": "string",

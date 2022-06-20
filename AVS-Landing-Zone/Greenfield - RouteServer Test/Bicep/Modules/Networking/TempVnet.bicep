@@ -117,6 +117,6 @@ resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-0
 }
 
 output VNetName string = VNetExists ? ExistingVNet.name : NewVNet.name
-output NewGatewayName string = ((!GatewayExists) && (!VNetExists)) ? NewVnetNewGateway.name : ExistingVnetNewGateway.name
+output NewGatewayName string = (!GatewayExists) && (VNetExists) ? NewVnetNewGateway.name : ExistingVnetNewGateway.name
 output ExistingGatewayName string = GatewayExists ? ExistingGateway.name : ExistingGateway.name
 output VNetResourceId string = VNetExists ? ExistingVNet.id : NewVNet.id
