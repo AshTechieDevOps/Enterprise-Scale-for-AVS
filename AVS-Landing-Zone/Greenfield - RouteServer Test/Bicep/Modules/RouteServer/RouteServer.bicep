@@ -44,7 +44,7 @@ resource RouteServer 'Microsoft.Network/virtualHubs@2021-05-01' = {
 }
 
 resource RouteServerIPConfigurationNewSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = if (!RouteServerSubnetExists) {
-  name: '${RouteServerName}-ipconfig'
+  name: '${RouteServerName}-pipconfig'
   parent: RouteServer
   properties: {
     subnet: {

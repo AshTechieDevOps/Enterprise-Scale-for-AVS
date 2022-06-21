@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "6859367066193140153"
+      "templateHash": "1092304231267967692"
     }
   },
   "parameters": {
@@ -81,7 +81,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "8529809190053144670"
+              "templateHash": "9636598189782207202"
             }
           },
           "parameters": {
@@ -142,7 +142,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "12454513427015236070"
+                      "templateHash": "18332782923994698195"
                     }
                   },
                   "parameters": {
@@ -202,7 +202,7 @@
                       "condition": "[not(parameters('RouteServerSubnetExists'))]",
                       "type": "Microsoft.Network/virtualHubs/ipConfigurations",
                       "apiVersion": "2021-05-01",
-                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
+                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-pipconfig', variables('RouteServerName')))]",
                       "properties": {
                         "subnet": {
                           "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
