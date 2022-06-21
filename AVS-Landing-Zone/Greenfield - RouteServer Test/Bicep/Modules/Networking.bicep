@@ -4,6 +4,7 @@ param Location string
 param Prefix string
 param VNetName string
 param RouteServerSubnetPrefix string
+param RouteServerSubnetExists bool
 
 resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-Network'
@@ -18,9 +19,11 @@ module RouteServer 'RouteServer/RouteServer.bicep' = {
     Location: Location
     VNetName: VNetName
     RouteServerSubnetPrefix : RouteServerSubnetPrefix
+    RouteServerSubnetExists : RouteServerSubnetExists
   }
 }
 
 output RouteServer string = RouteServer.outputs.RouteServer
-output RouteServerSubnetId string = RouteServer.outputs.RouteServerSubnetId
+output RouteServerSubnetId string = RouteServer.outputs.NewRouteServerSubnetId
+output ExistingRouteServerSubnetId string = RouteServer.outputs.ExistingRouteServerSubnetId
 output NetworkResourceGroup string = NetworkResourceGroup.name

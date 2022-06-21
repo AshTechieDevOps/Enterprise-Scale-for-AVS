@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "15332617307374300501"
+      "templateHash": "135035043025415939"
     }
   },
   "parameters": {
@@ -70,6 +70,9 @@
           },
           "RouteServerSubnetPrefix": {
             "value": "[parameters('RouteServerSubnetPrefix')]"
+          },
+          "RouteServerSubnetExists": {
+            "value": "[parameters('RouteServerSubnetExists')]"
           }
         },
         "template": {
@@ -79,7 +82,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "16415121690913722675"
+              "templateHash": "12028418525416166317"
             }
           },
           "parameters": {
@@ -94,6 +97,9 @@
             },
             "RouteServerSubnetPrefix": {
               "type": "string"
+            },
+            "RouteServerSubnetExists": {
+              "type": "bool"
             }
           },
           "resources": [
@@ -125,6 +131,9 @@
                   },
                   "RouteServerSubnetPrefix": {
                     "value": "[parameters('RouteServerSubnetPrefix')]"
+                  },
+                  "RouteServerSubnetExists": {
+                    "value": "[parameters('RouteServerSubnetExists')]"
                   }
                 },
                 "template": {
@@ -134,7 +143,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "5249664750417604215"
+                      "templateHash": "5520935966507727575"
                     }
                   },
                   "parameters": {
@@ -149,6 +158,9 @@
                     },
                     "RouteServerSubnetPrefix": {
                       "type": "string"
+                    },
+                    "RouteServerSubnetExists": {
+                      "type": "bool"
                     }
                   },
                   "variables": {
@@ -156,30 +168,13 @@
                   },
                   "resources": [
                     {
+                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
                       "type": "Microsoft.Network/virtualNetworks/subnets",
                       "apiVersion": "2021-02-01",
                       "name": "[format('{0}/{1}', parameters('VNetName'), 'RouteServerSubnet')]",
                       "properties": {
                         "addressPrefix": "[parameters('RouteServerSubnetPrefix')]"
                       }
-                    },
-                    {
-                      "type": "Microsoft.Network/virtualHubs/ipConfigurations",
-                      "apiVersion": "2021-05-01",
-                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
-                      "properties": {
-                        "subnet": {
-                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
-                        },
-                        "publicIPAddress": {
-                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
-                        }
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
-                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]",
-                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
-                      ]
                     },
                     {
                       "type": "Microsoft.Network/publicIPAddresses",
@@ -203,6 +198,43 @@
                         "allowBranchToBranchTraffic": true,
                         "sku": "Standard"
                       }
+                    },
+                    {
+                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
+                      "type": "Microsoft.Network/virtualHubs/ipConfigurations",
+                      "apiVersion": "2021-05-01",
+                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                        },
+                        "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]",
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                      ]
+                    },
+                    {
+                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
+                      "type": "Microsoft.Network/virtualHubs/ipConfigurations",
+                      "apiVersion": "2021-05-01",
+                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[1])]"
+                        },
+                        "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
+                        }
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
+                      ]
                     }
                   ],
                   "outputs": {
@@ -210,9 +242,13 @@
                       "type": "string",
                       "value": "[variables('RouteServerName')]"
                     },
-                    "RouteServerSubnetId": {
+                    "NewRouteServerSubnetId": {
                       "type": "string",
                       "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                    },
+                    "ExistingRouteServerSubnetId": {
+                      "type": "string",
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[1])]"
                     }
                   }
                 }
@@ -229,7 +265,11 @@
             },
             "RouteServerSubnetId": {
               "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.RouteServerSubnetId.value]"
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.NewRouteServerSubnetId.value]"
+            },
+            "ExistingRouteServerSubnetId": {
+              "type": "string",
+              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name))).outputs.ExistingRouteServerSubnetId.value]"
             },
             "NetworkResourceGroup": {
               "type": "string",
