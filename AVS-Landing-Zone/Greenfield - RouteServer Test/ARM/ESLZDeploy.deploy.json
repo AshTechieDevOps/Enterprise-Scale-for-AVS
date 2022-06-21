@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "13464855918134621296"
+      "templateHash": "6859367066193140153"
     }
   },
   "parameters": {
@@ -48,7 +48,6 @@
   },
   "resources": [
     {
-      "condition": "[not(parameters('RouteServerSubnetExists'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",

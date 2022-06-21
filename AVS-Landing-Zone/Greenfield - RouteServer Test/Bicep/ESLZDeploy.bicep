@@ -18,7 +18,7 @@ param RouteServerSubnetPrefix string = '192.168.123.0/26'
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module RouteServerWithNewSubnet 'Modules/Networking.bicep' = if (!RouteServerSubnetExists) {
+module RouteServer 'Modules/Networking.bicep' = {
   name: '${deploymentPrefix}-VNet'
   params: {
     Prefix: Prefix
