@@ -19,7 +19,7 @@ resource RouteServerSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01
 }
 
 resource ExistingRouteServerSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = if (RouteServerSubnetExists) {
-  name: '${VNet.name}/GatewaySubnet'
+  name: '${VNet.name}/RouteServerSubnet'
 }
 
 resource RouteServerPIP 'Microsoft.Network/publicIPAddresses@2021-05-01' = {

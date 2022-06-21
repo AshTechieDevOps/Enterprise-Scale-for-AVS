@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "135035043025415939"
+      "templateHash": "13464855918134621296"
     }
   },
   "parameters": {
@@ -82,7 +82,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "12028418525416166317"
+              "templateHash": "8529809190053144670"
             }
           },
           "parameters": {
@@ -143,7 +143,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "5520935966507727575"
+                      "templateHash": "12454513427015236070"
                     }
                   },
                   "parameters": {
@@ -225,7 +225,7 @@
                       "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
                       "properties": {
                         "subnet": {
-                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[1])]"
+                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1])]"
                         },
                         "publicIPAddress": {
                           "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
@@ -248,7 +248,7 @@
                     },
                     "ExistingRouteServerSubnetId": {
                       "type": "string",
-                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('VNetName')), '/')[1])]"
+                      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1])]"
                     }
                   }
                 }
