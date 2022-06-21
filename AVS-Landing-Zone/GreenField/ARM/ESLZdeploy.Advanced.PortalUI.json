@@ -264,7 +264,7 @@
                             "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Virtual Network and Virtual Network Gateway",
+                            "label": "Virtual Network and ExpressRoute Gateway",
                             "defaultValue": "New",
                             "toolTip": "",
                             "constraints": {
@@ -300,20 +300,6 @@
                             }
                         },
                         {
-                            "name": "GatewaySubnet",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
-                            "label": "Gateway Subnet Prefix",
-                            "toolTip": "Virtual network subnet for AVS virtual machines",
-                            "defaultValue": "192.168.0.0/24",
-                            "placeholder": "Example: 192.168.0.0/24",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
-                            }
-                        },
-                        {
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
@@ -332,9 +318,9 @@
                         {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
-                            "label": "Virtual Network Gateway",
-                            "defaultValue": "New",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "label": "ExpressRoute Gateway",
+                            "defaultValue": "Null",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -354,7 +340,7 @@
                             "name": "gatewaySelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
-                            "label": "Select Virtual Network Gateway",
+                            "label": "Select ExpressRoute Gateway",
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
                                 "required": true
@@ -369,7 +355,7 @@
                         {
                             "name": "GatewaySubnetExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, false)]",
                             "label": "Does a GatewaySubnet Exist?",
                             "defaultValue": "none",
                             "toolTip": "Ensure that the virtual network has a GatewaySubnet, otherwise the deployment will fail",
@@ -385,6 +371,20 @@
                                         "value": false
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "name": "GatewaySubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Virtual network subnet for AVS virtual machines",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
                             }
                         },
                         {
