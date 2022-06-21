@@ -189,7 +189,7 @@
                         {
                             "name": "RouteServerSubnetPrefix",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').DeployRouteServerSubnet, false)]",
+                            "visible": "[equals(steps('azureNetwork').RouteServerSubnetExists, false)]",
                             "label": "RouteServer Subnet Prefix",
                             "toolTip": "Subnet for the Azure RouteServer",
                             "defaultValue": "192.168.2.0/24",
