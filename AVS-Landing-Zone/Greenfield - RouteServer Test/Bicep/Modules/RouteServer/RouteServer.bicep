@@ -17,6 +17,18 @@ resource RouteServerSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01
   }
 }
 
+resource RouteServerIPConfiguration 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = {
+  name: '${RouteServerName}-ipconfig'
+  parent: RouteServer
+  properties: {
+    subnet: {
+      id: RouteServerSubnet.id
+    }
+    publicIPAddress: {
+      id: RouteServerPIP.id
+    }
+  }
+}
 
 resource RouteServerPIP 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: '${RouteServerName}-PIP'
@@ -39,18 +51,6 @@ resource RouteServer 'Microsoft.Network/virtualHubs@2021-05-01' = {
   }
 }
 
-resource RouteServerIPConfiguration 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = {
-  name: '${RouteServerName}-ipconfig'
-  parent: RouteServer
-  properties: {
-    subnet: {
-      id: RouteServerSubnet.id
-    }
-    publicIPAddress: {
-      id: RouteServerPIP.id
-    }
-  }
-}
 
 output RouteServer string = RouteServer.name
 output RouteServerSubnetId string = RouteServerSubnet.id
