@@ -13,12 +13,14 @@ param VNetName string = ''
 
 param RouteServerSubnetExists bool
 
+param SkipOnPremConnectivity string = ''
+
 @description('The subnet CIDR used for the RouteServer Subnet')
 param RouteServerSubnetPrefix string = '192.168.123.0/26'
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module RouteServer 'Modules/Networking.bicep' = {
+module RouteServer 'Modules/Networking.bicep' = if (SkipOnPremConnectivity != 'Skip') {
   name: '${deploymentPrefix}-VNet'
   params: {
     Prefix: Prefix

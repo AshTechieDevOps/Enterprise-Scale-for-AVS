@@ -124,6 +124,10 @@
                                     {
                                         "label": "VPN",
                                         "value": true
+                                    },
+                                    {
+                                        "label": "None",
+                                        "value": "Skip"
                                     }
                                 ]
                             }
@@ -229,6 +233,7 @@
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "VNetName": "[steps('azureNetwork').VnetSelectorId.name]",
+                "SkipOnPremConnectivity": "[steps('azureNetwork').OnpremiseConnect]",
                 "RouteServerSubnetExists": "[steps('azureNetwork').RouteServerSubnetExists]",
                 "RouteServerSubnetPrefix": "[if(equals(steps('azureNetwork').RouteServerSubnetExists, false), steps('azureNetwork').RouteServerSubnetPrefix, 'none')]"
             },

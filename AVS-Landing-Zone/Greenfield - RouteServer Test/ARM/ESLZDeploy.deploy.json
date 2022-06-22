@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "10040865701012793042"
+      "templateHash": "2929593158033286785"
     }
   },
   "parameters": {
@@ -35,6 +35,10 @@
     "RouteServerSubnetExists": {
       "type": "bool"
     },
+    "SkipOnPremConnectivity": {
+      "type": "string",
+      "defaultValue": ""
+    },
     "RouteServerSubnetPrefix": {
       "type": "string",
       "defaultValue": "192.168.123.0/26",
@@ -48,6 +52,7 @@
   },
   "resources": [
     {
+      "condition": "[not(equals(parameters('SkipOnPremConnectivity'), 'Skip'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
