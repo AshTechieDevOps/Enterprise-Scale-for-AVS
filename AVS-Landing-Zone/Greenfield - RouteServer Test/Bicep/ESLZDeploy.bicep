@@ -20,7 +20,7 @@ param RouteServerSubnetPrefix string = '192.168.123.0/26'
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module Blank 'Modules/Deployment.bicep' = {
+module Blank 'Modules/Deployment.bicep' = if (SkipOnPremConnectivity == 'Skip') {
   name: '${deploymentPrefix}-Deployment'
 } 
 
