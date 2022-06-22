@@ -56,7 +56,7 @@ resource RouteServerIPConfigurationNewSubnet 'Microsoft.Network/virtualHubs/ipCo
   }
 }
 
-resource RouteServerIPConfigurationExistingSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = if (!RouteServerSubnetExists) {
+resource RouteServerIPConfigurationExistingSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = if (RouteServerSubnetExists) {
   name: '${RouteServerName}-ipconfig'
   parent: RouteServer
   properties: {

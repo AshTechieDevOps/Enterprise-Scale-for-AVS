@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "1092304231267967692"
+      "templateHash": "10040865701012793042"
     }
   },
   "parameters": {
@@ -81,7 +81,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "9636598189782207202"
+              "templateHash": "4809160613461555570"
             }
           },
           "parameters": {
@@ -142,7 +142,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "18332782923994698195"
+                      "templateHash": "7552092466762305907"
                     }
                   },
                   "parameters": {
@@ -218,7 +218,7 @@
                       ]
                     },
                     {
-                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
+                      "condition": "[parameters('RouteServerSubnetExists')]",
                       "type": "Microsoft.Network/virtualHubs/ipConfigurations",
                       "apiVersion": "2021-05-01",
                       "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
