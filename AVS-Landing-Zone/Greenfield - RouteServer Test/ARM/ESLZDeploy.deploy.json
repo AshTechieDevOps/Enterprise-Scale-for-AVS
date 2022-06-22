@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "17236217728371767719"
+      "templateHash": "14948318932545725658"
     }
   },
   "parameters": {
@@ -52,6 +52,30 @@
     "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-Deployment', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.7.4.23292",
+              "templateHash": "5317878115774441568"
+            }
+          },
+          "resources": []
+        }
+      }
+    },
     {
       "condition": "[not(equals(parameters('SkipOnPremConnectivity'), 'Skip'))]",
       "type": "Microsoft.Resources/deployments",
