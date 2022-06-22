@@ -11,7 +11,7 @@ param Location string = deployment().location
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetName string = ''
 
-param RouteServerSubnetExists bool
+param RouteServerSubnetExists bool = false
 
 param SkipOnPremConnectivity string = ''
 
