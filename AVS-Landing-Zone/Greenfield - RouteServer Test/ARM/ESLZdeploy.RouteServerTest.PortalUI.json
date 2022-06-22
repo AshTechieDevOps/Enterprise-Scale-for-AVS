@@ -150,6 +150,16 @@
                             }
                         },
                         {
+                            "name": "DeployRouteServerInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('azureNetwork').DeployRouteServer, true)]",
+                            "options": {
+                                "text": "Existing Azure VPN gateway must be configured in active-active mode and have the ASN set to 65515. This is usually not done by default and if not set to active-active, this deployment will fail",
+                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support",
+                                "style": "Info"
+                            }
+                        },
+                        {
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').DeployRouteServer, true)]",
