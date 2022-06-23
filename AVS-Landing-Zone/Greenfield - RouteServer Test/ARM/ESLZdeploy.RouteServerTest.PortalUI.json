@@ -250,6 +250,7 @@
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "VNetName": "[steps('azureNetwork').VnetSelectorId.name]",
                 "OnPremConnectivity": "[steps('azureNetwork').OnpremiseConnect]",
+                "DeployRouteServer": "[steps('azureNetwork').DeployRouteServer]",
                 "RouteServerSubnetExists": "[steps('azureNetwork').RouteServerSubnetExists]",
                 "RouteServerSubnetPrefix": "[if(equals(steps('azureNetwork').RouteServerSubnetExists, false), steps('azureNetwork').RouteServerSubnetPrefix, 'none')]"
             },

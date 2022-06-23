@@ -11,6 +11,7 @@ param Location string = deployment().location
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetName string = ''
 
+param DeployRouteServer bool = false
 param RouteServerSubnetExists bool = false
 
 param OnPremConnectivity string = ''
@@ -20,7 +21,7 @@ param RouteServerSubnetPrefix string = '192.168.123.0/26'
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module Blank 'Modules/Deployment.bicep' = if (OnPremConnectivity == 'ExpressRoute') {
+module Blank 'Modules/Deployment.bicep' = if ((OnPremConnectivity == 'ExpressRoute') || (!DeployRouteServer)) {
   name: '${deploymentPrefix}-Deployment'
 } 
 
