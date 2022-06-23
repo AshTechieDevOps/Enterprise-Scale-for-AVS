@@ -111,7 +111,7 @@
                             "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Virtual Network and ExpressRoute Gateway",
+                            "label": "Virtual Network",
                             "defaultValue": "New",
                             "toolTip": "",
                             "constraints": {
@@ -147,20 +147,6 @@
                             }
                         },
                         {
-                            "name": "GatewaySubnet",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
-                            "label": "Gateway Subnet Prefix",
-                            "toolTip": "Virtual network subnet for AVS virtual machines",
-                            "defaultValue": "192.168.0.0/24",
-                            "placeholder": "Example: 192.168.0.0/27",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
-                            }
-                        },
-                        {
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
@@ -179,7 +165,7 @@
                         {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "ExpressRoute Gateway",
                             "defaultValue": "New",
                             "toolTip": "",
@@ -216,7 +202,7 @@
                         {
                             "name": "GatewaySubnetExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "visible": "[equals(steps('azureNetwork').GatewayExists, false)]",
                             "label": "Does a GatewaySubnet Exist?",
                             "defaultValue": "none",
                             "toolTip": "Ensure that the virtual network has a GatewaySubnet, otherwise the deployment will fail",
