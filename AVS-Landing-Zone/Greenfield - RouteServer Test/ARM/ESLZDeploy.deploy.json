@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "16256366929507426250"
+      "templateHash": "10479410882896345033"
     }
   },
   "parameters": {
@@ -36,7 +36,7 @@
       "type": "bool",
       "defaultValue": false
     },
-    "SkipOnPremConnectivity": {
+    "OnPremConnectivity": {
       "type": "string",
       "defaultValue": ""
     },
@@ -53,7 +53,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('SkipOnPremConnectivity'), 'Skip')]",
+      "condition": "[equals(parameters('OnPremConnectivity'), 'ExpressRoute')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Deployment', variables('deploymentPrefix'))]",
@@ -78,7 +78,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('SkipOnPremConnectivity'), 'Skip'))]",
+      "condition": "[equals(parameters('OnPremConnectivity'), 'VPN')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
