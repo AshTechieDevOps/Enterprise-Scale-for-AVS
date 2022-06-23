@@ -131,7 +131,7 @@
                         {
                             "name": "OnpremiseConnectInfo",
                             "type": "Microsoft.Common.InfoBox",
-                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, ExpressRoute)]",
+                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, 'ExpressRoute')]",
                             "options": {
                                 "text": "If ExpressRoute is already used for Azure connectivity, then you will need to request an ExpressRoute authorization key from the existing circuit to create the AVS Global Reach connection. Click here to learn more",
                                 "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud",
@@ -141,7 +141,7 @@
                         {
                             "name": "DeployRouteServer",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, VPN)]",
+                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, 'VPN')]",
                             "label": "Deploy an Azure Route Server",
                             "defaultValue": "No",
                             "toolTip": "",
