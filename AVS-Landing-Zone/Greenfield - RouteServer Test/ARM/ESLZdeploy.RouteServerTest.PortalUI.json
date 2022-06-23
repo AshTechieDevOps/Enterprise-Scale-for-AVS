@@ -136,7 +136,7 @@
                             "name": "DeployRouteServer",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').OnpremiseConnect, true)]",
-                            "label": "Deploy Route Server",
+                            "label": "Deploy an Azure Route Server",
                             "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
@@ -167,7 +167,7 @@
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').DeployRouteServer, true)]",
-                            "label": "Virtual Network",
+                            "label": "Existing Virtual Network",
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
                                 "required": true
