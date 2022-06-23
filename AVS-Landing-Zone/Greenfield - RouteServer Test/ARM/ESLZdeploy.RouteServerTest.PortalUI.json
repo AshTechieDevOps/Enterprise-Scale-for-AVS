@@ -126,7 +126,7 @@
                                         "value": true
                                     },
                                     {
-                                        "label": "None",
+                                        "label": "None (Skip)",
                                         "value": "Skip"
                                     }
                                 ]
