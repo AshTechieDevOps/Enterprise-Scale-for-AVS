@@ -89,8 +89,8 @@
                                     "options": {
                                         "text": "On-premise connectivity is also typically required especially for any migrations of workload via HCX. If VPN is the current method of Azure to On-premise connectivity, then we will need an Azure Route Server to act as the route forwarder from the VPN Gateway to the ExpressRoute Gateway deployed in the section above",
                                         "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 },
@@ -98,10 +98,10 @@
                                     "name": "onpreminfo2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "If VPN is selected and RouteServer is 'New', a RouteServer will be deployed in the same virtual network as selected in the section above. A RouteServerSubnet will be required for this deployment and can be specified below",
+                                        "text": "If you currently use VPN for Azure connectivity, then you will already have a VPN Gateway in Azure. In order for the VPN traffic to flow to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. If you choose to deploy the Route Server below, this deployment will create a RouteServer Subnet if one does not exist, the Route Server itself and enable the Branch-to-Branch feature for the route sharing. See link below for more details ",
                                         "link": {
-                                            "label": "",
-                                            "uri": ""
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support"
                                         }
                                     }
                                 }
