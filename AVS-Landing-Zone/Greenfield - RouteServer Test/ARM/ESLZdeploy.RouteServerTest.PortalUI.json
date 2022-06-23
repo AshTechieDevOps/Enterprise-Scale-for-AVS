@@ -112,7 +112,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "How does Azure connect to On-premises?",
-                            "defaultValue": "ExpressRoute",
+                            "defaultValue": "Null",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -124,12 +124,18 @@
                                     {
                                         "label": "VPN",
                                         "value": true
-                                    },
-                                    {
-                                        "label": "None (Skip)",
-                                        "value": "Skip"
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "name": "OnpremiseConnectInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('azureNetwork').OnpremiseConnect, false)]",
+                            "options": {
+                                "text": "If ExpressRoute is already used for Azure connectivity, then you will need to request an ExpressRoute authorization key from the existing circuit to create the AVS Global Reach connection. Click here to learn more",
+                                "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud",
+                                "style": "Info"
                             }
                         },
                         {
@@ -223,7 +229,17 @@
                                 "uri": "",
                                 "style": "Info"
                             }
-                        }
+                        },
+                        {
+                            "name": "RouteServerSubnetExistsInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('azureNetwork').RouteServerSubnetExists, true)]",
+                            "options": {
+                                "text": "Mandatory: If a RouteServer Subnet does not exist, this deployment will fail",
+                                "uri": "",
+                                "style": "Warning"
+                            }
+                        },
                     ]
                 }
             ]
