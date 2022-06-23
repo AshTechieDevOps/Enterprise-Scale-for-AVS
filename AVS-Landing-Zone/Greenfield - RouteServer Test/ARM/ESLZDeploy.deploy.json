@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "10479410882896345033"
+      "templateHash": "9500668328415585778"
     }
   },
   "parameters": {
@@ -32,6 +32,10 @@
         "description": "The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace"
       }
     },
+    "DeployRouteServer": {
+      "type": "bool",
+      "defaultValue": false
+    },
     "RouteServerSubnetExists": {
       "type": "bool",
       "defaultValue": false
@@ -53,7 +57,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('OnPremConnectivity'), 'ExpressRoute')]",
+      "condition": "[or(equals(parameters('OnPremConnectivity'), 'ExpressRoute'), not(parameters('DeployRouteServer')))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Deployment', variables('deploymentPrefix'))]",
