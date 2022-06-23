@@ -144,7 +144,7 @@
                             "visible": "[equals(steps('azureNetwork').OnpremiseConnect, 'VPN')]",
                             "label": "Deploy an Azure Route Server",
                             "defaultValue": "No",
-                            "toolTip": "",
+                            "toolTip": "Azure Route Server is required for VPN to AVS connectivity",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -153,7 +153,7 @@
                                         "value": true
                                     },
                                     {
-                                        "label": "No",
+                                        "label": "No (Skip)",
                                         "value": false
                                     }
                                 ]
@@ -164,7 +164,7 @@
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').DeployRouteServer, true)]",
                             "options": {
-                                "text": "Existing Azure VPN gateway must be configured in active-active mode and have the ASN set to 65515. This is usually not done by default and if not set to active-active, this deployment will fail",
+                                "text": "Existing Azure VPN gateway must be configured in active-active mode, this is usually not done by default. If not set to active-active, this deployment will fail",
                                 "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support",
                                 "style": "Info"
                             }
