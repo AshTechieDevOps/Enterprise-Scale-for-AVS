@@ -17,7 +17,7 @@ param RouteServerSubnetExists bool = false
 param OnPremConnectivity string = ''
 
 @description('The subnet CIDR used for the RouteServer Subnet')
-param RouteServerSubnetPrefix string = '192.168.123.0/26'
+param RouteServerSubnetPrefix string = ''
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
@@ -25,7 +25,7 @@ module Blank 'Modules/Deployment.bicep' = if ((OnPremConnectivity == 'ExpressRou
   name: '${deploymentPrefix}-Deployment'
 } 
 
-module RouteServer 'Modules/Networking.bicep' = if (OnPremConnectivity == 'VPN') {
+module RouteServer 'Modules/Networking.bicep' = if ((OnPremConnectivity == 'VPN') || (DeployRouteServer)) {
   name: '${deploymentPrefix}-VNet'
   params: {
     Prefix: Prefix

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "9500668328415585778"
+      "templateHash": "16761059027642450303"
     }
   },
   "parameters": {
@@ -46,7 +46,7 @@
     },
     "RouteServerSubnetPrefix": {
       "type": "string",
-      "defaultValue": "192.168.123.0/26",
+      "defaultValue": "",
       "metadata": {
         "description": "The subnet CIDR used for the RouteServer Subnet"
       }
@@ -82,7 +82,7 @@
       }
     },
     {
-      "condition": "[equals(parameters('OnPremConnectivity'), 'VPN')]",
+      "condition": "[or(equals(parameters('OnPremConnectivity'), 'VPN'), parameters('DeployRouteServer'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
