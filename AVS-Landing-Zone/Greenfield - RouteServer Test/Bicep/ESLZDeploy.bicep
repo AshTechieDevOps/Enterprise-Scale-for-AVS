@@ -25,7 +25,7 @@ module Blank 'Modules/Deployment.bicep' = if ((OnPremConnectivity == 'ExpressRou
   name: '${deploymentPrefix}-Deployment'
 } 
 
-module RouteServer 'Modules/Networking.bicep' = if ((OnPremConnectivity == 'VPN') || (DeployRouteServer)) {
+module RouteServer 'Modules/Networking.bicep' = if ((OnPremConnectivity == 'VPN') && (DeployRouteServer)) {
   name: '${deploymentPrefix}-VNet'
   params: {
     Prefix: Prefix
