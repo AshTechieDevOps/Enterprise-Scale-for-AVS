@@ -775,6 +775,25 @@
                     "label": "AVS Addons",
                     "elements": [
                         {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Addons",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "As part of your AVS deployment, you may choose to deploy the following Addons",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
                             "name": "deployHCX",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
