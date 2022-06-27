@@ -669,6 +669,176 @@
                     ]
                 },
                 {
+                    "name": "onpremises",
+                    "label": "On-premises Connectivity",
+                    "bladeTitle": "onpremisesconnectivity",
+                    "elements": [
+                        {
+                            "name": "Info",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "On-Premise Connectivity",
+                            "elements": [
+                                {
+                                    "name": "onpreminfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "On-premise connectivity is also typically required especially for any migrations of workload via HCX. If VPN is the current method of Azure to On-premise connectivity, then we will need an Azure Route Server to act as the route forwarder from the VPN Gateway to the ExpressRoute Gateway deployed in the section above",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "onpreminfo2",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "If you currently use VPN for Azure connectivity, then you will already have a VPN Gateway in Azure. In order for the VPN traffic to flow to the ExpressRoute Gateway and then to AVS, we will need a Route Server to act as the route forwarder between the two gateways. If you choose to deploy the Route Server below, this deployment will create a RouteServer Subnet if one does not exist, the Route Server itself and enable the Branch-to-Branch feature for the route sharing. See link below for more details ",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "OnpremiseConnect",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "How does Azure connect to On-premises?",
+                            "defaultValue": "Null",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "ExpressRoute",
+                                        "value": "ExpressRoute"
+                                    },
+                                    {
+                                        "label": "VPN",
+                                        "value": "VPN"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "OnpremiseConnectInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'ExpressRoute')]",
+                            "options": {
+                                "text": "If ExpressRoute is already used for Azure connectivity, then you will need to request an ExpressRoute authorization key from the existing circuit to create the AVS Global Reach connection. Click here to learn more",
+                                "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-expressroute-global-reach-private-cloud",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "DeployRouteServer",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('onpremises').OnpremiseConnect, 'VPN')]",
+                            "label": "Deploy an Azure Route Server",
+                            "defaultValue": "Null",
+                            "toolTip": "Azure Route Server is required for VPN to AVS connectivity",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No (Skip)",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployRouteServerInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "options": {
+                                "text": "Existing Azure VPN gateway must be configured in active-active mode, this is usually not done by default. If not set to active-active, this deployment will fail",
+                                "uri": "https://docs.microsoft.com/en-us/azure/route-server/expressroute-vpn-support",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "VnetSelectorId",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "label": "Existing Virtual Network",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "constraints": {
+                                "required": true
+                            },
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('onpremises').DeployRouteServer, true)]",
+                            "label": "RouteServer Subnet",
+                            "defaultValue": "No",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "New",
+                                        "value": false
+                                    },
+                                    {
+                                        "label": "Existing",
+                                        "value": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
+                            "label": "RouteServer Subnet Prefix",
+                            "toolTip": "Subnet for the Azure RouteServer",
+                            "defaultValue": "192.168.2.0/24",
+                            "placeholder": "Example: 192.168.2.0/24",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-7]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 27."
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetPrefixInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, false)]",
+                            "options": {
+                                "text": "Ensure that the subnet prefix is valid and is in the range of the chosen VNet above ",
+                                "uri": "",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "RouteServerSubnetExistsInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[equals(steps('onpremises').RouteServerSubnetExists, true)]",
+                            "options": {
+                                "text": "Mandatory: If a RouteServer Subnet does not exist, this deployment will fail",
+                                "uri": "",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "Monitoring",
                     "label": "Monitoring",
                     "elements": [
@@ -897,6 +1067,10 @@
                 "JumpboxSku": "[steps('Jumpbox').vmSkuSelector]",
                 "JumpboxUsername": "[steps('Jumpbox').jumpboxCredentials.jumpboxLocalUserName]",
                 "JumpboxPassword": "[steps('Jumpbox').jumpboxCredentials.JumpboxPassword.password]",
+                "OnPremConnectivity": "[steps('onpremises').OnpremiseConnect]",
+                "DeployRouteServer": "[steps('onpremises').DeployRouteServer]",
+                "RouteServerSubnetExists": "[steps('onpremises').RouteServerSubnetExists]",
+                "RouteServerSubnetPrefix": "[if(equals(steps('onpremises').RouteServerSubnetExists, false), steps('azureNetwork').RouteServerSubnetPrefix, 'none')]",
                 "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
                 "DeployHCX": "[steps('Addons').deployHCX]",
                 "DeploySRM": "[steps('Addons').deploySRM]",
