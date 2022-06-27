@@ -944,7 +944,7 @@
                 "OnPremConnectivity": "[steps('onpremises').OnpremiseConnect]",
                 "DeployRouteServer": "[steps('onpremises').DeployRouteServer]",
                 "RouteServerSubnetExists": "[steps('onpremises').RouteServerSubnetExists]",
-                "RouteServerSubnetPrefix": "[if(equals(steps('onpremises').RouteServerSubnetExists, false), steps('azureNetwork').RouteServerSubnetPrefix, 'none')]",
+                "RouteServerSubnetPrefix": "[if(equals(steps('onpremises').RouteServerSubnetExists, false), steps('onpremises').RouteServerSubnetPrefix, 'none')]",
                 "AlertEmails": "[steps('Monitoring').ActionGroupEmails]",
                 "DeployHCX": "[steps('Addons').deployHCX]",
                 "DeploySRM": "[steps('Addons').deploySRM]",
