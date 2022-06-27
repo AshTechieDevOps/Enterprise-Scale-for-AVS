@@ -119,11 +119,11 @@
                                 "allowedValues": [
                                     {   
                                         "label": "New",
-                                        "value": false
+                                        "value": "False"
                                     },
                                     {
                                         "label": "Existing",
-                                        "value": true
+                                        "value": "True"
                                     },
                                     {
                                         "label": "None (Skip)",

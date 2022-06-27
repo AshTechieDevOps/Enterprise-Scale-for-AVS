@@ -2,7 +2,7 @@ targetScope = 'subscription'
 
 param Location string
 param Prefix string
-param VNetExists bool
+param VNetExists string
 param ExistingVnetName string
 param GatewayExists bool
 param ExistingGatewayName string

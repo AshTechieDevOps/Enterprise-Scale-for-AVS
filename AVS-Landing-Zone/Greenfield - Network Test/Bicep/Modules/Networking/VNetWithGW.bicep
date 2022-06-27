@@ -1,6 +1,6 @@
 param Location string
 param Prefix string
-param VNetExists bool
+param VNetExists string
 param ExistingVnetName string
 param GatewayExists bool
 param ExistingGatewayName string
@@ -12,11 +12,11 @@ var NewVNetName = '${Prefix}-vnet'
 var NewVnetNewGatewayName = '${Prefix}-gw'
 var ExistingVnetNewGatewayName = '${Prefix}-egw'
 
-resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-08-01' existing = if (VNetExists) {
+resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-08-01' existing = if (VNetExists == 'True') {
   name: ExistingVnetName
 }
 
-resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExists) {
+resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (VNetExists == 'False') {
   name: NewVNetName
   location: Location
   properties: {
@@ -36,7 +36,7 @@ resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExist
   }
 }
 
-resource NewVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if (!VNetExists) {
+resource NewVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if (VNetExists == 'False') {
   name: 'GatewaySubnet'
   parent: NewVNet
   properties: {
@@ -44,7 +44,7 @@ resource NewVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02
   }
 }
 
-resource ExistingVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = if (VNetExists) {
+resource ExistingVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = if (VNetExists == 'False') {
   name: '${ExistingVNet.name}/GatewaySubnet'
 }
 
@@ -64,7 +64,7 @@ resource ExistingGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' e
   name: ExistingGatewayName
 }
 
-resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (!VNetExists)) {
+resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists == 'False')) {
   name: NewVnetNewGatewayName
   location: Location
   properties: {
@@ -90,7 +90,7 @@ resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01'
   }
 }
 
-resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists)) {
+resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists == 'True')) {
   name: ExistingVnetNewGatewayName
   location: Location
   properties: {
@@ -116,7 +116,7 @@ resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-0
   }
 }
 
-output VNetName string = VNetExists ? ExistingVNet.name : NewVNet.name
-output NewGatewayName string = ((!GatewayExists) && (!VNetExists)) ? NewVnetNewGateway.name : ExistingVnetNewGateway.name
+output VNetName string = VNetExists == 'False' ? ExistingVNet.name : NewVNet.name
+output NewGatewayName string = ((!GatewayExists) && (VNetExists == 'False')) ? NewVnetNewGateway.name : ExistingVnetNewGateway.name
 output ExistingGatewayName string = GatewayExists ? ExistingGateway.name : ExistingGateway.name
-output VNetResourceId string = VNetExists ? ExistingVNet.id : NewVNet.id
+output VNetResourceId string = VNetExists == 'False' ? ExistingVNet.id : NewVNet.id

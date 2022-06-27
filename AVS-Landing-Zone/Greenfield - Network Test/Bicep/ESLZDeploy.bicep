@@ -9,7 +9,7 @@ param Prefix string = 'AVS'
 param Location string = deployment().location
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
-param VNetExists bool = false
+param VNetExists string = ''
 @description('The Existing VNet name')
 param ExistingVnetName string = ''
 @description('The Existing Gateway name')
