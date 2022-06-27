@@ -696,7 +696,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "Deploy AVS Dashboard",
-                            "defaultValue": "false",
+                            "defaultValue": true,
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -716,8 +716,8 @@
                             "name": "DeployAVSAlerts",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
-                            "label": "Enable ",
-                            "defaultValue": "false",
+                            "label": "Enable AVS Metric Alerts",
+                            "defaultValue": true,
                             "toolTip": "Enable AVS Metric Alerts",
                             "constraints": {
                                 "required": true,
@@ -738,7 +738,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "Enable AVS Service Health Alerts",
                             "label": "Deploy Jumpbox and Azure Bastion",
-                            "defaultValue": "false",
+                            "defaultValue": true,
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -758,6 +758,7 @@
                             "name": "ActionGroupEmails",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Action Group Email",
+                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true)]), (equals(steps('Monitoring').DeployServiceHealth, true)]) ",
                             "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
                             "placeholder": "Example: alerts@company.com",
                             "defaultValue": "alerts@company.com",
