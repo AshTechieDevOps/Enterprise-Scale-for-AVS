@@ -758,7 +758,7 @@
                             "name": "ActionGroupEmails",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Action Group Email",
-                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true)]), (equals(steps('Monitoring').DeployServiceHealth, true)]) ",
+                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
                             "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
                             "placeholder": "Example: alerts@company.com",
                             "defaultValue": "alerts@company.com",
