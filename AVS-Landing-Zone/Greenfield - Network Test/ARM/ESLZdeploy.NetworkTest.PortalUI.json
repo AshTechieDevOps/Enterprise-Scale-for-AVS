@@ -111,9 +111,9 @@
                             "name": "DeployNetworking",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Virtual Network",
+                            "label": "Connect AVS to Azure",
                             "defaultValue": "Yes",
-                            "toolTip": "Deploy this networking scenario",
+                            "toolTip": "Connect AVS to Azure",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [

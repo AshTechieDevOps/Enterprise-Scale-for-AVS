@@ -23,7 +23,7 @@ param NewGatewaySubnetAddressPrefix string = ''
 param GatewayExists bool = false
 
 @description('A string value to skip the networking deployment')
-param DeployNetworking bool = true
+param DeployNetworking bool = false
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
