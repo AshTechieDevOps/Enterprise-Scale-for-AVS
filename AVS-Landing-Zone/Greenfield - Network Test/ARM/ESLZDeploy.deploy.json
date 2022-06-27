@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "13944846499448671829"
+      "templateHash": "5355052329968495620"
     }
   },
   "parameters": {
@@ -66,6 +66,13 @@
       "metadata": {
         "description": "Set this to true if you are redeploying, and the VNet already exists"
       }
+    },
+    "DeployNetworking": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "A string value to skip the networking deployment"
+      }
     }
   },
   "variables": {
@@ -73,6 +80,32 @@
   },
   "resources": [
     {
+      "condition": "[equals(parameters('DeployNetworking'), 'Skip')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-SkipNetworking', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.7.4.23292",
+              "templateHash": "5317878115774441568"
+            }
+          },
+          "resources": []
+        }
+      }
+    },
+    {
+      "condition": "[not(equals(parameters('DeployNetworking'), 'Skip'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Network', variables('deploymentPrefix'))]",
@@ -396,6 +429,7 @@
       }
     },
     {
+      "condition": "[not(equals(parameters('DeployNetworking'), 'Skip'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
@@ -407,13 +441,13 @@
         "mode": "Incremental",
         "parameters": {
           "NewGatewayName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.NewGatewayName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.NewGatewayName.value]"
           },
           "ExistingGatewayName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.ExistingGatewayName.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.ExistingGatewayName.value]"
           },
           "NetworkResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix')))).outputs.NetworkResourceGroup.value]"
+            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value]"
           },
           "VNetPrefix": {
             "value": "[parameters('Prefix')]"
