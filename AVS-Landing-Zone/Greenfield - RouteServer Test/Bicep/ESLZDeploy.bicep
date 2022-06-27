@@ -11,7 +11,10 @@ param Location string = deployment().location
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
 param VNetName string = ''
 
+@description('A boolean flag to deploy a Route Serrver or skip')
 param DeployRouteServer bool = false
+
+@description('Does a RouteServerSubnet exists?')
 param RouteServerSubnetExists bool = false
 
 param OnPremConnectivity string = ''

@@ -87,7 +87,7 @@
                                     "name": "networkinfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner, and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
+                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -98,7 +98,7 @@
                                     "name": "networkinfo2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "This deployment with allow you to specify a new or select an existing Virtual Network, the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from AVS to the Gateway, allowing Azure Resource in this vNet to communicate with AVS. See link below for more information.",
+                                        "text": "This deployment with allow you to specify a new or select an existing Virtual Network, input the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from AVS to this Gateway, allowing Azure Resource in this vNet to communicate with AVS. See link below for more information.",
                                         "link": {
                                             "label": "Learn more",
                                             "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking"
@@ -113,11 +113,11 @@
                             "visible": true,
                             "label": "Virtual Network",
                             "defaultValue": "New",
-                            "toolTip": "",
+                            "toolTip": "Select New to deploy a new virtual network, or choose and existing VNet",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
-                                    {
+                                    {   
                                         "label": "New",
                                         "value": false
                                     },
@@ -126,7 +126,7 @@
                                         "value": true
                                     },
                                     {
-                                        "label": "None",
+                                        "label": "None (Skip)",
                                         "value": "Skip"
                                     }
                                 ]
@@ -182,7 +182,7 @@
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "ExpressRoute Gateway",
                             "defaultValue": "None",
-                            "toolTip": "",
+                            "toolTip": "Deploy a new ExpressRoute Gateway or choose existing",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
