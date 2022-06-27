@@ -696,7 +696,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "Deploy AVS Dashboard",
-                            "defaultValue": true,
+                            "defaultValue": "Yes",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
@@ -717,7 +717,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "Enable AVS Metric Alerts",
-                            "defaultValue": true,
+                            "defaultValue": "Yes",
                             "toolTip": "Enable AVS Metric Alerts",
                             "constraints": {
                                 "required": true,
@@ -738,7 +738,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "Enable AVS Service Health Alerts",
                             "label": "Deploy Jumpbox and Azure Bastion",
-                            "defaultValue": true,
+                            "defaultValue": "Yes",
                             "toolTip": "",
                             "constraints": {
                                 "required": true,
