@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "6709514436387991545"
+      "templateHash": "17122766978884935137"
     }
   },
   "parameters": {
@@ -34,11 +34,17 @@
     },
     "DeployRouteServer": {
       "type": "bool",
-      "defaultValue": false
+      "defaultValue": false,
+      "metadata": {
+        "description": "A boolean flag to deploy a Route Serrver or skip"
+      }
     },
     "RouteServerSubnetExists": {
       "type": "bool",
-      "defaultValue": false
+      "defaultValue": false,
+      "metadata": {
+        "description": "Does a RouteServerSubnet exists?"
+      }
     },
     "OnPremConnectivity": {
       "type": "string",
@@ -60,7 +66,7 @@
       "condition": "[or(equals(parameters('OnPremConnectivity'), 'ExpressRoute'), not(parameters('DeployRouteServer')))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
-      "name": "[format('{0}-Deployment', variables('deploymentPrefix'))]",
+      "name": "[format('{0}-SkipRouteServer', variables('deploymentPrefix'))]",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
