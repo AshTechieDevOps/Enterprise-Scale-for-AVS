@@ -673,25 +673,13 @@
                     "label": "Monitoring",
                     "elements": [
                         {
-                            "name": "avsMonitoring",
-                            "type": "Microsoft.Common.TextBlock",
-                            "visible": true,
-                            "options": {
-                                "text": "Placeholder for monitoring description.",
-                                "link": {
-                                    "label": "Learn more",
-                                    "uri": "https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/azure-vmware/eslz-management-and-monitoring"
-                                }
-                            }
-                        },
-                        {
                             "name": "AVSBaseAlerts",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
-                            "label": "Enable Base Alerts for AVS",
+                            "label": "AVS Monitoring and Alerts",
                             "elements": [
                                 {
-                                    "name": "AVSAlertssetup",
+                                    "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
                                         "text": "It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.This scenario also includes service health alerts to ensure you don't miss any updates or events that may impact the target Private Cloud. ",
@@ -701,10 +689,71 @@
                                         }
                                     }
                                 }
-                             
                             ]
                         },
-
+                        {
+                            "name": "DeployDashboard",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Deploy AVS Dashboard",
+                            "defaultValue": "false",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployAVSAlerts",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Enable ",
+                            "defaultValue": "false",
+                            "toolTip": "Enable AVS Metric Alerts",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployServiceHealth",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "Enable AVS Service Health Alerts",
+                            "label": "Deploy Jumpbox and Azure Bastion",
+                            "defaultValue": "false",
+                            "toolTip": "",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
                         {
                             "name": "ActionGroupEmails",
                             "type": "Microsoft.Common.TextBox",
