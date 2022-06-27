@@ -31,7 +31,7 @@ module SkipNetworking 'Modules/Deployment.bicep' = if (DeployNetworking == 'Skip
   name: '${deploymentPrefix}-SkipNetworking'
 } 
 
-module Networking 'Modules/Networking.bicep' = if (DeployNetworking != 'Skip') {
+module Networking 'Modules/Networking.bicep' = if ((DeployNetworking == 'True') || (DeployNetworking == 'False')) {
   name: '${deploymentPrefix}-Network'
   params: {
     Prefix: Prefix
@@ -45,7 +45,7 @@ module Networking 'Modules/Networking.bicep' = if (DeployNetworking != 'Skip') {
   }
 }
 
-module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking != 'Skip') {
+module VNetConnection 'Modules/VNetConnection.bicep' = if ((DeployNetworking == 'True') || (DeployNetworking == 'False')) {
   name: '${deploymentPrefix}-VNet'
   params: {
     NewGatewayName: Networking.outputs.NewGatewayName

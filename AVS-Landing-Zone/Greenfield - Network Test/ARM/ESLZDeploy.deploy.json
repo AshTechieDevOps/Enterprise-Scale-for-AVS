@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "13716971683156775261"
+      "templateHash": "6232313357934214124"
     }
   },
   "parameters": {
@@ -105,7 +105,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('DeployNetworking'), 'Skip'))]",
+      "condition": "[or(equals(parameters('DeployNetworking'), 'True'), equals(parameters('DeployNetworking'), 'False'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Network', variables('deploymentPrefix'))]",
@@ -429,7 +429,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('DeployNetworking'), 'Skip'))]",
+      "condition": "[or(equals(parameters('DeployNetworking'), 'True'), equals(parameters('DeployNetworking'), 'False'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
