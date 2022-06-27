@@ -227,7 +227,7 @@
                 },
                 {
                     "name": "azureNetwork",
-                    "label": "Networking - AVS Connectivity",
+                    "label": "AVS Connectivity",
                     "bladeTitle": "azureNetworkingSettings",
                     "elements": [
                         {
@@ -518,7 +518,7 @@
                 },
                 {
                     "name": "Jumpbox",
-                    "label": "Networking - On-premises Connectivity",
+                    "label": "On-premises Connectivity",
                     "bladeTitle": "JumpboxInfo",
                     "elements": [
                         {
