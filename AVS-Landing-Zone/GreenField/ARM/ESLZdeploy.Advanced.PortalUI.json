@@ -240,10 +240,10 @@
                                     "name": "networkinfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner, and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway. See link below for more information.",
+                                        "text": "Azure VMware Solution (AVS) is deployed by design in an isolated manner and has no connectivity to either Azure or any other network. In order to connect AVS to Azure, a connection must be made from AVS to Azure via an ExpressRoute Gateway.",
                                         "link": {
-                                            "label": "Learn more",
-                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/request-host-quota-azure-vmware-solution?WT.mc_id=Portal-VMCP#request-host-quota-for-ea-customers"
+                                            "label": "",
+                                            "uri": ""
                                         }
                                     }
                                 },
@@ -251,36 +251,53 @@
                                     "name": "networkinfo2",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "This deployment with allow you to specify a new or select an existing Virtual Network, the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from AVS to the Gateway, allowing Azure Resource in this vNet to communicate with AVS",
+                                        "text": "This deployment with allow you to specify a new or select an existing Virtual Network, input the subnets required and deploy the ExpressRoute Gateway if one does not already exist. At the end of this deployment, a connection will automatically be created from AVS to this Gateway, allowing Azure Resource in this vNet to communicate with AVS. See link below for more information.",
                                         "link": {
-                                            "label": "",
-                                            "uri": ""
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/en-us/azure/azure-vmware/tutorial-configure-networking"
                                         }
                                     }
                                 }
                             ]
                         },
                         {
-                            "name": "VNetExists",
+                            "name": "DeployNetworking",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
-                            "label": "Virtual Network and ExpressRoute Gateway",
-                            "defaultValue": "New",
-                            "toolTip": "",
+                            "label": "Connect AVS to Azure",
+                            "defaultValue": "Yes",
+                            "toolTip": "Connect AVS to Azure",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
+                                    {   
+                                        "label": "Yes",
+                                        "value": true
+                                    },
                                     {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "VNetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').DeployNetworking, true)]",
+                            "label": "Virtual Network",
+                            "defaultValue": "New",
+                            "toolTip": "Select New to deploy a new virtual network, or choose and existing VNet",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {   
                                         "label": "New",
                                         "value": false
                                     },
                                     {
                                         "label": "Existing",
                                         "value": true
-                                    },
-                                    {
-                                        "label": "None",
-                                        "value": null
                                     }
                                 ]
                             }
@@ -290,13 +307,27 @@
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
-                            "toolTip": "Virtual network in Azure Native to host the Virtual Network Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
+                            "toolTip": "Virtual network in Azure Native to host the ExpressRoute Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "defaultValue": "192.168.0.0/22",
                             "placeholder": "Example: 192.168.0.0/22",
                             "constraints": {
                                 "required": true,
                                 "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
                                 "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
+                            }
+                        },
+                        {
+                            "name": "GatewaySubnet",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/27",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
                             }
                         },
                         {
@@ -320,8 +351,8 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "ExpressRoute Gateway",
-                            "defaultValue": "Null",
-                            "toolTip": "",
+                            "defaultValue": "None",
+                            "toolTip": "Deploy a new ExpressRoute Gateway or choose existing",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
@@ -340,7 +371,7 @@
                             "name": "gatewaySelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').GatewayExists, true)]",
-                            "label": "Select ExpressRoute Gateway",
+                            "label": "Select Existing ExpressRoute Gateway",
                             "resourceType": "Microsoft.Network/virtualNetworkGateways",
                             "constraints": {
                                 "required": true
@@ -374,20 +405,6 @@
                             }
                         },
                         {
-                            "name": "GatewaySubnet",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
-                            "label": "Gateway Subnet Prefix",
-                            "toolTip": "Virtual network subnet for AVS virtual machines",
-                            "defaultValue": "192.168.0.0/24",
-                            "placeholder": "Example: 192.168.0.0/24",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(1[0-9]|2[0-4]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 10 to 24."
-                            }
-                        },
-                        {
                             "name": "GWSubnetExistsTrue",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
@@ -410,14 +427,14 @@
                         {
                             "name": "jumpboxinfo",
                             "type": "Microsoft.Common.Section",
-                            "visible": true,
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Jumpbox and Bastion (Optional)",
                             "elements": [
                                 {
                                     "name": "jumpboxinfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "Once AVS connectivity to Azure Native has been established, you will want to connect to vCenter. Choose the options below to deploy a Jumpbox and Azure Bastion into the same virtual network as specified earlier, or skip if one already exists ",
+                                        "text": "Once AVS connectivity to Azure Native has been established, you will want to connect to vCenter. Choose the options below to deploy a Jumpbox and Azure Bastion into the new virtual network as specified above, or skip if one already exists ",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -793,9 +810,9 @@
                             "name": "DeployServiceHealth",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "Enable AVS Service Health Alerts",
-                            "label": "Deploy Jumpbox and Azure Bastion",
+                            "label": "Enable Service Health alerts",
                             "defaultValue": "Yes",
-                            "toolTip": "Deploy Jumpbox and Azure Bastion",
+                            "toolTip": "Enable Service Health alerts",
                             "constraints": {
                                 "required": true,
                                 "allowedValues": [
