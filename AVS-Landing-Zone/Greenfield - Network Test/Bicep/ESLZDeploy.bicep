@@ -9,7 +9,7 @@ param Prefix string = 'AVS'
 param Location string = deployment().location
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
-param VNetExists string = ''
+param VNetExists bool = false
 @description('The Existing VNet name')
 param ExistingVnetName string = ''
 @description('The Existing Gateway name')
@@ -22,13 +22,16 @@ param NewGatewaySubnetAddressPrefix string = ''
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param GatewayExists bool = false
 
+@description('A string value to skip the networking deployment')
+param DeployNetworking bool = true
+
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module SkipNetworking 'Modules/Deployment.bicep' = if (VNetExists == 'Skip') {
+module SkipNetworking 'Modules/Deployment.bicep' = if (!DeployNetworking) {
   name: '${deploymentPrefix}-SkipNetworking'
 } 
 
-module Networking 'Modules/Networking.bicep' = if ((VNetExists == 'True') || (VNetExists == 'False')) {
+module Networking 'Modules/Networking.bicep' = if (DeployNetworking) {
   name: '${deploymentPrefix}-Network'
   params: {
     Prefix: Prefix
@@ -42,7 +45,7 @@ module Networking 'Modules/Networking.bicep' = if ((VNetExists == 'True') || (VN
   }
 }
 
-module VNetConnection 'Modules/VNetConnection.bicep' = if ((VNetExists == 'True') || (VNetExists == 'False')) {
+module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking) {
   name: '${deploymentPrefix}-VNet'
   params: {
     NewGatewayName: Networking.outputs.NewGatewayName

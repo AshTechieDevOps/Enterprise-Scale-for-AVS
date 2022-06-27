@@ -108,9 +108,30 @@
                             ]
                         },
                         {
-                            "name": "VNetExists",
+                            "name": "DeployNetworking",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
+                            "label": "Virtual Network",
+                            "defaultValue": "Yes",
+                            "toolTip": "Deploy this networking scenario",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {   
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "VNetExists",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "[equals(steps('azureNetwork').DeployNetworking, true)]",
                             "label": "Virtual Network",
                             "defaultValue": "New",
                             "toolTip": "Select New to deploy a new virtual network, or choose and existing VNet",
@@ -119,15 +140,11 @@
                                 "allowedValues": [
                                     {   
                                         "label": "New",
-                                        "value": "False"
+                                        "value": false
                                     },
                                     {
                                         "label": "Existing",
-                                        "value": "True"
-                                    },
-                                    {
-                                        "label": "None (Skip)",
-                                        "value": "Skip"
+                                        "value": true
                                     }
                                 ]
                             }
@@ -135,7 +152,7 @@
                         {
                             "name": "vNetAddressSpace",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, False)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Virtual Network address range",
                             "toolTip": "Virtual network in Azure Native to host the ExpressRoute Gateway, Jumpbox and Bastion for AVS Connectivity. Ensure this is not overlapping the AVS Private Cloud",
                             "defaultValue": "192.168.0.0/22",
@@ -149,7 +166,7 @@
                         {
                             "name": "GatewaySubnet",
                             "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, False)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, false)]",
                             "label": "Gateway Subnet Prefix",
                             "toolTip": "Enter the address prefix for the new GatewaySubnet",
                             "defaultValue": "192.168.0.0/24",
@@ -163,7 +180,7 @@
                         {
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, True)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "Virtual Network",
                             "resourceType": "Microsoft.Network/virtualNetworks",
                             "constraints": {
@@ -179,7 +196,7 @@
                         {
                             "name": "GatewayExists",
                             "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, True)]",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
                             "label": "ExpressRoute Gateway",
                             "defaultValue": "None",
                             "toolTip": "Deploy a new ExpressRoute Gateway or choose existing",
@@ -262,6 +279,7 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployNetworking": "[steps('azureNetwork').DeployNetworking]",
                 "VNetExists": "[steps('azureNetwork').VNetExists]",
                 "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId.name]",
                 "GatewayExists": "[steps('azureNetwork').GatewayExists]",

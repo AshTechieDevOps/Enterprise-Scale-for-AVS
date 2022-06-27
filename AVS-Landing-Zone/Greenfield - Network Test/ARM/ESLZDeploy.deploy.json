@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "6859474232978649678"
+      "templateHash": "12891385536274516464"
     }
   },
   "parameters": {
@@ -26,8 +26,8 @@
       }
     },
     "VNetExists": {
-      "type": "string",
-      "defaultValue": "",
+      "type": "bool",
+      "defaultValue": false,
       "metadata": {
         "description": "Set this to true if you are redeploying, and the VNet already exists"
       }
@@ -66,6 +66,13 @@
       "metadata": {
         "description": "Set this to true if you are redeploying, and the VNet already exists"
       }
+    },
+    "DeployNetworking": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "A string value to skip the networking deployment"
+      }
     }
   },
   "variables": {
@@ -73,7 +80,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('VNetExists'), 'Skip')]",
+      "condition": "[not(parameters('DeployNetworking'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-SkipNetworking', variables('deploymentPrefix'))]",
@@ -98,7 +105,7 @@
       }
     },
     {
-      "condition": "[or(equals(parameters('VNetExists'), 'True'), equals(parameters('VNetExists'), 'False'))]",
+      "condition": "[parameters('DeployNetworking')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Network', variables('deploymentPrefix'))]",
@@ -141,7 +148,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "3917282100540396559"
+              "templateHash": "6326232092156915087"
             }
           },
           "parameters": {
@@ -152,7 +159,7 @@
               "type": "string"
             },
             "VNetExists": {
-              "type": "string"
+              "type": "bool"
             },
             "ExistingVnetName": {
               "type": "string"
@@ -220,7 +227,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "13960978598299166744"
+                      "templateHash": "12019003882060354871"
                     }
                   },
                   "parameters": {
@@ -231,7 +238,7 @@
                       "type": "string"
                     },
                     "VNetExists": {
-                      "type": "string"
+                      "type": "bool"
                     },
                     "ExistingVnetName": {
                       "type": "string"
@@ -260,7 +267,7 @@
                   },
                   "resources": [
                     {
-                      "condition": "[equals(parameters('VNetExists'), 'False')]",
+                      "condition": "[not(parameters('VNetExists'))]",
                       "type": "Microsoft.Network/virtualNetworks",
                       "apiVersion": "2021-02-01",
                       "name": "[variables('NewVNetName')]",
@@ -282,7 +289,7 @@
                       }
                     },
                     {
-                      "condition": "[equals(parameters('VNetExists'), 'False')]",
+                      "condition": "[not(parameters('VNetExists'))]",
                       "type": "Microsoft.Network/virtualNetworks/subnets",
                       "apiVersion": "2021-02-01",
                       "name": "[format('{0}/{1}', variables('NewVNetName'), 'GatewaySubnet')]",
@@ -308,7 +315,7 @@
                       }
                     },
                     {
-                      "condition": "[and(not(parameters('GatewayExists')), equals(parameters('VNetExists'), 'False'))]",
+                      "condition": "[and(not(parameters('GatewayExists')), not(parameters('VNetExists')))]",
                       "type": "Microsoft.Network/virtualNetworkGateways",
                       "apiVersion": "2021-08-01",
                       "name": "[variables('NewVnetNewGatewayName')]",
@@ -340,7 +347,7 @@
                       ]
                     },
                     {
-                      "condition": "[and(not(parameters('GatewayExists')), equals(parameters('VNetExists'), 'True'))]",
+                      "condition": "[and(not(parameters('GatewayExists')), parameters('VNetExists'))]",
                       "type": "Microsoft.Network/virtualNetworkGateways",
                       "apiVersion": "2021-08-01",
                       "name": "[variables('ExistingVnetNewGatewayName')]",
@@ -374,11 +381,11 @@
                   "outputs": {
                     "VNetName": {
                       "type": "string",
-                      "value": "[if(equals(parameters('VNetExists'), 'False'), parameters('ExistingVnetName'), variables('NewVNetName'))]"
+                      "value": "[if(parameters('VNetExists'), parameters('ExistingVnetName'), variables('NewVNetName'))]"
                     },
                     "NewGatewayName": {
                       "type": "string",
-                      "value": "[if(and(not(parameters('GatewayExists')), equals(parameters('VNetExists'), 'False')), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayName'))]"
+                      "value": "[if(and(not(parameters('GatewayExists')), not(parameters('VNetExists'))), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayName'))]"
                     },
                     "ExistingGatewayName": {
                       "type": "string",
@@ -386,7 +393,7 @@
                     },
                     "VNetResourceId": {
                       "type": "string",
-                      "value": "[if(equals(parameters('VNetExists'), 'False'), resourceId('Microsoft.Network/virtualNetworks', parameters('ExistingVnetName')), resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName')))]"
+                      "value": "[if(parameters('VNetExists'), resourceId('Microsoft.Network/virtualNetworks', parameters('ExistingVnetName')), resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName')))]"
                     }
                   }
                 }
@@ -422,7 +429,7 @@
       }
     },
     {
-      "condition": "[or(equals(parameters('VNetExists'), 'True'), equals(parameters('VNetExists'), 'False'))]",
+      "condition": "[parameters('DeployNetworking')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-VNet', variables('deploymentPrefix'))]",
