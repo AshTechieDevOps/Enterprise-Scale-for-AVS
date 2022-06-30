@@ -96,6 +96,18 @@
                             ]
                         },
                         {
+                            "name": "storageSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "label": "Select AVS Private Cloud",
+                            "resourceType": "Microsoft.AVS/privateClouds",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
                             "name": "DeployDashboard",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
