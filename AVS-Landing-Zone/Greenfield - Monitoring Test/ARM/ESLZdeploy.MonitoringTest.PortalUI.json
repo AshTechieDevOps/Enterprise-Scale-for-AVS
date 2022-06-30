@@ -96,7 +96,7 @@
                             ]
                         },
                         {
-                            "name": "storageSelector",
+                            "name": "avsSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "label": "Select AVS Private Cloud",
                             "resourceType": "Microsoft.AVS/privateClouds",
@@ -108,7 +108,7 @@
                             }
                         },
                         {
-                            "name": "storageSelector",
+                            "name": "exrconnectionSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "label": "Select existing AVS ExpressRoute Gateway Connection",
                             "resourceType": "Microsoft.Network/connections",
