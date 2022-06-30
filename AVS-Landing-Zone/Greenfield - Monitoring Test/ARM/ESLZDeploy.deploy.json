@@ -1,0 +1,160 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.7.4.23292",
+      "templateHash": "3028570178242212431"
+    }
+  },
+  "parameters": {
+    "Prefix": {
+      "type": "string",
+      "defaultValue": "SJAVS",
+      "maxLength": 20,
+      "minLength": 1,
+      "metadata": {
+        "description": "The prefix to use on resources inside this template"
+      }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[deployment().location]",
+      "metadata": {
+        "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
+      }
+    },
+    "AlertEmails": {
+      "type": "string",
+      "metadata": {
+        "description": "Email addresses to be added to the alerting action group. Use the format [\"name1@domain.com\",\"name2@domain.com\"]."
+      }
+    }
+  },
+  "variables": {
+    "deploymentPrefix": "[format('AVS-{0}', uniqueString(deployment().name, parameters('Location')))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2020-10-01",
+      "name": "[format('{0}-Monitoring', variables('deploymentPrefix'))]",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "AlertEmails": {
+            "value": "[parameters('AlertEmails')]"
+          },
+          "Prefix": {
+            "value": "[parameters('Prefix')]"
+          },
+          "PrimaryLocation": {
+            "value": "[parameters('Location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.7.4.23292",
+              "templateHash": "14971212785531633910"
+            }
+          },
+          "parameters": {
+            "Prefix": {
+              "type": "string"
+            },
+            "PrimaryLocation": {
+              "type": "string"
+            },
+            "AlertEmails": {
+              "type": "string"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Resources/resourceGroups",
+              "apiVersion": "2021-04-01",
+              "name": "[format('{0}-Operational', parameters('Prefix'))]",
+              "location": "[parameters('PrimaryLocation')]"
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ActionGroup', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "ActionGroupEmails": {
+                    "value": "[parameters('AlertEmails')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "2820348950530409317"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupEmails": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "microsoft.insights/actionGroups",
+                      "apiVersion": "2019-06-01",
+                      "name": "[format('{0}-ActionGroup', parameters('Prefix'))]",
+                      "location": "Global",
+                      "properties": {
+                        "enabled": true,
+                        "groupShortName": "[substring(format('avs{0}', uniqueString(parameters('Prefix'))), 0, 12)]",
+                        "emailReceivers": [
+                          {
+                            "emailAddress": "[parameters('ActionGroupEmails')]",
+                            "name": "[split(parameters('ActionGroupEmails'), '@')[0]]",
+                            "useCommonAlertSchema": false
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "outputs": {
+                    "ActionGroupResourceId": {
+                      "type": "string",
+                      "value": "[resourceId('microsoft.insights/actionGroups', format('{0}-ActionGroup', parameters('Prefix')))]"
+                    }
+                  }
+                }
+              },
+              "dependsOn": [
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

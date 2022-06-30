@@ -1,0 +1,190 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "AVS Landing Zone Accelerator - Monitoring",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Azure core setup",
+                    "subLabel": {
+                        "preValidation": "Provide deployment prefix for the resource groups and resources that will be created.",
+                        "postValidation": "Done"
+                    },
+                    "bladeTitle": "avsBasics",
+                    "elements": [
+                        {
+                            "name": "avsDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },
+                        {
+                            "name": "avsSharedServices",
+                            "type": "Microsoft.Common.InfoBox",
+                            "options": {
+                                "text": "The subscription and location selected in this step will be used to deploy the AVS Workload Landing Zone resources (Private Cloud, Virtual Networks, VMs etc.).",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "avsWorkloadSubscription",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Deployment",
+                            "elements": [
+                                {
+                                    "name": "info",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "Azure AVS Landing Zones will create the resource group hierarchy under the subscriptions with the prefix provided at this step.",
+                                        "link": {
+                                            "label": "Learn more",
+                                            "uri": "https://docs.microsoft.com/azure/cloud-adoption-framework/ready/enterprise-scale/management-group-and-subscription-organization"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "avsDeploymentPrefix",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Deployment prefix",
+                            "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
+                            "placeholder": "Example: AVS",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^[a-z0-9A-Z-]{1,8}$",
+                                "validationMessage": "The prefix must be 1-8 characters."
+                            }
+                        },
+                        {
+                            "name": "rbacInfo",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Azure AVS Landing Zones ARM deployment requires contributor access at the subscription scope. Visit this link to get more information on RBAC permissions and scopes.",
+                                "uri": "https://docs.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+                                "style": "Warning"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Monitoring",
+                    "label": "Monitoring",
+                    "elements": [
+                        {
+                            "name": "AVSBaseAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Monitoring and Alerts",
+                            "elements": [
+                                {
+                                    "name": "AVSAlertInfo1",
+                                    "type": "Microsoft.Common.TextBlock",
+                                    "options": {
+                                        "text": "It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.This scenario also includes service health alerts to ensure you don't miss any updates or events that may impact the target Private Cloud. ",
+                                        "link": {
+                                            "label": "",
+                                            "uri": ""
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "DeployDashboard",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Deploy AVS Dashboard",
+                            "defaultValue": "Yes",
+                            "toolTip": "Deploy AVS Dashboard",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployAVSAlerts",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "",
+                            "label": "Enable AVS Metric Alerts",
+                            "defaultValue": "Yes",
+                            "toolTip": "Enable AVS Metric Alerts",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "DeployServiceHealth",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "visible": "Enable AVS Service Health Alerts",
+                            "label": "Enable Service Health alerts",
+                            "defaultValue": "Yes",
+                            "toolTip": "Enable Service Health alerts",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes",
+                                        "value": true
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": false
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "ActionGroupEmails",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Action Group Email",
+                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
+                            "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
+                            "placeholder": "Example: alerts@company.com",
+                            "defaultValue": "alerts@company.com",
+                            "constraints": {
+                                "required": true,
+                                "regex": "",
+                                "validationMessage": "Please provide a valid email address. Email must be in quotes"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "Prefix": "[steps('basics').avsDeploymentPrefix]",
+                "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "ActionGroupEmails": "[steps('Monitoring').ActionGroupEmails]"
+            },
+            "kind": "Subscription",
+            "location": "[steps('basics').avsDeploymentScope.location.name]",
+            "subscriptionId": "[steps('basics').avsDeploymentScope.subscription.id]"
+        }
+    }
+}
