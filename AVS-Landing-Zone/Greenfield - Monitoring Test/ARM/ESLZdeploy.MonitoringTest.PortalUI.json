@@ -180,7 +180,7 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
-                "ActionGroupEmails": "[steps('Monitoring').ActionGroupEmails]"
+                "AlertEmails": "[steps('Monitoring').ActionGroupEmails]"
             },
             "kind": "Subscription",
             "location": "[steps('basics').avsDeploymentScope.location.name]",
