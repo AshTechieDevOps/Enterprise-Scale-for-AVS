@@ -108,6 +108,18 @@
                             }
                         },
                         {
+                            "name": "storageSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "label": "Select existing AVS ExpressRoute Gateway Connection",
+                            "resourceType": "Microsoft.Network/connections",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
                             "name": "DeployDashboard",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
