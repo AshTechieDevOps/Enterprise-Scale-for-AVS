@@ -261,10 +261,26 @@
                         {
                             "name": "gatewaySubnetApi",
                             "type": "Microsoft.Solutions.ArmApiControl",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
                             "request": {
                                 "method": "GET",
                                 "path": "[concat(steps('azureNetwork').VnetSelectorId.id, '/subnets?api-version=2021-03-01')]"
+                            }
+                        },
+                        {
+                            "name": "gatewaySubnetSubnetSelectorName",
+                            "label": "Subnet",
+                            "type": "Microsoft.Common.DropDown",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "defaultValue": "",
+                            "toolTip": "Select the subnet.",
+                            "multiselect": false,
+                            "selectAll": false,
+                            "filter": true,
+                            "filterPlaceholder": "Filter items ...",
+                            "multiLine": true,
+                            "constraints": {
+                                "allowedValues": "[map(steps('azureNetwork').gatewaySubnetApi.value,(item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.id, '\",\"description\":\"', 'Resource Group: ', last(take(split(item.id, '/'), 5)), '\"}')))]",
+                                "required": true
                             }
                         },
                         {
