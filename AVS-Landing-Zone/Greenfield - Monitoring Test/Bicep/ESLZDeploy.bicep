@@ -8,8 +8,9 @@ param Prefix string = 'SJAVS'
 @description('Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment')
 param Location string = deployment().location
 
-// @description('Deploy AVS Dashboard')
-// param DeployDashbord bool = false
+@description('Deploy AVS Dashboard')
+param DeployDashbord bool = false
+
 @description('Deploy Azure Monitor metric alerts for your AVS Private Cloud')
 param DeployMetricAlerts bool = false
 
@@ -27,11 +28,11 @@ param AlertEmails string = ''
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module SkipMonitoring 'Modules/Deployment.bicep' = if ((!DeployMetricAlerts) || (!DeployServiceHealth)) {
+module SkipMonitoring 'Modules/Deployment.bicep' = if ((!DeployMetricAlerts) || (!DeployServiceHealth) || (!DeployDashbord)) {
   name: '${deploymentPrefix}-SkipMonitoring'
 } 
 
-module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth)) {
+module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth) || (DeployDashbord)) {
   name: '${deploymentPrefix}-Monitoring'
   params: {
     AlertEmails: AlertEmails
@@ -39,6 +40,7 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlert
     PrimaryLocation: Location
     DeployMetricAlerts : DeployMetricAlerts
     DeployServiceHealth : DeployServiceHealth
+    DeployDashbord : DeployDashbord
     PrivateCloudName : PrivateCloudName
     PrivateCloudResourceId : PrivateCloudResourceId
     ExRConnectionResourceId : ExRConnectionResourceId

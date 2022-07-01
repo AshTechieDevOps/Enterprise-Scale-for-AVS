@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "10577952110425014973"
+      "templateHash": "18262219380978089663"
     }
   },
   "parameters": {
@@ -23,6 +23,13 @@
       "defaultValue": "[deployment().location]",
       "metadata": {
         "description": "Optional: The location the private cloud should be deployed to, by default this will be the location of the deployment"
+      }
+    },
+    "DeployDashbord": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Deploy AVS Dashboard"
       }
     },
     "DeployMetricAlerts": {
@@ -64,7 +71,7 @@
   },
   "resources": [
     {
-      "condition": "[or(not(parameters('DeployMetricAlerts')), not(parameters('DeployServiceHealth')))]",
+      "condition": "[or(or(not(parameters('DeployMetricAlerts')), not(parameters('DeployServiceHealth'))), not(parameters('DeployDashbord')))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-SkipMonitoring', variables('deploymentPrefix'))]",
@@ -89,7 +96,7 @@
       }
     },
     {
-      "condition": "[or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth'))]",
+      "condition": "[or(or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth')), parameters('DeployDashbord'))]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2020-10-01",
       "name": "[format('{0}-Monitoring', variables('deploymentPrefix'))]",
@@ -115,6 +122,9 @@
           "DeployServiceHealth": {
             "value": "[parameters('DeployServiceHealth')]"
           },
+          "DeployDashbord": {
+            "value": "[parameters('DeployDashbord')]"
+          },
           "PrivateCloudName": {
             "value": "[parameters('PrivateCloudName')]"
           },
@@ -132,7 +142,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "672364145542978495"
+              "templateHash": "4225450672987769597"
             }
           },
           "parameters": {
@@ -149,6 +159,9 @@
               "type": "bool"
             },
             "DeployServiceHealth": {
+              "type": "bool"
+            },
+            "DeployDashbord": {
               "type": "bool"
             },
             "PrivateCloudName": {
@@ -466,6 +479,7 @@
               ]
             },
             {
+              "condition": "[parameters('DeployDashbord')]",
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2020-10-01",
               "name": "[format('{0}-Dashboard', deployment().name)]",
