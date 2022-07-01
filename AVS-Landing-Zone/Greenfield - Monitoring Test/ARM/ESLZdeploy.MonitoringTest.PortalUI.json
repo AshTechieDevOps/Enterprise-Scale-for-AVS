@@ -98,6 +98,7 @@
                         {
                             "name": "avsSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[or(equals(steps('Monitoring').DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
                             "label": "Select AVS Private Cloud",
                             "resourceType": "Microsoft.AVS/privateClouds",
                             "options": {
@@ -110,6 +111,7 @@
                         {
                             "name": "exrconnectionSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[or(equals(steps('Monitoring').DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
                             "label": "Select existing AVS ExpressRoute Gateway Connection",
                             "resourceType": "Microsoft.Network/connections",
                             "options": {
