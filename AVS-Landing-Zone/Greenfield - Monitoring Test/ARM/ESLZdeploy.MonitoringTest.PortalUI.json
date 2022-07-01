@@ -152,27 +152,6 @@
                             ]
                         },
                         {
-                            "name": "DeployDashboard",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
-                            "label": "Deploy AVS Dashboard",
-                            "defaultValue": "No",
-                            "toolTip": "Deploy AVS Dashboard",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes",
-                                        "value": true
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": false
-                                    }
-                                ]
-                            }
-                        },
-                        {
                             "name": "DeployAVSAlerts",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
