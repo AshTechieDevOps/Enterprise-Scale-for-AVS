@@ -232,8 +232,8 @@
                 "DeployDashbord": "[steps('Monitoring').AVSDashboard.DeployDashboard]",
                 "DeployMetricAlerts": "[steps('Monitoring').AVSAlerts.DeployAVSAlerts]",
                 "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
-                "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
-                "PrivateCloudResourceId": "[steps('Monitoring').avsSelector.id]",
+                "PrivateCloudName": "[if(equals(steps('Monitoring').AVSDashboard.DeployDashboard, true), steps('Monitoring').avsSelector.name, steps('Monitoring').avsSelector2.name)]",
+                "PrivateCloudResourceId": "[if(equals(steps('Monitoring').AVSDashboard.DeployDashboard, true), steps('Monitoring').avsSelector.id, steps('Monitoring').avsSelector2.id)]",
                 "ExRConnectionResourceId": "[steps('Monitoring').exrconnectionSelector.id]",
                 "AlertEmails": "[steps('Monitoring').ActionGroupEmails]"
             },

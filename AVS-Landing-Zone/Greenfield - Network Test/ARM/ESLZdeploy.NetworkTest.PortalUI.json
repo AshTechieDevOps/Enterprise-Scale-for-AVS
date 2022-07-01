@@ -129,6 +129,11 @@
                             }
                         },
                         {
+                            "type": "Microsoft.Common.SubscriptionSelector",
+                            "name": "azurevnetsub",
+                            "label": "Connectivity subscription"
+                        },
+                        {
                             "name": "VNetExists",
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "[equals(steps('azureNetwork').DeployNetworking, true)]",
@@ -252,6 +257,15 @@
                             }
                         },
                         {
+                            "name": "gatewaySubnetApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
+                            "request": {
+                                "method": "GET",
+                                "path": "[concat(steps('azureNetwork').VnetSelectorId.id, '/subnets?api-version=2021-03-01')]"
+                            }
+                        },
+                        {
                             "name": "GWSubnetExistsTrue",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
@@ -262,7 +276,7 @@
                             }
                         },
                         {
-                            "name": "GWSubnetExistsFalse",
+                            "name": "GWSubnetExistsFalseInfo",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
                             "options": {
@@ -270,7 +284,21 @@
                                 "uri": "",
                                 "style": "Error"
                             }
-                        }
+                        },
+                        {
+                            "name": "GWSubnetExistsFalse",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/27",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
+                            }
+                        }                        
                     ]
                 }
             ]
