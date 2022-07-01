@@ -15,6 +15,11 @@ resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01
   location: PrimaryLocation
 }
 
+module Blank 'Monitoring/Blank.bicep' = {
+  scope: OperationalResourceGroup
+  name: '${deployment().name}-Blank'
+}
+
 module ActionGroup 'Monitoring/ActionGroup.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth)) {
   scope: OperationalResourceGroup
   name: '${deployment().name}-ActionGroup'
