@@ -194,7 +194,7 @@
                             },
                             "options": {
                                 "filter": {
-                                    "subscription": "onBasics",
+                                    "subscription": "azureNetwork",
                                     "location": "onBasics"
                                 }
                             }
@@ -231,7 +231,7 @@
                             },
                             "options": {
                                 "filter": {
-                                    "subscription": "onBasics",
+                                    "subscription": "azureNetwork",
                                     "location": "onBasics"
                                 }
                             }
