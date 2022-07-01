@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "12891385536274516464"
+      "templateHash": "14696722388019026855"
     }
   },
   "parameters": {
@@ -53,7 +53,7 @@
         "description": "The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks"
       }
     },
-    "NewGatewaySubnetAddressPrefix": {
+    "NewVnetNewGatewaySubnetAddressPrefix": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
@@ -67,9 +67,30 @@
         "description": "Set this to true if you are redeploying, and the VNet already exists"
       }
     },
+    "GatewaySubnetExists": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Does the GatewaySubnet Exist"
+      }
+    },
+    "ExistingGatewaySubnetId": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The existing vnet gatewaysubnet id"
+      }
+    },
+    "ExistingVnetNewGatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The existing vnet new gatewaysubnet prefix"
+      }
+    },
     "DeployNetworking": {
       "type": "bool",
-      "defaultValue": true,
+      "defaultValue": false,
       "metadata": {
         "description": "A string value to skip the networking deployment"
       }
@@ -134,11 +155,20 @@
           "ExistingGatewayName": {
             "value": "[parameters('ExistingGatewayName')]"
           },
+          "GatewaySubnetExists": {
+            "value": "[parameters('GatewaySubnetExists')]"
+          },
+          "ExistingGatewaySubnetId": {
+            "value": "[parameters('ExistingGatewaySubnetId')]"
+          },
+          "ExistingVnetNewGatewaySubnetPrefix": {
+            "value": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
+          },
           "NewVNetAddressSpace": {
             "value": "[parameters('NewVNetAddressSpace')]"
           },
-          "NewGatewaySubnetAddressPrefix": {
-            "value": "[parameters('NewGatewaySubnetAddressPrefix')]"
+          "NewVnetNewGatewaySubnetAddressPrefix": {
+            "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
           }
         },
         "template": {
@@ -148,7 +178,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "6326232092156915087"
+              "templateHash": "14679239445966696556"
             }
           },
           "parameters": {
@@ -173,7 +203,16 @@
             "NewVNetAddressSpace": {
               "type": "string"
             },
-            "NewGatewaySubnetAddressPrefix": {
+            "NewVnetNewGatewaySubnetAddressPrefix": {
+              "type": "string"
+            },
+            "GatewaySubnetExists": {
+              "type": "bool"
+            },
+            "ExistingVnetNewGatewaySubnetPrefix": {
+              "type": "string"
+            },
+            "ExistingGatewaySubnetId": {
               "type": "string"
             }
           },
@@ -216,8 +255,17 @@
                   "NewVNetAddressSpace": {
                     "value": "[parameters('NewVNetAddressSpace')]"
                   },
-                  "NewGatewaySubnetAddressPrefix": {
-                    "value": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                  "NewVnetNewGatewaySubnetAddressPrefix": {
+                    "value": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
+                  },
+                  "GatewaySubnetExists": {
+                    "value": "[parameters('GatewaySubnetExists')]"
+                  },
+                  "ExistingGatewaySubnetId": {
+                    "value": "[parameters('ExistingGatewaySubnetId')]"
+                  },
+                  "ExistingVnetNewGatewaySubnetPrefix": {
+                    "value": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
                   }
                 },
                 "template": {
@@ -227,7 +275,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "12019003882060354871"
+                      "templateHash": "17640579032102093324"
                     }
                   },
                   "parameters": {
@@ -252,12 +300,21 @@
                     "NewVNetAddressSpace": {
                       "type": "string"
                     },
-                    "NewGatewaySubnetAddressPrefix": {
+                    "NewVnetNewGatewaySubnetAddressPrefix": {
                       "type": "string"
                     },
                     "NewGatewaySku": {
                       "type": "string",
                       "defaultValue": "Standard"
+                    },
+                    "GatewaySubnetExists": {
+                      "type": "bool"
+                    },
+                    "ExistingGatewaySubnetId": {
+                      "type": "string"
+                    },
+                    "ExistingVnetNewGatewaySubnetPrefix": {
+                      "type": "string"
                     }
                   },
                   "variables": {
@@ -266,6 +323,15 @@
                     "ExistingVnetNewGatewayName": "[format('{0}-egw', parameters('Prefix'))]"
                   },
                   "resources": [
+                    {
+                      "condition": "[and(parameters('VNetExists'), not(parameters('GatewaySubnetExists')))]",
+                      "type": "Microsoft.Network/virtualNetworks/subnets",
+                      "apiVersion": "2021-02-01",
+                      "name": "[format('{0}/{1}', parameters('ExistingVnetName'), 'GatewaySubnet')]",
+                      "properties": {
+                        "addressPrefix": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
+                      }
+                    },
                     {
                       "condition": "[not(parameters('VNetExists'))]",
                       "type": "Microsoft.Network/virtualNetworks",
@@ -282,7 +348,7 @@
                           {
                             "name": "GatewaySubnet",
                             "properties": {
-                              "addressPrefix": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                              "addressPrefix": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
                             }
                           }
                         ]
@@ -294,7 +360,7 @@
                       "apiVersion": "2021-02-01",
                       "name": "[format('{0}/{1}', variables('NewVNetName'), 'GatewaySubnet')]",
                       "properties": {
-                        "addressPrefix": "[parameters('NewGatewaySubnetAddressPrefix')]"
+                        "addressPrefix": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
                       },
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
@@ -364,7 +430,7 @@
                             "properties": {
                               "privateIPAllocationMethod": "Dynamic",
                               "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/GatewaySubnet', parameters('ExistingVnetName')), '/')[0], split(format('{0}/GatewaySubnet', parameters('ExistingVnetName')), '/')[1])]"
+                                "id": "[parameters('ExistingGatewaySubnetId')]"
                               },
                               "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"

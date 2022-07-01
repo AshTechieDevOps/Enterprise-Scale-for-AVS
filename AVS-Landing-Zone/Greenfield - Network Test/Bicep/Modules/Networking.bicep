@@ -7,7 +7,10 @@ param ExistingVnetName string
 param GatewayExists bool
 param ExistingGatewayName string
 param NewVNetAddressSpace string
-param NewGatewaySubnetAddressPrefix string
+param NewVnetNewGatewaySubnetAddressPrefix string
+param GatewaySubnetExists bool
+param ExistingVnetNewGatewaySubnetPrefix string
+param ExistingGatewaySubnetId string
 
 resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-Network'
@@ -25,7 +28,10 @@ module Network 'Networking/VNetWithGW.bicep' = {
     GatewayExists : GatewayExists
     ExistingGatewayName : ExistingGatewayName
     NewVNetAddressSpace: NewVNetAddressSpace
-    NewGatewaySubnetAddressPrefix: NewGatewaySubnetAddressPrefix
+    NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+    GatewaySubnetExists : GatewaySubnetExists
+    ExistingGatewaySubnetId : ExistingGatewaySubnetId
+    ExistingVnetNewGatewaySubnetPrefix : ExistingVnetNewGatewaySubnetPrefix
   }
 }
 

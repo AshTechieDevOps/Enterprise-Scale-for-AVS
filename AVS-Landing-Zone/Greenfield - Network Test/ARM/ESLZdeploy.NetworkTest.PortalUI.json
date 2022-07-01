@@ -277,7 +277,7 @@
                             }
                         },
                         {
-                            "name": "GWSubnetExistsFalse",
+                            "name": "ExistingVnetNewGatewaySubnetPrefix",
                             "type": "Microsoft.Common.TextBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
                             "label": "Gateway Subnet Prefix",
@@ -323,8 +323,12 @@
                 "ExistingVnetName": "[steps('azureNetwork').VnetSelectorId.name]",
                 "GatewayExists": "[steps('azureNetwork').GatewayExists]",
                 "ExistingGatewayName": "[steps('azureNetwork').gatewaySelectorId.name]",
+                "GatewaySubnetExists": "[steps('azureNetwork').GatewayExists]",
+                "ExistingGatewaySubnetId": "[steps('azureNetwork').gatewaySubnetSubnetSelectorName]",
                 "NewVNetAddressSpace": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').vNetAddressSpace, 'none')]",
-                "NewGatewaySubnetAddressPrefix": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]"
+                "NewVnetNewGatewaySubnetAddressPrefix": "[if(equals(steps('azureNetwork').VNetExists, false), steps('azureNetwork').GatewaySubnet, 'none')]",
+                "ExistingVnetNewGatewaySubnetPrefix": "[if(equals(steps('azureNetwork').GatewaySubnetExists, false), steps('azureNetwork').ExistingVnetNewGatewaySubnetPrefix, 'none')]"
+
             },
             "kind": "Subscription",
             "location": "[steps('basics').avsDeploymentScope.location.name]",

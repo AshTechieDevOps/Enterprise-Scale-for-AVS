@@ -5,8 +5,11 @@ param ExistingVnetName string
 param GatewayExists bool
 param ExistingGatewayName string
 param NewVNetAddressSpace string
-param NewGatewaySubnetAddressPrefix string
+param NewVnetNewGatewaySubnetAddressPrefix string
 param NewGatewaySku string = 'Standard'
+param GatewaySubnetExists bool
+param ExistingGatewaySubnetId string
+param ExistingVnetNewGatewaySubnetPrefix string
 
 var NewVNetName = '${Prefix}-vnet'
 var NewVnetNewGatewayName = '${Prefix}-gw'
@@ -14,6 +17,14 @@ var ExistingVnetNewGatewayName = '${Prefix}-egw'
 
 resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-08-01' existing = if (VNetExists) {
   name: ExistingVnetName
+}
+
+resource ExistingVnetNewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if ((VNetExists) && (!GatewaySubnetExists)) {
+  name: 'GatewaySubnet'
+  parent: ExistingVNet
+  properties: {
+    addressPrefix: ExistingVnetNewGatewaySubnetPrefix
+  }
 }
 
 resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExists) {
@@ -29,7 +40,7 @@ resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExist
       {
         name: 'GatewaySubnet'
         properties: {
-          addressPrefix: NewGatewaySubnetAddressPrefix
+          addressPrefix: NewVnetNewGatewaySubnetAddressPrefix
       }
     }
     ]
@@ -40,12 +51,8 @@ resource NewVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02
   name: 'GatewaySubnet'
   parent: NewVNet
   properties: {
-    addressPrefix: NewGatewaySubnetAddressPrefix
+    addressPrefix: NewVnetNewGatewaySubnetAddressPrefix
   }
-}
-
-resource ExistingVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-08-01' existing = if (VNetExists) {
-  name: '${ExistingVNet.name}/GatewaySubnet'
 }
 
 resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = if (!GatewayExists) {
@@ -105,7 +112,7 @@ resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-0
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: ExistingVNetGatewaySubnet.id
+            id: ExistingGatewaySubnetId
           }
           publicIPAddress: {
             id: NewGatewayPIP.id

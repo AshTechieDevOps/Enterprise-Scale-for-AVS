@@ -17,10 +17,19 @@ param ExistingGatewayName string = ''
 @description('The address space used for the VNet attached to AVS. Must be non-overlapping with existing networks')
 param NewVNetAddressSpace string = ''
 @description('The subnet CIDR used for the Gateway Subnet. Must be a /24 or greater within the VNetAddressSpace')
-param NewGatewaySubnetAddressPrefix string = ''
+param NewVnetNewGatewaySubnetAddressPrefix string = ''
 
 @description('Set this to true if you are redeploying, and the VNet already exists')
 param GatewayExists bool = false
+
+@description('Does the GatewaySubnet Exist')
+param GatewaySubnetExists bool = false
+
+@description('The existing vnet gatewaysubnet id')
+param ExistingGatewaySubnetId string = ''
+
+@description('The existing vnet new gatewaysubnet prefix')
+param ExistingVnetNewGatewaySubnetPrefix string = ''
 
 @description('A string value to skip the networking deployment')
 param DeployNetworking bool = false
@@ -40,8 +49,11 @@ module Networking 'Modules/Networking.bicep' = if (DeployNetworking) {
     ExistingVnetName : ExistingVnetName
     GatewayExists : GatewayExists
     ExistingGatewayName : ExistingGatewayName
+    GatewaySubnetExists : GatewaySubnetExists
+    ExistingGatewaySubnetId : ExistingGatewaySubnetId
+    ExistingVnetNewGatewaySubnetPrefix : ExistingVnetNewGatewaySubnetPrefix
     NewVNetAddressSpace: NewVNetAddressSpace
-    NewGatewaySubnetAddressPrefix: NewGatewaySubnetAddressPrefix
+    NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
   }
 }
 
