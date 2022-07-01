@@ -178,12 +178,6 @@
                             }
                         },
                         {
-                            "type": "Microsoft.Common.SubscriptionSelector",
-                            "name": "azurevnetsubselect",
-                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
-                            "toolTip": "Select the subscription that contains the existing Virtual Network"
-                        },
-                        {
                             "name": "VnetSelectorId",
                             "type": "Microsoft.Solutions.ResourceSelector",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
@@ -194,7 +188,7 @@
                             },
                             "options": {
                                 "filter": {
-                                    "subscription": "azureNetwork",
+                                    "subscription": "onBasics",
                                     "location": "onBasics"
                                 }
                             }
@@ -231,7 +225,7 @@
                             },
                             "options": {
                                 "filter": {
-                                    "subscription": "azureNetwork",
+                                    "subscription": "onBasics",
                                     "location": "onBasics"
                                 }
                             }
