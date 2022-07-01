@@ -54,6 +54,7 @@
                             "label": "Deployment prefix",
                             "toolTip": "Provide a prefix (max 8 characters) for the resource groups and resources created as part of AVS landing zones.",
                             "placeholder": "Example: AVS",
+                            "defaultValue": "SJAVS",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-z0-9A-Z-]{1,8}$",
@@ -126,7 +127,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "Deploy AVS Dashboard",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "Deploy AVS Dashboard",
                             "constraints": {
                                 "required": true,
@@ -147,7 +148,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "",
                             "label": "Enable AVS Metric Alerts",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "Enable AVS Metric Alerts",
                             "constraints": {
                                 "required": true,
@@ -168,7 +169,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": "Enable AVS Service Health Alerts",
                             "label": "Enable Service Health alerts",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "Enable Service Health alerts",
                             "constraints": {
                                 "required": true,
