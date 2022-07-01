@@ -204,6 +204,10 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
+                "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
+                "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
+                "PrivateCloudResourceId": "[steps('Monitoring').avsSelector.id]",
                 "AlertEmails": "[steps('Monitoring').ActionGroupEmails]"
             },
             "kind": "Subscription",
