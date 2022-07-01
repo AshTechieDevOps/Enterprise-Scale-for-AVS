@@ -16,12 +16,12 @@ param DeployMetricAlerts bool = false
 @description('Deploy Service Health Alerts for AVS')
 param DeployServiceHealth bool = false
 
-param PrivateCloudName string
+param PrivateCloudName string = ''
 
-param PrivateCloudResourceId string
+param PrivateCloudResourceId string = ''
 
 @description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
-param AlertEmails string
+param AlertEmails string = ''
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
