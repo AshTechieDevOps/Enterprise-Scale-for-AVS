@@ -112,7 +112,7 @@
                             "type": "Microsoft.Common.OptionsGroup",
                             "visible": true,
                             "label": "Connect AVS to Azure",
-                            "defaultValue": "Yes",
+                            "defaultValue": "No",
                             "toolTip": "Connect AVS to Azure",
                             "constraints": {
                                 "required": true,
@@ -127,11 +127,6 @@
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "type": "Microsoft.Common.SubscriptionSelector",
-                            "name": "azurevnetsub",
-                            "label": "Connectivity subscription"
                         },
                         {
                             "name": "VNetExists",
@@ -181,6 +176,13 @@
                                 "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
                                 "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
                             }
+                        },
+                        {
+                            "type": "Microsoft.Common.SubscriptionSelector",
+                            "name": "azurevnetsub",
+                            "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
+                            "toolTip": "Select the subscription that contains the existing Virtual Network",
+                            "label": "Connectivity subscription"
                         },
                         {
                             "name": "VnetSelectorId",
@@ -266,6 +268,20 @@
                             }
                         },
                         {
+                            "name": "GWSubnetExistsFalse",
+                            "type": "Microsoft.Common.TextBox",
+                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
+                            "label": "Gateway Subnet Prefix",
+                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
+                            "defaultValue": "192.168.0.0/24",
+                            "placeholder": "Example: 192.168.0.0/27",
+                            "constraints": {
+                                "required": true,
+                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
+                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
+                            }
+                        },
+                        {
                             "name": "GWSubnetExistsTrue",
                             "type": "Microsoft.Common.InfoBox",
                             "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, true)]",
@@ -284,21 +300,7 @@
                                 "uri": "",
                                 "style": "Error"
                             }
-                        },
-                        {
-                            "name": "GWSubnetExistsFalse",
-                            "type": "Microsoft.Common.TextBox",
-                            "visible": "[equals(steps('azureNetwork').GatewaySubnetExists, false)]",
-                            "label": "Gateway Subnet Prefix",
-                            "toolTip": "Enter the address prefix for the new GatewaySubnet",
-                            "defaultValue": "192.168.0.0/24",
-                            "placeholder": "Example: 192.168.0.0/27",
-                            "constraints": {
-                                "required": true,
-                                "regex": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\/(2[0-9]))$",
-                                "validationMessage": "Invalid CIDR range. The address prefix must be in the range 20 to 29."
-                            }
-                        }                        
+                        }                       
                     ]
                 }
             ]
