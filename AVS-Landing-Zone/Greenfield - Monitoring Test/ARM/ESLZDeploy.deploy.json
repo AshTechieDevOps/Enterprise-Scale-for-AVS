@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "16950386862982438505"
+      "templateHash": "6355954371384672564"
     }
   },
   "parameters": {
@@ -142,7 +142,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "12598354283967479340"
+              "templateHash": "11673442282650412129"
             }
           },
           "parameters": {
@@ -180,33 +180,6 @@
               "apiVersion": "2021-04-01",
               "name": "[format('{0}-Operational', parameters('Prefix'))]",
               "location": "[parameters('PrimaryLocation')]"
-            },
-            {
-              "type": "Microsoft.Resources/deployments",
-              "apiVersion": "2020-10-01",
-              "name": "[format('{0}-Blank', deployment().name)]",
-              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
-              "properties": {
-                "expressionEvaluationOptions": {
-                  "scope": "inner"
-                },
-                "mode": "Incremental",
-                "template": {
-                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                  "contentVersion": "1.0.0.0",
-                  "metadata": {
-                    "_generator": {
-                      "name": "bicep",
-                      "version": "0.7.4.23292",
-                      "templateHash": "6683222247151537882"
-                    }
-                  },
-                  "resources": []
-                }
-              },
-              "dependsOn": [
-                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
-              ]
             },
             {
               "condition": "[or(parameters('DeployMetricAlerts'), parameters('DeployServiceHealth'))]",

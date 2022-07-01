@@ -87,7 +87,7 @@
                                     "name": "AVSAlertInfo1",
                                     "type": "Microsoft.Common.TextBlock",
                                     "options": {
-                                        "text": "It is crucial to monitor the resource utilization in order to take timely action. This tutorial walks through setting up Azure Monitor alerts for Azure VMware Solution Private Cloud. Action owners will receive email notifications if utilization metrics exceeds set threshold.This scenario also includes service health alerts to ensure you don't miss any updates or events that may impact the target Private Cloud. ",
+                                        "text": "Monitoring is a crucial aspect to any service and ensures that teams are alerted for any failures, maintenance events, performance degradation etc. As part of this deployment, you will have the option to deploy an Azure Dashboard to visualize metrics from your Private Cloud, deploy some Azure Monitor Metric alerts and also setup some Azure Service Health Alerts for AVS",
                                         "link": {
                                             "label": "",
                                             "uri": ""
@@ -121,6 +121,12 @@
                                     "location": "onBasics"
                                 }
                             }
+                        },
+                        {
+                            "name": "AVSDashboardTitle",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Dashboard" 
                         },
                         {
                             "name": "DeployDashboard",
