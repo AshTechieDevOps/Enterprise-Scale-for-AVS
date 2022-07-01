@@ -179,10 +179,9 @@
                         },
                         {
                             "type": "Microsoft.Common.SubscriptionSelector",
-                            "name": "azurevnetsub",
+                            "name": "azurevnetsubselect",
                             "visible": "[equals(steps('azureNetwork').VNetExists, true)]",
-                            "toolTip": "Select the subscription that contains the existing Virtual Network",
-                            "label": "Connectivity subscription"
+                            "toolTip": "Select the subscription that contains the existing Virtual Network"
                         },
                         {
                             "name": "VnetSelectorId",
