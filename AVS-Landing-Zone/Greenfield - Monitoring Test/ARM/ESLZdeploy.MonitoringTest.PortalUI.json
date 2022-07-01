@@ -207,6 +207,7 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
+                "DeployDashbord": "[steps('Monitoring').DeployDashboard]",
                 "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
                 "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
                 "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
