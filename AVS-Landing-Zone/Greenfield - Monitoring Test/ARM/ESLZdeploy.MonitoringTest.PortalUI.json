@@ -97,7 +97,7 @@
                             ]
                         },
                         {
-                            "name": "AVSDashboardTitle",
+                            "name": "AVSDashboard",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
                             "label": "AVS Dashboard",
@@ -128,7 +128,7 @@
                         {
                             "name": "avsSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[or(equals(steps('Monitoring').AVSDashboardTitle.DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
+                            "visible": "[or(equals(steps('Monitoring').AVSDashboard.DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
                             "label": "Select AVS Private Cloud",
                             "resourceType": "Microsoft.AVS/privateClouds",
                             "options": {
@@ -141,7 +141,7 @@
                         {
                             "name": "exrconnectionSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('Monitoring').AVSDashboardTitle.DeployPrivateCloud, true)]",
+                            "visible": "[equals(steps('Monitoring').AVSDashboard.DeployPrivateCloud, true)]",
                             "label": "Select existing AVS ExpressRoute Gateway Connection",
                             "resourceType": "Microsoft.Network/connections",
                             "options": {
@@ -215,7 +215,7 @@
             "parameters": {
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
-                "DeployDashbord": "[steps('Monitoring').DeployDashboard]",
+                "DeployDashbord": "[steps('Monitoring').AVSDashboard.DeployDashboard]",
                 "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
                 "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
                 "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
