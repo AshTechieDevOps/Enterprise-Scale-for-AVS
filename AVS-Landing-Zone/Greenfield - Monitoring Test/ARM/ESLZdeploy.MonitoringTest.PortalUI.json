@@ -13,14 +13,7 @@
                         "postValidation": "Done"
                     },
                     "bladeTitle": "avsBasics",
-                    "elements": [
-                        {
-                            "name": "avsDeploymentScope",
-                            "type": "Microsoft.Common.ResourceScope",
-                            "location": {
-                                "resourceTypes": []
-                            }
-                        },
+                    "elements": [                     
                         {
                             "name": "avsSharedServices",
                             "type": "Microsoft.Common.InfoBox",
@@ -128,7 +121,7 @@
                         {
                             "name": "avsSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[or(equals(steps('Monitoring').AVSDashboard.DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
+                            "visible": "[equals(steps('Monitoring').AVSDashboard.DeployDashboard, true)]",
                             "label": "Select AVS Private Cloud",
                             "resourceType": "Microsoft.AVS/privateClouds",
                             "options": {
@@ -141,7 +134,7 @@
                         {
                             "name": "exrconnectionSelector",
                             "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[equals(steps('Monitoring').AVSDashboard.DeployPrivateCloud, true)]",
+                            "visible": "[equals(steps('Monitoring').AVSDashboard.DeployDashboard, true)]",
                             "label": "Select existing AVS ExpressRoute Gateway Connection",
                             "resourceType": "Microsoft.Network/connections",
                             "options": {
@@ -151,26 +144,34 @@
                                 }
                             }
                         },
-                        {
-                            "name": "DeployAVSAlerts",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "visible": "",
-                            "label": "Enable AVS Metric Alerts",
-                            "defaultValue": "No",
-                            "toolTip": "Enable AVS Metric Alerts",
-                            "constraints": {
-                                "required": true,
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes",
-                                        "value": true
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": false
+						{
+                            "name": "AVSAlerts",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "AVS Alerts",
+                            "elements": [
+                                {
+                                    "name": "DeployAVSAlerts",
+                                    "type": "Microsoft.Common.OptionsGroup",
+                                    "visible": "",
+                                    "label": "Deploy AVS Alerts",
+                                    "toolTip": "Deploy AVS Alerts",
+                                    "defaultValue": "No",
+                                    "constraints": {
+                                        "required": true,
+                                        "allowedValues": [
+                                            {
+                                                "label": "Yes",
+                                                "value": true
+                                            },
+                                            {
+                                                "label": "No",
+                                                "value": false
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
+                                }
+                            ]
                         },
                         {
                             "name": "DeployServiceHealth",
@@ -193,11 +194,24 @@
                                 ]
                             }
                         },
+						{
+                            "name": "avsSelector2",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[and(equals(steps('Monitoring').AVSAlerts.DeployAVSAlerts, true), equals(steps('Monitoring').AVSDashboard.DeployDashboard, false))]",
+                            "label": "Select AVS Private Cloud",
+                            "resourceType": "Microsoft.AVS/privateClouds",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
                         {
                             "name": "ActionGroupEmails",
                             "type": "Microsoft.Common.TextBox",
                             "label": "Action Group Email",
-                            "visible": "[or(equals(steps('Monitoring').DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
+                            "visible": "[or(equals(steps('Monitoring').AVSAlerts.DeployAVSAlerts, true), equals(steps('Monitoring').DeployServiceHealth, true))]",
                             "toolTip": "Provide an email address to send the service health alerts to, email address must be in quotes",
                             "placeholder": "Example: alerts@company.com",
                             "defaultValue": "alerts@company.com",
@@ -216,7 +230,7 @@
                 "Prefix": "[steps('basics').avsDeploymentPrefix]",
                 "Location": "[steps('basics').avsDeploymentScope.location.name]",
                 "DeployDashbord": "[steps('Monitoring').AVSDashboard.DeployDashboard]",
-                "DeployMetricAlerts": "[steps('Monitoring').DeployAVSAlerts]",
+                "DeployMetricAlerts": "[steps('Monitoring').AVSAlerts.DeployAVSAlerts]",
                 "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
                 "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
                 "PrivateCloudResourceId": "[steps('Monitoring').avsSelector.id]",
