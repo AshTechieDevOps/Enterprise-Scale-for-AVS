@@ -16,7 +16,7 @@ var DashboardHeading = {
     settings: {
       content: {
         settings:{
-          content: '# ${Prefix}-SDDC Cloud Metrics'
+          content: '# ${Prefix}-SDDC Private Cloud Metrics'
           title: ''
           subtitle: ''
           markdownSource: 1

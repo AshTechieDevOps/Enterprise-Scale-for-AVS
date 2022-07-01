@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "17032150234691426305"
+      "templateHash": "6355954371384672564"
     }
   },
   "parameters": {
@@ -142,7 +142,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "5443496579899547027"
+              "templateHash": "11673442282650412129"
             }
           },
           "parameters": {
@@ -510,7 +510,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "7540116719786389862"
+                      "templateHash": "9879433458015474397"
                     }
                   },
                   "parameters": {
@@ -541,7 +541,7 @@
                         "settings": {
                           "content": {
                             "settings": {
-                              "content": "[format('# {0}-SDDC Cloud Metrics', parameters('Prefix'))]",
+                              "content": "[format('# {0}-SDDC Private Cloud Metrics', parameters('Prefix'))]",
                               "title": "",
                               "subtitle": "",
                               "markdownSource": 1
