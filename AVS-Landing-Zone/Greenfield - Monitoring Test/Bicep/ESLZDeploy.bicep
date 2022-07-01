@@ -25,7 +25,11 @@ param AlertEmails string
 
 var deploymentPrefix = 'AVS-${uniqueString(deployment().name, Location)}'
 
-module OperationalMonitoring 'Modules/Monitoring.bicep' = {
+module SkipMonitoring 'Modules/Deployment.bicep' = if ((!DeployMetricAlerts) || (!DeployServiceHealth)) {
+  name: '${deploymentPrefix}-SkipMonitoring'
+} 
+
+module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlerts) || (DeployServiceHealth)) {
   name: '${deploymentPrefix}-Monitoring'
   params: {
     AlertEmails: AlertEmails
