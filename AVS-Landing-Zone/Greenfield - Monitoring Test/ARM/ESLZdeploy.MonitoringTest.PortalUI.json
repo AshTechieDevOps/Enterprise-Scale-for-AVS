@@ -97,32 +97,6 @@
                             ]
                         },
                         {
-                            "name": "avsSelector",
-                            "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[or(equals(steps('Monitoring').DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
-                            "label": "Select AVS Private Cloud",
-                            "resourceType": "Microsoft.AVS/privateClouds",
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
-                            }
-                        },
-                        {
-                            "name": "exrconnectionSelector",
-                            "type": "Microsoft.Solutions.ResourceSelector",
-                            "visible": "[or(equals(steps('Monitoring').DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
-                            "label": "Select existing AVS ExpressRoute Gateway Connection",
-                            "resourceType": "Microsoft.Network/connections",
-                            "options": {
-                                "filter": {
-                                    "subscription": "onBasics",
-                                    "location": "onBasics"
-                                }
-                            }
-                        },
-                        {
                             "name": "AVSDashboardTitle",
                             "type": "Microsoft.Common.Section",
                             "visible": true,
@@ -150,6 +124,32 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "name": "avsSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[or(equals(steps('Monitoring').AVSDashboardTitle.DeployDashboard, true), equals(steps('Monitoring').DeployAVSAlerts, true))]",
+                            "label": "Select AVS Private Cloud",
+                            "resourceType": "Microsoft.AVS/privateClouds",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
+                        },
+                        {
+                            "name": "exrconnectionSelector",
+                            "type": "Microsoft.Solutions.ResourceSelector",
+                            "visible": "[equals(steps('Monitoring').AVSDashboardTitle.DeployPrivateCloud, true)]",
+                            "label": "Select existing AVS ExpressRoute Gateway Connection",
+                            "resourceType": "Microsoft.Network/connections",
+                            "options": {
+                                "filter": {
+                                    "subscription": "onBasics",
+                                    "location": "onBasics"
+                                }
+                            }
                         },
                         {
                             "name": "DeployAVSAlerts",
