@@ -16,7 +16,7 @@ var DashboardHeading = {
     settings: {
       content: {
         settings:{
-          content: '# AVS Private Cloud Metrics'
+          content: '# ${Prefix}-SDDC Cloud Metrics'
           title: ''
           subtitle: ''
           markdownSource: 1
@@ -28,7 +28,7 @@ var DashboardHeading = {
 
 var PrivateCloudLink = {
   position: {
-    colSpan: 2
+    colSpan: 6
     rowSpan: 1
     x: 6
     y: 0

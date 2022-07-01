@@ -10,7 +10,7 @@ param PrivateCloudName string
 param PrivateCloudResourceId string
 param ExRConnectionResourceId string
 
-resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
+resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${Prefix}-Operational'
   location: PrimaryLocation
 }
