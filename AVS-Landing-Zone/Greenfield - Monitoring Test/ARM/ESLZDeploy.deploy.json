@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "4114078136042245785"
+      "templateHash": "10577952110425014973"
     }
   },
   "parameters": {
@@ -44,6 +44,10 @@
       "defaultValue": ""
     },
     "PrivateCloudResourceId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "ExRConnectionResourceId": {
       "type": "string",
       "defaultValue": ""
     },
@@ -116,6 +120,9 @@
           },
           "PrivateCloudResourceId": {
             "value": "[parameters('PrivateCloudResourceId')]"
+          },
+          "ExRConnectionResourceId": {
+            "value": "[parameters('ExRConnectionResourceId')]"
           }
         },
         "template": {
@@ -125,7 +132,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "8217468648938743780"
+              "templateHash": "672364145542978495"
             }
           },
           "parameters": {
@@ -148,6 +155,9 @@
               "type": "string"
             },
             "PrivateCloudResourceId": {
+              "type": "string"
+            },
+            "ExRConnectionResourceId": {
               "type": "string"
             }
           },
@@ -359,6 +369,466 @@
               },
               "dependsOn": [
                 "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name))]",
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "condition": "[parameters('DeployServiceHealth')]",
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-ServiceHealth', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "ActionGroupResourceId": {
+                    "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name)), '2020-10-01').outputs.ActionGroupResourceId.value]"
+                  },
+                  "AlertPrefix": {
+                    "value": "[parameters('PrivateCloudName')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrivateCloudResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "8088561399322787109"
+                    }
+                  },
+                  "parameters": {
+                    "AlertPrefix": {
+                      "type": "string"
+                    },
+                    "ActionGroupResourceId": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Insights/activityLogAlerts",
+                      "apiVersion": "2020-10-01",
+                      "name": "[format('{0}-ServiceHealth', parameters('AlertPrefix'))]",
+                      "location": "Global",
+                      "properties": {
+                        "description": "Service Health Alerts",
+                        "condition": {
+                          "allOf": [
+                            {
+                              "field": "category",
+                              "equals": "ServiceHealth"
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ServiceName",
+                              "containsAny": [
+                                "Azure VMware Solution"
+                              ]
+                            },
+                            {
+                              "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+                              "containsAny": [
+                                "[reference(parameters('PrivateCloudResourceId'), '2021-06-01', 'Full').location]",
+                                "Global"
+                              ]
+                            }
+                          ]
+                        },
+                        "scopes": [
+                          "[subscription().id]"
+                        ],
+                        "enabled": true,
+                        "actions": {
+                          "actionGroups": [
+                            {
+                              "actionGroupId": "[parameters('ActionGroupResourceId')]"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
+                "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Operational', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ActionGroup', deployment().name))]",
+                "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Resources/deployments",
+              "apiVersion": "2020-10-01",
+              "name": "[format('{0}-Dashboard', deployment().name)]",
+              "resourceGroup": "[format('{0}-Operational', parameters('Prefix'))]",
+              "properties": {
+                "expressionEvaluationOptions": {
+                  "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {
+                  "Prefix": {
+                    "value": "[parameters('Prefix')]"
+                  },
+                  "Location": {
+                    "value": "[parameters('PrimaryLocation')]"
+                  },
+                  "PrivateCloudResourceId": {
+                    "value": "[parameters('PrivateCloudResourceId')]"
+                  },
+                  "ExRConnectionResourceId": {
+                    "value": "[parameters('ExRConnectionResourceId')]"
+                  }
+                },
+                "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "metadata": {
+                    "_generator": {
+                      "name": "bicep",
+                      "version": "0.7.4.23292",
+                      "templateHash": "16138073813285372195"
+                    }
+                  },
+                  "parameters": {
+                    "Prefix": {
+                      "type": "string"
+                    },
+                    "Location": {
+                      "type": "string"
+                    },
+                    "PrivateCloudResourceId": {
+                      "type": "string"
+                    },
+                    "ExRConnectionResourceId": {
+                      "type": "string"
+                    }
+                  },
+                  "variables": {
+                    "DashboardHeading": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 1,
+                        "x": 0,
+                        "y": 0
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MarkdownPart",
+                        "inputs": [],
+                        "settings": {
+                          "content": {
+                            "settings": {
+                              "content": "# AVS Private Cloud Metrics",
+                              "title": "",
+                              "subtitle": "",
+                              "markdownSource": 1
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "PrivateCloudLink": {
+                      "position": {
+                        "colSpan": 2,
+                        "rowSpan": 1,
+                        "x": 6,
+                        "y": 0
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/ResourcePart",
+                        "asset": {
+                          "idInputName": "id"
+                        },
+                        "inputs": [
+                          {
+                            "name": "id",
+                            "value": "[parameters('PrivateCloudResourceId')]"
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudCPUMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 0,
+                        "y": 1
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "EffectiveCpuAverage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": "Percentage CPU"
+                                    }
+                                  }
+                                ],
+                                "title": "Percentage CPU by Cluster Name",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "clustername",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudDiskMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 6,
+                        "y": 1
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "DiskUsedPercentage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": " Percentage Datastore Disk Used"
+                                    }
+                                  }
+                                ],
+                                "title": "Percentage Datastore Disk Used by Datastore",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "dsname",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "PrivateCloudMemoryMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 0,
+                        "y": 5
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('PrivateCloudResourceId')]"
+                                    },
+                                    "name": "UsageAverage",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.avs/privateclouds",
+                                    "metricVisualization": {
+                                      "displayName": "Average Memory Usage"
+                                    }
+                                  }
+                                ],
+                                "title": "Average Memory Usage by Cluster Name",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "clustername",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "ExpressRouteConnectionsMetric": {
+                      "position": {
+                        "colSpan": 6,
+                        "rowSpan": 4,
+                        "x": 6,
+                        "y": 5
+                      },
+                      "metadata": {
+                        "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+                        "inputs": [
+                          {
+                            "name": "options",
+                            "value": {
+                              "chart": {
+                                "metrics": [
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('ExRConnectionResourceId')]"
+                                    },
+                                    "name": "BitsInPerSecond",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.network/connections",
+                                    "metricVisualization": {
+                                      "displayName": "BitsInPerSecond"
+                                    }
+                                  },
+                                  {
+                                    "resourceMetadata": {
+                                      "id": "[parameters('ExRConnectionResourceId')]"
+                                    },
+                                    "name": "BitsOutPerSecond",
+                                    "aggregationType": 4,
+                                    "namespace": "microsoft.network/connections",
+                                    "metricVisualization": {
+                                      "displayName": "BitsOutPerSecond"
+                                    }
+                                  }
+                                ],
+                                "title": "Private Cloud to VNet Utilization",
+                                "titleKind": 1,
+                                "visualization": {
+                                  "chartType": 2,
+                                  "legendVisualization": {
+                                    "isVisible": true,
+                                    "position": 2,
+                                    "hideSubtitle": false
+                                  },
+                                  "axisVisualization": {
+                                    "x": {
+                                      "isVisible": true,
+                                      "axisType": 2
+                                    },
+                                    "y": {
+                                      "isVisible": true,
+                                      "axisType": 1
+                                    }
+                                  }
+                                },
+                                "grouping": {
+                                  "dimension": "dsname",
+                                  "sort": 2,
+                                  "top": 10
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "resources": [
+                    {
+                      "type": "Microsoft.Portal/dashboards",
+                      "apiVersion": "2019-01-01-preview",
+                      "name": "[format('{0}-Dashboard', parameters('Prefix'))]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "lenses": {
+                          "0": {
+                            "order": 0,
+                            "parts": {
+                              "0": "[variables('DashboardHeading')]",
+                              "1": "[variables('PrivateCloudLink')]",
+                              "2": "[variables('PrivateCloudDiskMetric')]",
+                              "3": "[variables('PrivateCloudCPUMetric')]",
+                              "4": "[variables('PrivateCloudMemoryMetric')]",
+                              "5": "[variables('ExpressRouteConnectionsMetric')]"
+                            }
+                          }
+                        }
+                      },
+                      "tags": {
+                        "hidden-title": "[format('{0}-Dashboard', parameters('Prefix'))]"
+                      }
+                    }
+                  ]
+                }
+              },
+              "dependsOn": [
                 "[subscriptionResourceId('Microsoft.Resources/resourceGroups', format('{0}-Operational', parameters('Prefix')))]"
               ]
             }

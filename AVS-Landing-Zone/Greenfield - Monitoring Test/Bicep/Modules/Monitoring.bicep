@@ -7,6 +7,7 @@ param DeployMetricAlerts bool
 param DeployServiceHealth bool
 param PrivateCloudName string
 param PrivateCloudResourceId string
+param ExRConnectionResourceId string
 
 resource OperationalResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
   name: '${Prefix}-Operational'
@@ -29,5 +30,26 @@ module PrimaryMetricAlerts 'Monitoring/MetricAlerts.bicep' = if (DeployMetricAle
     ActionGroupResourceId: ActionGroup.outputs.ActionGroupResourceId
     AlertPrefix: PrivateCloudName
     PrivateCloudResourceId: PrivateCloudResourceId
+  }
+}
+
+module ServiceHealth 'Monitoring/ServiceHealth.bicep' = if (DeployServiceHealth) {
+  scope: OperationalResourceGroup
+  name: '${deployment().name}-ServiceHealth'
+  params: {
+    ActionGroupResourceId: ActionGroup.outputs.ActionGroupResourceId
+    AlertPrefix: PrivateCloudName
+    PrivateCloudResourceId: PrivateCloudResourceId
+  }
+}
+
+module Dashboard 'Monitoring/Dashboard.bicep' = {
+  scope: OperationalResourceGroup
+  name: '${deployment().name}-Dashboard'
+  params:{
+    Prefix: Prefix
+    Location: PrimaryLocation
+    PrivateCloudResourceId: PrivateCloudResourceId
+    ExRConnectionResourceId: ExRConnectionResourceId
   }
 }

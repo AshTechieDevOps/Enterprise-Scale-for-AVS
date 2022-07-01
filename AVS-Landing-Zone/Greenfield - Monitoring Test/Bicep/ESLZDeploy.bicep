@@ -20,6 +20,8 @@ param PrivateCloudName string = ''
 
 param PrivateCloudResourceId string = ''
 
+param ExRConnectionResourceId string = ''
+
 @description('Email addresses to be added to the alerting action group. Use the format ["name1@domain.com","name2@domain.com"].')
 param AlertEmails string = ''
 
@@ -39,5 +41,6 @@ module OperationalMonitoring 'Modules/Monitoring.bicep' = if ((DeployMetricAlert
     DeployServiceHealth : DeployServiceHealth
     PrivateCloudName : PrivateCloudName
     PrivateCloudResourceId : PrivateCloudResourceId
+    ExRConnectionResourceId : ExRConnectionResourceId
   }
 }

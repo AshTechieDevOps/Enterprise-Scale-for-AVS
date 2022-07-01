@@ -211,6 +211,7 @@
                 "DeployServiceHealth": "[steps('Monitoring').DeployServiceHealth]",
                 "PrivateCloudName": "[steps('Monitoring').avsSelector.name]",
                 "PrivateCloudResourceId": "[steps('Monitoring').avsSelector.id]",
+                "ExRConnectionResourceId": "[steps('Monitoring').exrconnectionSelector.id]",
                 "AlertEmails": "[steps('Monitoring').ActionGroupEmails]"
             },
             "kind": "Subscription",
