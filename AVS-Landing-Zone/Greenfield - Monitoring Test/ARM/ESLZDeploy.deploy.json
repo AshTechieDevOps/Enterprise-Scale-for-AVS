@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.7.4.23292",
-      "templateHash": "18262219380978089663"
+      "templateHash": "17032150234691426305"
     }
   },
   "parameters": {
@@ -142,7 +142,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.7.4.23292",
-              "templateHash": "4225450672987769597"
+              "templateHash": "5443496579899547027"
             }
           },
           "parameters": {
@@ -510,7 +510,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.7.4.23292",
-                      "templateHash": "16138073813285372195"
+                      "templateHash": "7540116719786389862"
                     }
                   },
                   "parameters": {
@@ -541,7 +541,7 @@
                         "settings": {
                           "content": {
                             "settings": {
-                              "content": "# AVS Private Cloud Metrics",
+                              "content": "[format('# {0}-SDDC Cloud Metrics', parameters('Prefix'))]",
                               "title": "",
                               "subtitle": "",
                               "markdownSource": 1
@@ -552,7 +552,7 @@
                     },
                     "PrivateCloudLink": {
                       "position": {
-                        "colSpan": 2,
+                        "colSpan": 6,
                         "rowSpan": 1,
                         "x": 6,
                         "y": 0
