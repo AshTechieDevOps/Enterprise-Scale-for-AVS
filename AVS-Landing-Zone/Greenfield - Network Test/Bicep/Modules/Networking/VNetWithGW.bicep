@@ -16,7 +16,8 @@ param ExistingVnetNewGatewaySubnetPrefix string
 
 var NewVNetName = '${Prefix}-vnet'
 var NewVnetNewGatewayName = '${Prefix}-gw'
-var ExistingVnetNewGatewayName = '${Prefix}-egw'
+var ExistingVnetNewGatewayNewSubnetName = '${Prefix}-egw'
+var ExistingVnetNewGatewayExistingSubnetName = '${Prefix}-esgw'
 
 
 // Existing VNet Workflow
@@ -33,8 +34,9 @@ resource ExistingVnetNewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets
   }
 }
 
+//Vnet exists, deploy new gateway in new gateway subnet
 resource ExistingVnetNewGatewayNewSubnet 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists) && (!GatewaySubnetExists)) {
-  name: ExistingVnetNewGatewayName
+  name: ExistingVnetNewGatewayNewSubnetName
   location: Location
   properties: {
     gatewayType: 'ExpressRoute'
@@ -59,8 +61,9 @@ resource ExistingVnetNewGatewayNewSubnet 'Microsoft.Network/virtualNetworkGatewa
   }
 }
 
-resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists)) {
-  name: ExistingVnetNewGatewayName
+//Vnet exists, deploy new gateway in existing gateway subnet
+resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists) && (GatewaySubnetExists)) {
+  name: ExistingVnetNewGatewayExistingSubnetName
   location: Location
   properties: {
     gatewayType: 'ExpressRoute'
