@@ -13,7 +13,14 @@
                         "postValidation": "Done"
                     },
                     "bladeTitle": "avsBasics",
-                    "elements": [                     
+                    "elements": [  
+                        {
+                            "name": "avsDeploymentScope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },                   
                         {
                             "name": "avsSharedServices",
                             "type": "Microsoft.Common.InfoBox",
