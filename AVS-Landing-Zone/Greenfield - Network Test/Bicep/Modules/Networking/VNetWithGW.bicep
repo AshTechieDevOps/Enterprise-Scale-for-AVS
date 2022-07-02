@@ -15,10 +15,13 @@ var NewVNetName = '${Prefix}-vnet'
 var NewVnetNewGatewayName = '${Prefix}-gw'
 var ExistingVnetNewGatewayName = '${Prefix}-egw'
 
+
+// Existing VNet Workflow
 resource ExistingVNet 'Microsoft.Network/virtualNetworks@2021-08-01' existing = if (VNetExists) {
   name: ExistingVnetName
 }
 
+// If VNet exists, but GatewaySubnet does not. Create new GatewaySubnet
 resource ExistingVnetNewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if ((VNetExists) && (!GatewaySubnetExists)) {
   name: 'GatewaySubnet'
   parent: ExistingVNet
@@ -27,6 +30,7 @@ resource ExistingVnetNewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets
   }
 }
 
+//New VNet Workflow
 resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExists) {
   name: NewVNetName
   location: Location
@@ -47,14 +51,7 @@ resource NewVNet 'Microsoft.Network/virtualNetworks@2021-02-01' = if (!VNetExist
   }
 }
 
-resource NewVNetGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' = if (!VNetExists) {
-  name: 'GatewaySubnet'
-  parent: NewVNet
-  properties: {
-    addressPrefix: NewVnetNewGatewaySubnetAddressPrefix
-  }
-}
-
+//New Gateway Workflow
 resource NewGatewayPIP 'Microsoft.Network/publicIPAddresses@2021-08-01' = if (!GatewayExists) {
   name: '${NewVnetNewGatewayName}-pip'
   location: Location
@@ -86,7 +83,7 @@ resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01'
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: NewVNetGatewaySubnet.id
+            id: NewVNet.properties.subnets[0].id
           }
           publicIPAddress: {
             id: NewGatewayPIP.id

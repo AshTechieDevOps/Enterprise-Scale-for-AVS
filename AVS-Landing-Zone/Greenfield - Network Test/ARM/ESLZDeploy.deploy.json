@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.7.4.23292",
-      "templateHash": "14696722388019026855"
+      "version": "0.8.2.30886",
+      "templateHash": "7775810381753108672"
     }
   },
   "parameters": {
@@ -117,8 +117,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.7.4.23292",
-              "templateHash": "5317878115774441568"
+              "version": "0.8.2.30886",
+              "templateHash": "15419533773683886955"
             }
           },
           "resources": []
@@ -177,8 +177,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.7.4.23292",
-              "templateHash": "14679239445966696556"
+              "version": "0.8.2.30886",
+              "templateHash": "16495553692440122532"
             }
           },
           "parameters": {
@@ -274,8 +274,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.7.4.23292",
-                      "templateHash": "17640579032102093324"
+                      "version": "0.8.2.30886",
+                      "templateHash": "13362495963531859588"
                     }
                   },
                   "parameters": {
@@ -355,18 +355,6 @@
                       }
                     },
                     {
-                      "condition": "[not(parameters('VNetExists'))]",
-                      "type": "Microsoft.Network/virtualNetworks/subnets",
-                      "apiVersion": "2021-02-01",
-                      "name": "[format('{0}/{1}', variables('NewVNetName'), 'GatewaySubnet')]",
-                      "properties": {
-                        "addressPrefix": "[parameters('NewVnetNewGatewaySubnetAddressPrefix')]"
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
-                      ]
-                    },
-                    {
                       "condition": "[not(parameters('GatewayExists'))]",
                       "type": "Microsoft.Network/publicIPAddresses",
                       "apiVersion": "2021-08-01",
@@ -398,7 +386,7 @@
                             "properties": {
                               "privateIPAllocationMethod": "Dynamic",
                               "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('NewVNetName'), 'GatewaySubnet')]"
+                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName')), '2021-02-01').subnets[0].id]"
                               },
                               "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
@@ -409,7 +397,7 @@
                       },
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]",
-                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('NewVNetName'), 'GatewaySubnet')]"
+                        "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
                       ]
                     },
                     {
@@ -537,8 +525,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.7.4.23292",
-              "templateHash": "11273190827950094287"
+              "version": "0.8.2.30886",
+              "templateHash": "10595551346266796413"
             }
           },
           "parameters": {
@@ -596,8 +584,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.7.4.23292",
-                      "templateHash": "13030027764924857473"
+                      "version": "0.8.2.30886",
+                      "templateHash": "2422646138301630198"
                     }
                   },
                   "parameters": {
@@ -670,8 +658,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.7.4.23292",
-                      "templateHash": "7926019310191247689"
+                      "version": "0.8.2.30886",
+                      "templateHash": "14046289494167747390"
                     }
                   },
                   "parameters": {
