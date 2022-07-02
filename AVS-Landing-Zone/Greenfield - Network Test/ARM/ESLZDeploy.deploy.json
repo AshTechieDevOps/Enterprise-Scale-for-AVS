@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.8.2.30886",
-      "templateHash": "18214157633898980389"
+      "templateHash": "13252120407602681634"
     }
   },
   "parameters": {
@@ -178,7 +178,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.8.2.30886",
-              "templateHash": "6361995426291159262"
+              "templateHash": "451982416452018924"
             }
           },
           "parameters": {
@@ -227,7 +227,7 @@
               "condition": "[not(parameters('VNetExists'))]",
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2020-10-01",
-              "name": "[format('{0}-Network', deployment().name)]",
+              "name": "[format('{0}-NewNetwork', deployment().name)]",
               "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -371,7 +371,7 @@
               "condition": "[parameters('VNetExists')]",
               "type": "Microsoft.Resources/deployments",
               "apiVersion": "2020-10-01",
-              "name": "[format('{0}-Network', deployment().name)]",
+              "name": "[format('{0}-ExistingNetwork', deployment().name)]",
               "resourceGroup": "[format('{0}-Network', parameters('Prefix'))]",
               "properties": {
                 "expressionEvaluationOptions": {
@@ -532,23 +532,15 @@
           "outputs": {
             "GatewayName": {
               "type": "string",
-              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.GatewayName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.GatewayName.value)]"
-            },
-            "NewGatewayName": {
-              "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.GatewayName.value]"
-            },
-            "ExistingGatewayName": {
-              "type": "string",
-              "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.ExistingGatewayName.value]"
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.GatewayName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.GatewayName.value)]"
             },
             "VNetName": {
               "type": "string",
-              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.VNetName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.VNetName.value)]"
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.VNetName.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.VNetName.value)]"
             },
             "VNetResourceId": {
               "type": "string",
-              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.VNetResourceId.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-Network', deployment().name)), '2020-10-01').outputs.VNetResourceId.value)]"
+              "value": "[if(not(parameters('VNetExists')), reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-NewNetwork', deployment().name)), '2020-10-01').outputs.VNetResourceId.value, reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('{0}-Network', parameters('Prefix'))), 'Microsoft.Resources/deployments', format('{0}-ExistingNetwork', deployment().name)), '2020-10-01').outputs.VNetResourceId.value)]"
             },
             "NetworkResourceGroup": {
               "type": "string",

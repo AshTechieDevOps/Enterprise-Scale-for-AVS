@@ -19,7 +19,7 @@ resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = 
 
 module NewNetwork 'Networking/NewVNetWithGW.bicep' = if (!VNetExists) {
   scope: NetworkResourceGroup
-  name: '${deployment().name}-Network'
+  name: '${deployment().name}-NewNetwork'
   params: {
     Prefix: Prefix
     Location: Location
@@ -30,7 +30,7 @@ module NewNetwork 'Networking/NewVNetWithGW.bicep' = if (!VNetExists) {
 
 module ExistingNetwork 'Networking/ExistingVNetWithGW.bicep' = if (VNetExists) {
   scope: NetworkResourceGroup
-  name: '${deployment().name}-Network'
+  name: '${deployment().name}-ExistingNetwork'
   params: {
     Prefix: Prefix
     Location: Location
@@ -44,8 +44,6 @@ module ExistingNetwork 'Networking/ExistingVNetWithGW.bicep' = if (VNetExists) {
 }
 
 output GatewayName string = (!VNetExists) ? NewNetwork.outputs.GatewayName : ExistingNetwork.outputs.GatewayName
-output NewGatewayName string = NewNetwork.outputs.GatewayName
-output ExistingGatewayName string = ExistingNetwork.outputs.ExistingGatewayName
 output VNetName string = (!VNetExists) ? NewNetwork.outputs.VNetName : ExistingNetwork.outputs.VNetName
 output VNetResourceId string = (!VNetExists) ? NewNetwork.outputs.VNetResourceId : ExistingNetwork.outputs.VNetResourceId
 output NetworkResourceGroup string = NetworkResourceGroup.name
