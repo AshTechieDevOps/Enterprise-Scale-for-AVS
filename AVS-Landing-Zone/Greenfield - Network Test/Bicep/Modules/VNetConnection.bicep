@@ -5,9 +5,7 @@ param AVSPrefix string = VNetPrefix
 param PrivateCloudResourceGroup string
 param PrivateCloudName string
 param NetworkResourceGroup string
-param GatewayExists bool
-param NewGatewayName string
-param ExistingGatewayName string
+param GatewayName string
 param Location string
 
 module AVSExRAuthorization 'VNetConnection/AVSAuthorization.bicep' = {
@@ -23,11 +21,8 @@ module VNetExRConnection 'VNetConnection/VNetExRConnection.bicep' = {
   scope: resourceGroup(NetworkResourceGroup)
   name: '${deployment().name}-ExR'
   params: {
-    NewGWConnectionName: '${AVSPrefix}-AVS-GW'
-    ExistingGWConnectionName: '${AVSPrefix}-AVS-EGW'
-    GatewayExists : GatewayExists
-    NewGatewayName: NewGatewayName
-    ExistingGatewayName : ExistingGatewayName
+    ConnectionName: '${AVSPrefix}-AVS'
+    GatewayName: GatewayName
     ExpressRouteAuthorizationKey: AVSExRAuthorization.outputs.ExpressRouteAuthorizationKey
     ExpressRouteId: AVSExRAuthorization.outputs.ExpressRouteId
     Location: Location

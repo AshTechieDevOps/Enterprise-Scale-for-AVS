@@ -17,26 +17,35 @@ resource NetworkResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = 
   location: Location
 }
 
-module Network 'Networking/VNetWithGW.bicep' = {
+module NewNetwork 'Networking/NewVNetWithGW.bicep' = if (!VNetExists) {
   scope: NetworkResourceGroup
   name: '${deployment().name}-Network'
   params: {
     Prefix: Prefix
     Location: Location
-    VNetExists: VNetExists
+    NewVNetAddressSpace: NewVNetAddressSpace
+    NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
+  }
+}
+
+module ExistingNetwork 'Networking/ExistingVNetWithGW.bicep' = if (VNetExists) {
+  scope: NetworkResourceGroup
+  name: '${deployment().name}-Network'
+  params: {
+    Prefix: Prefix
+    Location: Location
     ExistingVnetName : ExistingVnetName
     GatewayExists : GatewayExists
     ExistingGatewayName : ExistingGatewayName
-    NewVNetAddressSpace: NewVNetAddressSpace
-    NewVnetNewGatewaySubnetAddressPrefix: NewVnetNewGatewaySubnetAddressPrefix
     GatewaySubnetExists : GatewaySubnetExists
     ExistingGatewaySubnetId : ExistingGatewaySubnetId
     ExistingVnetNewGatewaySubnetPrefix : ExistingVnetNewGatewaySubnetPrefix
   }
 }
 
-output NewGatewayName string = Network.outputs.NewGatewayName
-output ExistingGatewayName string = Network.outputs.ExistingGatewayName
-output VNetName string = Network.outputs.VNetName
-output VNetResourceId string = Network.outputs.VNetResourceId
+output GatewayName string = (!VNetExists) ? NewNetwork.outputs.GatewayName : ExistingNetwork.outputs.GatewayName
+output NewGatewayName string = NewNetwork.outputs.GatewayName
+output ExistingGatewayName string = ExistingNetwork.outputs.ExistingGatewayName
+output VNetName string = (!VNetExists) ? NewNetwork.outputs.VNetName : ExistingNetwork.outputs.VNetName
+output VNetResourceId string = (!VNetExists) ? NewNetwork.outputs.VNetResourceId : ExistingNetwork.outputs.VNetResourceId
 output NetworkResourceGroup string = NetworkResourceGroup.name
