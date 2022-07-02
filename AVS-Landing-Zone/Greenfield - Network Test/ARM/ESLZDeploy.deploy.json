@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.8.2.30886",
-      "templateHash": "1924339037656591493"
+      "templateHash": "6935182981912457600"
     }
   },
   "parameters": {
@@ -178,7 +178,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.8.2.30886",
-              "templateHash": "371725999021647484"
+              "templateHash": "9844721165946096132"
             }
           },
           "parameters": {
@@ -275,7 +275,7 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.8.2.30886",
-                      "templateHash": "8645722293187637844"
+                      "templateHash": "2340196226818958336"
                     }
                   },
                   "parameters": {
@@ -320,8 +320,7 @@
                   "variables": {
                     "NewVNetName": "[format('{0}-vnet', parameters('Prefix'))]",
                     "NewVnetNewGatewayName": "[format('{0}-gw', parameters('Prefix'))]",
-                    "ExistingVnetNewGatewayNewSubnetName": "[format('{0}-egw', parameters('Prefix'))]",
-                    "ExistingVnetNewGatewayExistingSubnetName": "[format('{0}-esgw', parameters('Prefix'))]"
+                    "ExistingVnetNewGatewayNewSubnetName": "[format('{0}-egw', parameters('Prefix'))]"
                   },
                   "resources": [
                     {
@@ -369,7 +368,7 @@
                       "condition": "[and(and(not(parameters('GatewayExists')), parameters('VNetExists')), parameters('GatewaySubnetExists'))]",
                       "type": "Microsoft.Network/virtualNetworkGateways",
                       "apiVersion": "2021-08-01",
-                      "name": "[variables('ExistingVnetNewGatewayExistingSubnetName')]",
+                      "name": "[variables('ExistingVnetNewGatewayNewSubnetName')]",
                       "location": "[parameters('Location')]",
                       "properties": {
                         "gatewayType": "ExpressRoute",
@@ -472,7 +471,7 @@
                     },
                     "NewGatewayName": {
                       "type": "string",
-                      "value": "[if(and(not(parameters('GatewayExists')), not(parameters('VNetExists'))), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayExistingSubnetName'))]"
+                      "value": "[if(and(not(parameters('GatewayExists')), not(parameters('VNetExists'))), variables('NewVnetNewGatewayName'), variables('ExistingVnetNewGatewayNewSubnetName'))]"
                     },
                     "ExistingGatewayName": {
                       "type": "string",
