@@ -60,8 +60,8 @@ module Networking 'Modules/Networking.bicep' = if (DeployNetworking) {
 module VNetConnection 'Modules/VNetConnection.bicep' = if (DeployNetworking) {
   name: '${deploymentPrefix}-VNet'
   params: {
-    GatewayName: Networking.outputs.GatewayName
-    NetworkResourceGroup: Networking.outputs.NetworkResourceGroup
+    GatewayName: DeployNetworking ? Networking.outputs.GatewayName : 'none'
+    NetworkResourceGroup: DeployNetworking ? Networking.outputs.NetworkResourceGroup : 'none'
     VNetPrefix: Prefix
     PrivateCloudName: 'SJAVS-SDDC'
     PrivateCloudResourceGroup: 'SJAVS-PrivateCloud'

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.8.2.30886",
-      "templateHash": "2760494914914023367"
+      "templateHash": "18214157633898980389"
     }
   },
   "parameters": {
@@ -571,10 +571,10 @@
         "mode": "Incremental",
         "parameters": {
           "GatewayName": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.GatewayName.value]"
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.GatewayName.value, 'none')]"
           },
           "NetworkResourceGroup": {
-            "value": "[reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value]"
+            "value": "[if(parameters('DeployNetworking'), reference(subscriptionResourceId('Microsoft.Resources/deployments', format('{0}-Network', variables('deploymentPrefix'))), '2020-10-01').outputs.NetworkResourceGroup.value, 'none')]"
           },
           "VNetPrefix": {
             "value": "[parameters('Prefix')]"
