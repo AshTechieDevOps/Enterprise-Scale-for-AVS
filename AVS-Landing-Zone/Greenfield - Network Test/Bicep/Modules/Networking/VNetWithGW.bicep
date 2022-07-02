@@ -1,13 +1,16 @@
+//Bool
+param VNetExists bool
+param GatewayExists bool
+param GatewaySubnetExists bool
+
+//String
 param Location string
 param Prefix string
-param VNetExists bool
 param ExistingVnetName string
-param GatewayExists bool
 param ExistingGatewayName string
 param NewVNetAddressSpace string
 param NewVnetNewGatewaySubnetAddressPrefix string
 param NewGatewaySku string = 'Standard'
-param GatewaySubnetExists bool
 param ExistingGatewaySubnetId string
 param ExistingVnetNewGatewaySubnetPrefix string
 
@@ -27,6 +30,58 @@ resource ExistingVnetNewGatewaySubnet 'Microsoft.Network/virtualNetworks/subnets
   parent: ExistingVNet
   properties: {
     addressPrefix: ExistingVnetNewGatewaySubnetPrefix
+  }
+}
+
+resource ExistingVnetNewGatewayNewSubnet 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists) && (!GatewaySubnetExists)) {
+  name: ExistingVnetNewGatewayName
+  location: Location
+  properties: {
+    gatewayType: 'ExpressRoute'
+    sku: {
+      name: NewGatewaySku
+      tier: NewGatewaySku
+    }
+    ipConfigurations: [
+      {
+        name: 'default'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: ExistingVnetNewGatewaySubnet.id
+          }
+          publicIPAddress: {
+            id: NewGatewayPIP.id
+          }
+        }
+      }
+    ]
+  }
+}
+
+resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists)) {
+  name: ExistingVnetNewGatewayName
+  location: Location
+  properties: {
+    gatewayType: 'ExpressRoute'
+    sku: {
+      name: NewGatewaySku
+      tier: NewGatewaySku
+    }
+    ipConfigurations: [
+      {
+        name: 'default'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: ExistingGatewaySubnetId
+          }
+          publicIPAddress: {
+            id: NewGatewayPIP.id
+          }
+        }
+      }
+    ]
   }
 }
 
@@ -84,32 +139,6 @@ resource NewVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01'
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
             id: NewVNet.properties.subnets[0].id
-          }
-          publicIPAddress: {
-            id: NewGatewayPIP.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-resource ExistingVnetNewGateway 'Microsoft.Network/virtualNetworkGateways@2021-08-01' = if ((!GatewayExists) && (VNetExists)) {
-  name: ExistingVnetNewGatewayName
-  location: Location
-  properties: {
-    gatewayType: 'ExpressRoute'
-    sku: {
-      name: NewGatewaySku
-      tier: NewGatewaySku
-    }
-    ipConfigurations: [
-      {
-        name: 'default'
-        properties: {
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: ExistingGatewaySubnetId
           }
           publicIPAddress: {
             id: NewGatewayPIP.id

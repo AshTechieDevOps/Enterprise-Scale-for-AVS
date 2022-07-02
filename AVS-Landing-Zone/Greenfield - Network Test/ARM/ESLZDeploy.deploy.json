@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.8.2.30886",
-      "templateHash": "7775810381753108672"
+      "templateHash": "9766639663775139673"
     }
   },
   "parameters": {
@@ -178,7 +178,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.8.2.30886",
-              "templateHash": "16495553692440122532"
+              "templateHash": "1584509861958759296"
             }
           },
           "parameters": {
@@ -275,24 +275,27 @@
                     "_generator": {
                       "name": "bicep",
                       "version": "0.8.2.30886",
-                      "templateHash": "13362495963531859588"
+                      "templateHash": "5649488151719978260"
                     }
                   },
                   "parameters": {
+                    "VNetExists": {
+                      "type": "bool"
+                    },
+                    "GatewayExists": {
+                      "type": "bool"
+                    },
+                    "GatewaySubnetExists": {
+                      "type": "bool"
+                    },
                     "Location": {
                       "type": "string"
                     },
                     "Prefix": {
                       "type": "string"
                     },
-                    "VNetExists": {
-                      "type": "bool"
-                    },
                     "ExistingVnetName": {
                       "type": "string"
-                    },
-                    "GatewayExists": {
-                      "type": "bool"
                     },
                     "ExistingGatewayName": {
                       "type": "string"
@@ -306,9 +309,6 @@
                     "NewGatewaySku": {
                       "type": "string",
                       "defaultValue": "Standard"
-                    },
-                    "GatewaySubnetExists": {
-                      "type": "bool"
                     },
                     "ExistingGatewaySubnetId": {
                       "type": "string"
@@ -331,6 +331,69 @@
                       "properties": {
                         "addressPrefix": "[parameters('ExistingVnetNewGatewaySubnetPrefix')]"
                       }
+                    },
+                    {
+                      "condition": "[and(and(not(parameters('GatewayExists')), parameters('VNetExists')), not(parameters('GatewaySubnetExists')))]",
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('ExistingVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('ExistingVnetName'), 'GatewaySubnet')]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('ExistingVnetName'), 'GatewaySubnet')]",
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                      ]
+                    },
+                    {
+                      "condition": "[and(not(parameters('GatewayExists')), parameters('VNetExists'))]",
+                      "type": "Microsoft.Network/virtualNetworkGateways",
+                      "apiVersion": "2021-08-01",
+                      "name": "[variables('ExistingVnetNewGatewayName')]",
+                      "location": "[parameters('Location')]",
+                      "properties": {
+                        "gatewayType": "ExpressRoute",
+                        "sku": {
+                          "name": "[parameters('NewGatewaySku')]",
+                          "tier": "[parameters('NewGatewaySku')]"
+                        },
+                        "ipConfigurations": [
+                          {
+                            "name": "default",
+                            "properties": {
+                              "privateIPAllocationMethod": "Dynamic",
+                              "subnet": {
+                                "id": "[parameters('ExistingGatewaySubnetId')]"
+                              },
+                              "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
+                      ]
                     },
                     {
                       "condition": "[not(parameters('VNetExists'))]",
@@ -398,37 +461,6 @@
                       "dependsOn": [
                         "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]",
                         "[resourceId('Microsoft.Network/virtualNetworks', variables('NewVNetName'))]"
-                      ]
-                    },
-                    {
-                      "condition": "[and(not(parameters('GatewayExists')), parameters('VNetExists'))]",
-                      "type": "Microsoft.Network/virtualNetworkGateways",
-                      "apiVersion": "2021-08-01",
-                      "name": "[variables('ExistingVnetNewGatewayName')]",
-                      "location": "[parameters('Location')]",
-                      "properties": {
-                        "gatewayType": "ExpressRoute",
-                        "sku": {
-                          "name": "[parameters('NewGatewaySku')]",
-                          "tier": "[parameters('NewGatewaySku')]"
-                        },
-                        "ipConfigurations": [
-                          {
-                            "name": "default",
-                            "properties": {
-                              "privateIPAllocationMethod": "Dynamic",
-                              "subnet": {
-                                "id": "[parameters('ExistingGatewaySubnetId')]"
-                              },
-                              "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
-                              }
-                            }
-                          }
-                        ]
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-pip', variables('NewVnetNewGatewayName')))]"
                       ]
                     }
                   ],
