@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.7.4.23292",
-      "templateHash": "17122766978884935137"
+      "version": "0.8.2.30886",
+      "templateHash": "15361757765803372249"
     }
   },
   "parameters": {
@@ -79,8 +79,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.7.4.23292",
-              "templateHash": "5317878115774441568"
+              "version": "0.8.2.30886",
+              "templateHash": "15419533773683886955"
             }
           },
           "resources": []
@@ -121,8 +121,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.7.4.23292",
-              "templateHash": "4809160613461555570"
+              "version": "0.8.2.30886",
+              "templateHash": "6772526023915156165"
             }
           },
           "parameters": {
@@ -182,8 +182,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.7.4.23292",
-                      "templateHash": "7552092466762305907"
+                      "version": "0.8.2.30886",
+                      "templateHash": "3210911173664742511"
                     }
                   },
                   "parameters": {
@@ -240,13 +240,12 @@
                       }
                     },
                     {
-                      "condition": "[not(parameters('RouteServerSubnetExists'))]",
                       "type": "Microsoft.Network/virtualHubs/ipConfigurations",
                       "apiVersion": "2021-05-01",
                       "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-pipconfig', variables('RouteServerName')))]",
                       "properties": {
                         "subnet": {
-                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
+                          "id": "[if(not(parameters('RouteServerSubnetExists')), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet'), resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1]))]"
                         },
                         "publicIPAddress": {
                           "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
@@ -256,24 +255,6 @@
                         "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
                         "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]",
                         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), 'RouteServerSubnet')]"
-                      ]
-                    },
-                    {
-                      "condition": "[parameters('RouteServerSubnetExists')]",
-                      "type": "Microsoft.Network/virtualHubs/ipConfigurations",
-                      "apiVersion": "2021-05-01",
-                      "name": "[format('{0}/{1}', variables('RouteServerName'), format('{0}-ipconfig', variables('RouteServerName')))]",
-                      "properties": {
-                        "subnet": {
-                          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[0], split(format('{0}/RouteServerSubnet', parameters('VNetName')), '/')[1])]"
-                        },
-                        "publicIPAddress": {
-                          "id": "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
-                        }
-                      },
-                      "dependsOn": [
-                        "[resourceId('Microsoft.Network/virtualHubs', variables('RouteServerName'))]",
-                        "[resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', variables('RouteServerName')))]"
                       ]
                     }
                   ],

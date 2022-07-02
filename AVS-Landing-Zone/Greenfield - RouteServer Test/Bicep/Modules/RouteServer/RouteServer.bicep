@@ -43,25 +43,12 @@ resource RouteServer 'Microsoft.Network/virtualHubs@2021-05-01' = {
   }
 }
 
-resource RouteServerIPConfigurationNewSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = if (!RouteServerSubnetExists) {
+resource RouteServerIPConfigurationNewSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = {
   name: '${RouteServerName}-pipconfig'
   parent: RouteServer
   properties: {
     subnet: {
-      id: RouteServerSubnet.id
-    }
-    publicIPAddress: {
-      id: RouteServerPIP.id
-    }
-  }
-}
-
-resource RouteServerIPConfigurationExistingSubnet 'Microsoft.Network/virtualHubs/ipConfigurations@2021-05-01' = if (RouteServerSubnetExists) {
-  name: '${RouteServerName}-ipconfig'
-  parent: RouteServer
-  properties: {
-    subnet: {
-      id: ExistingRouteServerSubnet.id
+      id: (!RouteServerSubnetExists) ? RouteServerSubnet.id : ExistingRouteServerSubnet.id
     }
     publicIPAddress: {
       id: RouteServerPIP.id
